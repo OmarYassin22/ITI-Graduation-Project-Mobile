@@ -28,6 +28,13 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
         onPress={() => navigation.navigate('Login')}
         style={styles.selectedItem}
       />
+         <DrawerItem
+        label="Buyer"
+        icon={({ color, size }) => <Icon name="log-in-outline" size={size} color={color} />}
+        focused={currentRoute === 'Buyer'}
+        onPress={() => navigation.navigate('Buyer')}
+        style={styles.selectedItem}
+      />
     </DrawerContentScrollView>
   );
 }
