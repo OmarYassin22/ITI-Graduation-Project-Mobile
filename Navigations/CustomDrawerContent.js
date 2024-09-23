@@ -10,8 +10,8 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
       <DrawerItem
         label="Home"
         icon={({ color, size }) => <Icon name="home-outline" size={size} color={color} />}
-        focused={currentRoute === 'Home'}
-        onPress={() => navigation.navigate('Home')}
+        focused={currentRoute === 'HomeScreen'}
+        onPress={() => navigation.navigate('HomeScreen')}
         style={styles.selectedItem}
       />
       <DrawerItem
