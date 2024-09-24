@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import CustomDrawerContent from './Navigations/CustomDrawerContent';
-import HomeScreen from './Screens/homeScreen/homeScreen';
 import ProfileScreen from './Screens/profileScreen';
 import Login from './Screens/login';
 import CoursesProvider from './api/courses/CourseContext'; 
