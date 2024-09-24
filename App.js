@@ -5,8 +5,9 @@ import CustomDrawerContent from './Navigations/CustomDrawerContent';
 import ProfileScreen from './Screens/profileScreen';
 import Login from './Screens/login';
 import CoursesProvider from './api/courses/CourseContext'; 
-import InstructorsProvider from './api/students/InstructorsContext'; 
+import InstructorsProvider from './api/instructors/InstructorsContext'; 
 import StudentsProvider from './api/students/StudentsContext';
+import HomeScreen from './Screens/homeScreen/homeScreen';
 
 const Drawer = createDrawerNavigator();
 
