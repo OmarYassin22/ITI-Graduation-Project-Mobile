@@ -35,6 +35,13 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
         onPress={() => navigation.navigate('About Us')}
         style={styles.selectedItem}
       />
+      <DrawerItem
+        label="Contact Us"
+        icon={({ color, size }) => <Icon name="chatbubbles-outline" size={size} color={color} />}
+        focused={currentRoute === "Contact Us"}
+        onPress={() => navigation.navigate('Contact Us')}
+        style={styles.selectedItem}
+      />
     </DrawerContentScrollView>
   );
 }

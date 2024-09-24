@@ -6,7 +6,7 @@ import CustomDrawerContent from './Navigations/CustomDrawerContent';
 import HomeScreen from './Screens/homeScreen';
 import ProfileScreen from './Screens/profileScreen';
 import About from './Screens/About Page/About';
-import { Text } from 'react-native';
+import Contact from './Screens/Contact Page/Contact';
 
 const Drawer = createDrawerNavigator();
 
@@ -34,7 +34,9 @@ export default function App() {
         <Drawer.Screen name="About Us" options={{ headerShown: false }}>
           {props => <About {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
         </Drawer.Screen>
-
+        <Drawer.Screen name="Contact Us" options={{ headerShown: false }}>
+          {props => <Contact {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
+        </Drawer.Screen>
       </Drawer.Navigator>
     </NavigationContainer>
   );
