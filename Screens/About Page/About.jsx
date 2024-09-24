@@ -54,12 +54,14 @@ const About = ({ isDarkMode, toggleDarkMode, navigation }) => {
         <SafeAreaView style={[styles.mainContainer, isDarkMode && styles.mainContainerDark]}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} navigation={navigation} />
-                <Text style={styles.txtAbout}>About Us</Text>
-                <Text style={[styles.txtAboutContent, isDarkMode && styles.txtAboutContentDark]}>At E-learning, we believe that learning should be accessible, engaging, and empowering for everyone, no matter where they are in the world. Our e-learning platform is designed to provide you with high-quality educational content that fits into your life, helping you achieve your goals at your own pace.</Text>
-                <Image source={require("../../assets/About Images/About-Image2.jpg")} style={styles.aboutImage} />
-                <Text style={styles.txtMession}>Our Mission</Text>
-                <Text style={[styles.txtMessionContent, isDarkMode && styles.txtMessionContentDark]}>Our mission is simple: to democratize education by providing affordable and flexible learning opportunities to people everywhere. Whether you are looking to develop new skills, advance in your career, or simply learn something new, we are here to support you on your journey.</Text>
-                <Image source={require("../../assets/About Images/About-Image.jpg")} style={styles.aboutImage} />
+                <View style={styles.shadowBox}>
+                    <Text style={styles.txtAbout}>About Us</Text>
+                    <Text style={[styles.txtAboutContent, isDarkMode && styles.txtAboutContentDark]}>At E-learning, we believe that learning should be accessible, engaging, and empowering for everyone, no matter where they are in the world. Our e-learning platform is designed to provide you with high-quality educational content that fits into your life, helping you achieve your goals at your own pace.</Text>
+                    <Image source={require("../../assets/About Images/About-Image2.jpg")} style={styles.aboutImage} />
+                    <Text style={styles.txtMession}>Our Mission</Text>
+                    <Text style={[styles.txtMessionContent, isDarkMode && styles.txtMessionContentDark]}>Our mission is simple: to democratize education by providing affordable and flexible learning opportunities to people everywhere. Whether you are looking to develop new skills, advance in your career, or simply learn something new, we are here to support you on your journey.</Text>
+                    <Image source={require("../../assets/About Images/About-Image.jpg")} style={styles.aboutImage} />
+                </View>
                 <View style={[styles.dropDownMenu, isDarkMode && styles.dropDownMenuDark]} >
                     <RNPickerSelect key={"1"} onValueChange={(value) => handleChange(value)} items={items} activeItemStyle={isDarkMode ? styles.dropDownMenu2Dark : styles.dropDownMenu2} placeholder={{ label: "Choose a branch", valid: false, value: null }} />
                 </View>

@@ -123,11 +123,11 @@ const styles = StyleSheet.create({
   mainContainerDark: { paddingTop: Platform.OS === "android" ? 0 : 0, backgroundColor: "black" },
   txtAbout: { marginVertical: 10, color: "blue", fontSize: 24, fontWeight: "bold", textAlign: "center" },
   txtAboutContent: { marginVertical: 10, color: "black", fontSize: 18, paddingHorizontal: "5%", textAlign: "center" },
-  txtAboutContentDark: { marginVertical: 10, color: "white", fontSize: 18, paddingHorizontal: "5%" },
+  txtAboutContentDark: { marginVertical: 10, color: "white", fontSize: 18, paddingHorizontal: "5%", textAlign: "center" },
   aboutImage: { marginBottom: 20, width: "70%", height: "10%", alignSelf: "center" },
   txtMession: { marginVertical: 10, color: "blue", fontSize: 24, fontWeight: "bold", textAlign: "center" },
-  txtMessionContent: { marginVertical: 10, color: "black", fontSize: 18, paddingHorizontal: "5%" },
-  txtMessionContentDark: { marginVertical: 10, color: "white", fontSize: 18, paddingHorizontal: "5%" },
+  txtMessionContent: { marginVertical: 10, color: "black", fontSize: 18, paddingHorizontal: "5%", textAlign: "center" },
+  txtMessionContentDark: { marginVertical: 10, color: "white", fontSize: 18, paddingHorizontal: "5%", textAlign: "center" },
   dropDownMenu: { marginVertical: 10, width: "90%", alignSelf: "center", borderColor: "black", borderWidth: 2, borderRadius: 5 },
   dropDownMenuDark: { marginVertical: 10, width: "90%", alignSelf: "center", borderColor: "white", borderWidth: 2, borderRadius: 5 },
   dropDownMenu2: { color: "black" },
@@ -170,5 +170,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
   },
+  shadowBox: {
+    shadowOffset: { width: 0, height: 4 },
+    shadowColor: "gray",
+    shadowOpacity: 0.17,
+    shadowRadius: 3.05,
+    elevation: 4,
+    width: "100%",
+    backfaceVisibility: "white",
+    borderRadius: 8,
+    paddingVertical: 45,
+    paddingHorizontal: 25,
+    marginVertical: 10,
+  }
 });
 export default styles;
