@@ -5,6 +5,8 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import CustomDrawerContent from './Navigations/CustomDrawerContent';
 
 import ProfileScreen from './Screens/profileScreen';
+import About from './Screens/About Page/About';
+import { Text } from 'react-native';
 
 import { createStackNavigator } from '@react-navigation/stack';
 const Drawer = createDrawerNavigator();
@@ -40,6 +42,10 @@ export default function App() {
         <Drawer.Screen name="Buyer" options={{ headerShown: false }}>
           {props => <Buyer {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
         </Drawer.Screen>
+        <Drawer.Screen name="About Us" options={{ headerShown: false }}>
+          {props => <About {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
+        </Drawer.Screen>
+
 
       </Drawer.Navigator>
       </InstructorsProvider>
