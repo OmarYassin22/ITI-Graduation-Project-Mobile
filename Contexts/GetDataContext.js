@@ -1,7 +1,7 @@
 
 import { createContext } from "react";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebaseConfig";
+import { db } from "../firebase";
 
 export const GetData = createContext();
 

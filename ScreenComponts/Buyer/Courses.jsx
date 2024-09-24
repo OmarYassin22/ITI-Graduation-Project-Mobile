@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
-import { GetData } from '../../../Contexts/GetDataContext';
+import { GetData } from '../../Contexts/GetDataContext';
 import { TextInput, Text, Headline, Searchbar, useTheme } from 'react-native-paper';
 import CourseList from './CourseList';
 
