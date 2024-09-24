@@ -182,6 +182,8 @@ const styles = StyleSheet.create({
     paddingVertical: 45,
     paddingHorizontal: 25,
     marginVertical: 10,
-  }
+  },
+  button: { backgroundColor: "blue", textAlign: "center", alignSelf: "center", borderRadius: 5, width: "40%", height: "10%", marginTop: 50 },
+  btnTxt: { textAlign: "center", padding: "15%", height: "100%", color: "white", fontSize: 18 },
 });
 export default styles;

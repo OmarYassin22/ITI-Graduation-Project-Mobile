@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, Text, Image, View } from 'react-native';
+import { ScrollView, Text, Image, View, TouchableOpacity } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import styles from "../../styles.js";
 import MapView from 'react-native-maps';
@@ -38,6 +38,9 @@ const Contact = ({ isDarkMode, toggleDarkMode, navigation }) => {
 
                     <Text style={[styles.labelsForContact, isDarkMode && styles.labelsForContactDark]}>Mesaage</Text>
                     <TextInput style={[styles.txtInputsMessage, isDarkMode && styles.txtInputsMessageDark]} value={inputs.message} onChangeText={(txt) => { handleChange(txt, "message") }}></TextInput>
+                    <TouchableOpacity style={styles.button} onPress={() => { }}>
+                        <Text style={styles.btnTxt}>Submit</Text>
+                    </TouchableOpacity>
                 </View>
 
                 <View style={styles.shadowBox}>
