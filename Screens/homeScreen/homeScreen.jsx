@@ -5,11 +5,9 @@ import Navbar from '../../Navigations/navbar';
 import { List } from 'react-native-paper';
 import { FontAwesome } from '@expo/vector-icons';
 import styles from './StyleHome';
-import { useInstructors } from '../../api/students/InstructorsContext';
 
 const HomeScreen = ({ isDarkMode, toggleDarkMode, navigation }) => {
   const { courses, loading } = useCourses();
-const {instructors}=useInstructors
   const renderCourse = ({ item }) => (
     <View style={styles.courseCard}>
       <Image source={{ uri: item.image }} style={styles.courseImage} resizeMode="cover" />
