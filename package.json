@@ -14,12 +14,9 @@
     "@react-native-community/checkbox": "^0.5.17",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-firebase/app": "^20.5.0",
-<<<<<<< HEAD
     "@react-native-firebase/auth": "^20.5.0",
     "@react-native-firebase/firestore": "^20.5.0",
-=======
     "@react-navigation/bottom-tabs": "^6.6.1",
->>>>>>> 86da43d36310bc4602d786b25432f069842444a6
     "@react-navigation/drawer": "^6.7.2",
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/stack": "^6.4.1",
