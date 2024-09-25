@@ -15,6 +15,7 @@ import Buyer from './ScreenComponts/Buyer/Buyer.jsx';
 import { GetDataProvider } from './Contexts/GetDataContext.js';
 import CourseProvider from './api/courses/CourseContext.jsx';
 import InstructorsProvider from './api/instructors/InstructorsContext.jsx';
+import Account from './Screens/Account.jsx';
 
 const Stack = createStackNavigator();
 
@@ -35,6 +36,9 @@ export default function App() {
       >
         <Drawer.Screen name="Home" options={{ headerShown: false }}>
           {props => <Home {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
+        </Drawer.Screen>
+        <Drawer.Screen name="Account" options={{ headerShown: false }}>
+          {props => <Account {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
         </Drawer.Screen>
         <Drawer.Screen name="Profile" options={{ headerShown: false }}>
           {props => <ProfileScreen {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
