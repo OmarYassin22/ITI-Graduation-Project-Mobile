@@ -3,7 +3,7 @@ import { View, Text, Switch, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; 
 import { Picker } from '@react-native-picker/picker'; 
 import Navbar from '../Navigations/navbar';
-
+import About from './About Page/About';
 const SettingsScreen = ({ isDarkMode, toggleDarkMode, navigation }) => {
   const [selectedLanguage, setSelectedLanguage] = useState('English');
   return (
@@ -40,12 +40,12 @@ const SettingsScreen = ({ isDarkMode, toggleDarkMode, navigation }) => {
       <View style={styles.section}>
         <Text style={[styles.sectionTitle,styles.marginHeader , isDarkMode && styles.darkText]}>More</Text>
 
-        <TouchableOpacity style={styles.settingRow} onPress={() => alert('About Us')}>
+        <TouchableOpacity style={styles.settingRow} onPress={() => navigation.navigate('About')}>
           <Ionicons name="information-circle" size={24} color="black" style={[styles.icon, isDarkMode && styles.iconDark]} />
           <Text style={[styles.settingText, isDarkMode && styles.darkText]}>About Us</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.settingRow} onPress={() => alert('Contact Us')}>
+        <TouchableOpacity style={styles.settingRow} onPress={() => navigation.navigate('Contact')}>
           <Ionicons name="mail" size={24} color="black" style={[styles.icon, isDarkMode && styles.iconDark]} />
           <Text style={[styles.settingText, isDarkMode && styles.darkText]}>Contact Us</Text>
         </TouchableOpacity>

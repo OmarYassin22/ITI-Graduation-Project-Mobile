@@ -4,7 +4,6 @@ import { FontAwesome } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import Navbar from '../Navigations/navbar';
 const ProfilePage = ({ isDarkMode, toggleDarkMode, navigation }) => {
-  const [coverImage, setCoverImage] = useState(require('../assets/default-cover.jpeg'));
   const [profileImage, setProfileImage] = useState(require('../assets/default-img.jpg'));
   const [userName, setUserName] = useState('Mahmoud badr');
   const [isEditingName, setIsEditingName] = useState(false);
@@ -25,26 +24,16 @@ const ProfilePage = ({ isDarkMode, toggleDarkMode, navigation }) => {
       aspect: [4, 3],
       quality: 1,
     });
-    if (!result.cancelled) {
+    if (!result.canceled) {
       setImage({ uri: result.uri || null });
     }
   };
   return (
     <View style={[styles.container, isDarkMode && styles.darkContainer]}>
       <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} navigation={navigation} />
-      <View style={styles.coverContainer}>
-        <Image 
-          source={coverImage.uri ? coverImage : require('../assets/default-cover.jpeg')} 
-          style={styles.coverImage} 
-        />
-        <TouchableOpacity style={styles.editCoverButton} onPress={() => pickImage(setCoverImage)}>
-          <FontAwesome name="camera" size={14} color="white" />
-          <Text style={styles.editText}>Edit</Text>
-        </TouchableOpacity>
-      </View>
       <View style={styles.profileImageContainer}>
         <Image 
-          source={profileImage.uri ? profileImage : require('../assets/default-img.jpg')} 
+          source={profileImage.uri ? profileImage.uri : require('../assets/default-img.jpg')} 
           style={styles.profileImage} 
         />
         <TouchableOpacity style={styles.editProfileButton} onPress={() => pickImage(setProfileImage)}>
@@ -97,31 +86,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  coverContainer: {
-    position: 'relative',
-  },
-  coverImage: {
-    width: '100%',
-    height: 200,
-    resizeMode: 'cover',
-  },
-  editCoverButton: {
-    position: 'absolute',
-    bottom: 10,
-    right: 10,
-    flexDirection: 'row',
-    backgroundColor: '#007bff',
-    padding: 10,
-    borderRadius: 5,
-    alignItems: 'center',
-  },
   editText: {
     color: 'white',
     marginLeft: 5,
   },
   profileImageContainer: {
     alignItems: 'center',
-    marginTop: -50,
+    marginTop: 50,
   },
   profileImage: {
     width: 120,

@@ -53,7 +53,6 @@ const About = ({ isDarkMode, toggleDarkMode, navigation }) => {
     return (
         <SafeAreaView style={[styles.mainContainer, isDarkMode && styles.mainContainerDark]}>
             <ScrollView showsVerticalScrollIndicator={false}>
-                <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} navigation={navigation} />
                 <Text style={styles.txtAbout}>About Us</Text>
                 <Text style={[styles.txtAboutContent, isDarkMode && styles.txtAboutContentDark]}>At E-learning, we believe that learning should be accessible, engaging, and empowering for everyone, no matter where they are in the world. Our e-learning platform is designed to provide you with high-quality educational content that fits into your life, helping you achieve your goals at your own pace.</Text>
                 <Image source={require("../../assets/About Images/About-Image2.jpg")} style={styles.aboutImage} />
