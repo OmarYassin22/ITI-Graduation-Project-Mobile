@@ -24,11 +24,15 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ccc',
     height:80,
     marginBottom:5,
+
   },
   logo: {
     width: 100,
     height: 40,
     resizeMode: 'contain',
+    // marginHorizontal:'auto'
+    position:'absolute',
+    left: '40%',
   },
   contentContainer: {
     flex: 1,

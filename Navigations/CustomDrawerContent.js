@@ -28,6 +28,14 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
         onPress={() => navigation.navigate('Login')}
         style={styles.selectedItem}
       />
+      <DrawerItem
+        label="Settings"
+        icon={({ color, size }) => <Icon name="settings-outline" size={size} color={color} />}
+        focused={currentRoute === 'Settings'}
+        onPress={() => navigation.navigate('Settings')}
+        style={styles.selectedItem}
+      />
+
     </DrawerContentScrollView>
   );
 }
