@@ -1,30 +1,37 @@
 import React from 'react';
-import { View, Text, ScrollView, Image, FlatList } from 'react-native';
+import { View, Text, ScrollView, ImageBackground, FlatList, Image } from 'react-native';
 import { useCourses } from '../../api/courses/CourseContext'; 
 import Navbar from '../../Navigations/navbar';
 import { List } from 'react-native-paper';
 import { FontAwesome } from '@expo/vector-icons';
 import styles from './StyleHome';
-<<<<<<< HEAD
-=======
-import { useInstructors } from '../../api/instructors/InstructorsContext';
->>>>>>> 86da43d36310bc4602d786b25432f069842444a6
 
 const HomeScreen = ({ isDarkMode, toggleDarkMode, navigation }) => {
   const { courses, loading } = useCourses();
-  const renderCourse = ({ item }) => (
-    <View style={styles.courseCard}>
-      <Image source={{ uri: item.image }} style={styles.courseImage} resizeMode="cover" />
-      <View style={styles.overlay}></View>
-      <View style={styles.cardContent}>
-        <Text style={styles.courseTitle}>{item.title}</Text>
-        <View style={styles.ratingContainer}>
-          <FontAwesome name="star" size={16} color="#FFD700" />
-          <Text style={styles.ratingText}>{parseFloat(item.rating).toFixed(2)}</Text>
-        </View>
+
+ 
+  console.warn(courses);
+
+  const renderCourse = ({ item }) => {
+    return (
+      <View style={styles.courseCard}>
+        <ImageBackground
+         source={item.image ? { uri: item.image } : null}
+          style={styles.courseImage}
+          resizeMode="cover"
+        >
+          <View style={styles.overlay}></View>
+          <View style={styles.cardContent}>
+            <Text style={styles.courseTitle}>{item.title}</Text>
+            <View style={styles.ratingContainer}>
+              <FontAwesome name="star" size={16} color="#FFD700" />
+              <Text style={styles.ratingText}>{parseFloat(item.rating).toFixed(2)}</Text>
+            </View>
+          </View>
+        </ImageBackground>
       </View>
-    </View>
-  );
+    );
+  };
 
   return (
     <View style={[styles.screenContainer, isDarkMode && styles.darkContainer]}>
@@ -40,35 +47,44 @@ const HomeScreen = ({ isDarkMode, toggleDarkMode, navigation }) => {
               We are accredited with the Most Lorem ipsum dolor sit amet consectetur.
             </Text>
           </View>
-          <Image source={require("../../assets/image/13.jpg")} style={styles.introImage} resizeMode="cover" />
+          <Image 
+            source={require("../../assets/image/13.jpg")} 
+            style={styles.introImage} 
+            resizeMode="cover" 
+          />
         </View>
 
         <View style={styles.containerTxt}>
           <View style={styles.overlayTxt}></View>
           <Text style={[styles.txtTitle, isDarkMode && styles.darkText]}>Your Future Starts Now</Text>
           <Text style={[styles.txtSubtitle, isDarkMode && styles.darkText]}>
-            Let Us Help You To build a Build Good One.
+            Let Us Help You To build a Good One.
           </Text>
         </View>
 
         <View style={styles.coursesSection}>
           <Text style={[styles.sectionHeading, isDarkMode && styles.darkText]}>Most Popular Courses</Text>
-          {loading ? (
-            <Text>Loading...</Text> 
-          ) : (
-            <FlatList
-              data={courses}
-              renderItem={renderCourse}
-              keyExtractor={(item) => item.id}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={styles.courseList}
-            />
-          )}
+          <ImageBackground 
+            style={styles.backgroundImage}
+            resizeMode="cover"
+          >
+            {loading ? (
+              <Text style={[styles.loadingText, isDarkMode && styles.darkText]}>Loading courses...</Text> 
+            ) : (
+              <FlatList
+                data={courses}
+                renderItem={renderCourse}
+                keyExtractor={(item) => item.id}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.courseList}
+              />
+            )}
+          </ImageBackground>
         </View>
 
         <View style={styles.content}>
-          <List.AccordionGroup style={[styles.sectionHeading, isDarkMode && styles.darkText]}>
+          <List.AccordionGroup>
             <List.Accordion
               titleStyle={[styles.accordionTitle, isDarkMode && styles.darkText]}
               style={[styles.accordionBackground, isDarkMode && styles.darkAccordionBackground]}
@@ -104,16 +120,6 @@ const HomeScreen = ({ isDarkMode, toggleDarkMode, navigation }) => {
           </List.AccordionGroup>
         </View>
       </ScrollView>
-      <View>
-         {/* <FlatList
-              data={instructors}
-              // renderItem={renderCourse}
-              keyExtractor={(item) => item.id}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={styles.instructors}
-            /> */}
-      </View>
     </View>
   );
 };

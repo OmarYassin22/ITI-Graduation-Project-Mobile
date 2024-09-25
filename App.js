@@ -9,7 +9,6 @@ import InstructorsProvider from './api/instructors/InstructorsContext';
 import StudentsProvider from './api/students/StudentsContext';
 import About from './Screens/About Page/About';
 import { createStackNavigator } from '@react-navigation/stack';
-import Home from './Screens/homeScreen/homeScreen'; 
 import Buyer from './ScreenComponts/Buyer/Buyer.jsx';
 import { GetDataProvider } from './Contexts/GetDataContext.js';
 import Account from './Screens/Account.jsx';
@@ -26,14 +25,15 @@ export default function App() {
 
   return (
     <GetDataProvider>
+      <StudentsProvider>
       <NavigationContainer>
         <CoursesProvider>
           <InstructorsProvider>
             <Drawer.Navigator
               drawerContent={(props) => <CustomDrawerContent {...props} isDarkMode={isDarkMode} />}
             >
-              <Drawer.Screen name="Home" options={{ headerShown: false }}>
-                {props => <Home {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
+              <Drawer.Screen name="HomeScreen" options={{ headerShown: false }}>
+                {props => <HomeScreen {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
               </Drawer.Screen>
               <Drawer.Screen name="Account" options={{ headerShown: false }}>
                 {props => <Account {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
@@ -51,6 +51,7 @@ export default function App() {
           </InstructorsProvider>
         </CoursesProvider>
       </NavigationContainer>
+      </StudentsProvider>
     </GetDataProvider>
   );
 }

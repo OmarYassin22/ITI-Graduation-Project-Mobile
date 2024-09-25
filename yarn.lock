@@ -2649,7 +2649,6 @@
     firebase "10.12.2"
     superstruct "^0.6.2"
 
-<<<<<<< HEAD
 "@react-native-firebase/auth@^20.5.0":
   version "20.5.0"
   resolved "https://registry.npmjs.org/@react-native-firebase/auth/-/auth-20.5.0.tgz"
@@ -2661,12 +2660,11 @@
   version "20.5.0"
   resolved "https://registry.npmjs.org/@react-native-firebase/firestore/-/firestore-20.5.0.tgz"
   integrity sha512-DsjMLHlVcj6If02kfQKpPDQ1S29mL8lAusQ8wRJ8oltQd64HBsANcjDXpWak6v7ohY6TmGvuHjBfNF73M+7LXA==
-=======
+
 "@react-native-picker/picker@^2.4.0":
   version "2.8.1"
   resolved "https://registry.npmjs.org/@react-native-picker/picker/-/picker-2.8.1.tgz"
   integrity sha512-iFhsKQzRh/z3GlmvJWSjJJ4333FdLE/PhXxlGlYllE7sFf+UTzziVY+ajatuJ+R5zDw2AxfJV4v/3tAzUJb0/A==
->>>>>>> 86da43d36310bc4602d786b25432f069842444a6
 
 "@react-native/assets-registry@0.74.87":
   version "0.74.87"
