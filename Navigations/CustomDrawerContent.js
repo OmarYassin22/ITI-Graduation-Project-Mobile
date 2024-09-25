@@ -10,8 +10,8 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
       <DrawerItem
         label="Home"
         icon={({ color, size }) => <Icon name="home-outline" size={size} color={color} />}
-        focused={currentRoute === 'Home'}
-        onPress={() => navigation.navigate('Home')}
+        focused={currentRoute === 'HomeScreen'}
+        onPress={() => navigation.navigate('HomeScreen')}
         style={styles.selectedItem}
       />
       <DrawerItem
@@ -26,6 +26,20 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
         icon={({ color, size }) => <Icon name="log-in-outline" size={size} color={color} />}
         focused={currentRoute === 'Login'}
         onPress={() => navigation.navigate('Login')}
+        style={styles.selectedItem}
+      />
+      <DrawerItem
+        label="About Us"
+        icon={({ color, size }) => <Icon name="book-outline" size={size} color={color} />}
+        focused={currentRoute === "About Us"}
+        onPress={() => navigation.navigate('About Us')}
+        style={styles.selectedItem}
+      />
+         <DrawerItem
+        label="Buyer"
+        icon={({ color, size }) => <Icon name="log-in-outline" size={size} color={color} />}
+        focused={currentRoute === 'Buyer'}
+        onPress={() => navigation.navigate('Buyer')}
         style={styles.selectedItem}
       />
       <DrawerItem
