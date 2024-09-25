@@ -24,8 +24,22 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
       <DrawerItem
         label="Login"
         icon={({ color, size }) => <Icon name="log-in-outline" size={size} color={color} />}
-        focused={currentRoute === 'Login'}
-        onPress={() => navigation.navigate('Login')}
+        focused={currentRoute === 'Account'}
+        onPress={() => navigation.navigate('Account')}
+        style={styles.selectedItem}
+      />
+      <DrawerItem
+        label="About Us"
+        icon={({ color, size }) => <Icon name="book-outline" size={size} color={color} />}
+        focused={currentRoute === "About Us"}
+        onPress={() => navigation.navigate('About Us')}
+        style={styles.selectedItem}
+      />
+         <DrawerItem
+        label="Buyer"
+        icon={({ color, size }) => <Icon name="log-in-outline" size={size} color={color} />}
+        focused={currentRoute === 'Buyer'}
+        onPress={() => navigation.navigate('Buyer')}
         style={styles.selectedItem}
       />
     </DrawerContentScrollView>

@@ -5,6 +5,10 @@ import Navbar from '../../Navigations/navbar';
 import { List } from 'react-native-paper';
 import { FontAwesome } from '@expo/vector-icons';
 import styles from './StyleHome';
+<<<<<<< HEAD
+=======
+import { useInstructors } from '../../api/instructors/InstructorsContext';
+>>>>>>> 86da43d36310bc4602d786b25432f069842444a6
 
 const HomeScreen = ({ isDarkMode, toggleDarkMode, navigation }) => {
   const { courses, loading } = useCourses();
