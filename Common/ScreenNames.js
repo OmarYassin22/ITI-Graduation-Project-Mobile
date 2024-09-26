@@ -7,7 +7,6 @@ const ScreenNames = {
   Contact: "Contact",
   Register: "Register",
   Courses: "Courses",
-  ForgotPassword: "ForgotPassword",
 };
 
 export default ScreenNames;
