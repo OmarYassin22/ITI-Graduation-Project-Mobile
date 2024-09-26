@@ -3,10 +3,9 @@ import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from "firebase
 import { ref, listAll, getDownloadURL } from "firebase/storage";
 import { db, storage } from "../../firebase";
 
-
 const CourseContext = createContext();
 
- const CourseProvider = ({ children }) => {
+const CourseProvider = ({ children }) => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -19,9 +18,9 @@ const CourseContext = createContext();
     fetchCourses();
   }, []);
 
-  // add  course
+  // add course
   const createCourse = async (courseData) => {
-    const result = await addCourse(courseData);  //add Firestore
+    const result = await addCourse(courseData);  // add Firestore
     if (result.success) {
       setCourses((prevCourses) => [...prevCourses, { id: result.id, ...courseData }]); 
     }
@@ -29,7 +28,7 @@ const CourseContext = createContext();
 
   // delete course
   const removeCourse = async (id) => {
-    const result = await deleteCourse(id);  //delete Firestore
+    const result = await deleteCourse(id);  // delete Firestore
     if (result.success) {
       setCourses((prevCourses) => prevCourses.filter((course) => course.id !== id));  
     }
@@ -52,14 +51,13 @@ const CourseContext = createContext();
   );
 };
 
-
 export const useCourses = () => useContext(CourseContext);
-
 
 async function getCourses() {
   let imageUrls = [];
   let imagesRef = ref(storage, "images/courses/");
 
+  // تحميل جميع الروابط للصورة من Firebase Storage
   await listAll(imagesRef).then((response) =>
     response.items.forEach((item) =>
       getDownloadURL(item).then((url) => imageUrls.push(url))
@@ -69,11 +67,12 @@ async function getCourses() {
   const querySnapshot = await getDocs(collection(db, "courses"));
   let data = [];
 
+ 
   querySnapshot.forEach((doc) => {
     data.push({
       id: doc.id,
       ...doc.data(),
-      image: imageUrls.find((url) => url.includes(doc.data().imgPath)),
+      image: imageUrls.find((url) => url.includes(doc.data().imgPath)) || '', 
     });
   });
 
@@ -117,4 +116,5 @@ async function updateCourse(id, courseData) {
     return { success: false, error };
   }
 }
- export default CourseProvider
+
+export default CourseProvider;

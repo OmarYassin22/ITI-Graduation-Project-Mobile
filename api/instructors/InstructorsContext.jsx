@@ -63,7 +63,6 @@ const InstructorsProvider = ({ children }) => {
       throw error;
     }
   };
-
   // delete
   const deleteInstructorById = async (id) => {
     try {
