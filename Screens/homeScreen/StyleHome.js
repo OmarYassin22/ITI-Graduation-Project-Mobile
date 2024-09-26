@@ -148,6 +148,11 @@ const styles = StyleSheet.create({
   borderRadius: 10, // نفس قيمة borderRadius في courseCard
 },
 
+ backgroundImageContainer: {
+    position: 'relative',
+    // أضف هنا صورة الخلفية
+    backgroundColor: 'transparent', // أو أي لون آخر ترغب به
+  },
 
 });
 

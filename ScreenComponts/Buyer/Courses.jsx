@@ -3,9 +3,10 @@ import { View, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
 import { GetData } from '../../Contexts/GetDataContext';
 import { TextInput, Text, Headline, Searchbar, useTheme } from 'react-native-paper';
 import CourseList from './CourseList';
+import { useNavigation } from '@react-navigation/native';
 
 const Courses = () => {
-  const getAllCourses = useContext(GetData);
+  const {getAllCourses} = useContext(GetData);
   const [courses, setCourses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const theme = useTheme();
@@ -23,10 +24,7 @@ const Courses = () => {
     course.data.title?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const openCourseDetails = (courseId) => {
-    // Navigate to course details screen
-    console.log('Opening course with ID:', courseId);
-  };
+
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
@@ -42,7 +40,7 @@ const Courses = () => {
         </View>
         <CourseList 
           filteredCourses={filteredCourses} 
-          openCourseDetails={openCourseDetails}
+         
         />
       </ScrollView>
     </SafeAreaView>

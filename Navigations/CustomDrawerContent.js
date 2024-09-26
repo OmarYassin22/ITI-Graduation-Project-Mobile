@@ -24,8 +24,8 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
       <DrawerItem
         label="Login"
         icon={({ color, size }) => <Icon name="log-in-outline" size={size} color={color} />}
-        focused={currentRoute === 'Login'}
-        onPress={() => navigation.navigate('Login')}
+        focused={currentRoute === 'Account'}
+        onPress={() => navigation.navigate('Account')}
         style={styles.selectedItem}
       />
       <DrawerItem
@@ -37,7 +37,7 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
       />
          <DrawerItem
         label="Buyer"
-        icon={({ color, size }) => <Icon name="log-in-outline" size={size} color={color} />}
+        icon={({ color, size }) => <Icon name="cart-outline" size={size} color={color} />}
         focused={currentRoute === 'Buyer'}
         onPress={() => navigation.navigate('Buyer')}
         style={styles.selectedItem}

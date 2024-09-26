@@ -114,6 +114,8 @@ export const GetDataProvider = ({ children }) => {
       getCourseById,
       courseBuyerCart,
       courseBuyerWish,
+      setCourseBuyerCart,
+      setCourseBuyerWish,
       addToCart,
       removeFromCart,
       addToWishlist,
