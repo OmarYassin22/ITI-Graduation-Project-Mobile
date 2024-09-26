@@ -1,15 +1,22 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import { Card, Title, Paragraph, Button } from 'react-native-paper';
 
-const CourseList = ({ filteredCourses, openCourseDetails }) => {
+const CourseList = ({ filteredCourses }) => {
+  const navigation= useNavigation()
+
+  const openCourseDetails = (courseId) => {
+    navigation.navigate('CourseDetailes',  { id: courseId })
+    console.log('Opening course with ID:', courseId);
+  };
   const renderCourseItem = ({ item: course }) => (
     <Card style={styles.card}>
       <Card.Cover source={{ uri: course.image }} />
       <Card.Content>
         <Title>{course.data.title}</Title>
         <Paragraph>{`by: ${course.data.instructor.split(" ").slice(0, 3).join(" ")}`}</Paragraph>
-        <Paragraph style={styles.price}>{`Price: ${course.data.price}`}</Paragraph>
+        <Paragraph style={styles.price}>{`Price: ${course.data.price} $`}</Paragraph>
       </Card.Content>
       <Card.Actions style={styles.cardActions}>
         <Button 
