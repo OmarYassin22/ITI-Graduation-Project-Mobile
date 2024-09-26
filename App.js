@@ -1,21 +1,19 @@
-import Login from './Screens/login';
-import Login from './Screens/login';
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import CustomDrawerContent from './Navigations/CustomDrawerContent';
-
+import HomeScreen from './Screens/homeScreen/homeScreen';
 import ProfileScreen from './Screens/profileScreen';
-import Login from './Screens/login';
 import CoursesProvider from './api/courses/CourseContext'; 
 import InstructorsProvider from './api/instructors/InstructorsContext'; 
 import StudentsProvider from './api/students/StudentsContext';
-import HomeScreen from './Screens/homeScreen/homeScreen';
+import About from './Screens/About Page/About';
+import { createStackNavigator } from '@react-navigation/stack';
+import Buyer from './ScreenComponts/Buyer/Buyer.jsx';
+import { GetDataProvider } from './Contexts/GetDataContext.js';
+import Account from './Screens/Account.jsx';
 
 const Drawer = createDrawerNavigator();
-import Home from './ScreenComponts/HomeScreen/Home.jsx'; 
-import Buyer from './ScreenComponts/HomeScreen/Buyer/Buyer.jsx';
-
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -26,26 +24,34 @@ export default function App() {
   };
 
   return (
-    <InstructorsProvider>
+    <GetDataProvider>
       <StudentsProvider>
-    <CoursesProvider>
       <NavigationContainer>
-        <Drawer.Navigator
-          drawerContent={(props) => <CustomDrawerContent {...props} isDarkMode={isDarkMode} />}
-        >
-          <Drawer.Screen name="HomeScreen" options={{ headerShown: false }}>
-            {props => <HomeScreen {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
-          </Drawer.Screen>
-          <Drawer.Screen name="Profile" options={{ headerShown: false }}>
-            {props => <ProfileScreen {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
-          </Drawer.Screen>
-          <Drawer.Screen name="Login" options={{ headerShown: false }}>
-            {props => <Login {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
-          </Drawer.Screen>
-        </Drawer.Navigator>
+        <CoursesProvider>
+          <InstructorsProvider>
+            <Drawer.Navigator
+              drawerContent={(props) => <CustomDrawerContent {...props} isDarkMode={isDarkMode} />}
+            >
+              <Drawer.Screen name="HomeScreen" options={{ headerShown: false }}>
+                {props => <HomeScreen {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
+              </Drawer.Screen>
+              <Drawer.Screen name="Account" options={{ headerShown: false }}>
+                {props => <Account {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
+              </Drawer.Screen>
+              <Drawer.Screen name="Profile" options={{ headerShown: false }}>
+                {props => <ProfileScreen {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
+              </Drawer.Screen>
+              <Drawer.Screen name="Buyer" options={{ headerShown: false }}>
+                {props => <Buyer {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
+              </Drawer.Screen>
+              <Drawer.Screen name="About Us" options={{ headerShown: false }}>
+                {props => <About {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
+              </Drawer.Screen>
+            </Drawer.Navigator>
+          </InstructorsProvider>
+        </CoursesProvider>
       </NavigationContainer>
-    </CoursesProvider>
-    </StudentsProvider>
-    </InstructorsProvider>
+      </StudentsProvider>
+    </GetDataProvider>
   );
 }
