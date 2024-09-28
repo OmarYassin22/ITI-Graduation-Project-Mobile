@@ -8,11 +8,13 @@ import ProfileScreen from './Screens/profileScreen';
 import Buyer from './ScreenComponts/Buyer/Buyer.jsx';
 import About from './Screens/About Page/About';
 import Account from './Screens/Account.jsx';
+
 import CourseDetails from './Screens/homeScreen/courseDetails.jsx'; 
 import CoursesProvider from './api/courses/CourseContext'; 
 import InstructorsProvider from './api/instructors/InstructorsContext'; 
 import StudentsProvider from './api/students/StudentsContext';
 import { GetDataProvider } from './Contexts/GetDataContext.js';
+import Scholarship from './Screens/Scholarship/Scholarship.jsx';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -54,6 +56,9 @@ export default function App() {
                       </Drawer.Screen>
                       <Drawer.Screen name="About Us" options={{ headerShown: false }}>
                         {props => <About {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
+                      </Drawer.Screen>
+                      <Drawer.Screen name="Scholarship" options={{ headerShown: false }}>
+                        {props => <Scholarship {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
                       </Drawer.Screen>
                     </Drawer.Navigator>
                   )}
