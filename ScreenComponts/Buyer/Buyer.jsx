@@ -69,12 +69,10 @@ function Buyer({ isDarkMode, toggleDarkMode }) {
       <Tab.Screen
   name="CourseDetailes"
   options={{
-    tabBarLabel: 'CourseDetailes',
-    tabBarVisible: false, // Hide the bottom tab bar for this screen
-    headerShown: false, // Hide the header title for this screen
-   
-   
-    tabBarVisible: true, // Hide the bottom tab bar for this screen
+    
+      tabBarButton: () => null,
+      
+  
   }}
 >
   {(props) => <CourseDetailes {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
