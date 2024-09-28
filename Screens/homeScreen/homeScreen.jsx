@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView, ImageBackground, FlatList, Image } from 'react-native';
+import { View, Text, ScrollView, ImageBackground, FlatList, Image,TouchableOpacity } from 'react-native';
 import { useCourses } from '../../api/courses/CourseContext'; 
 import Navbar from '../../Navigations/navbar';
 import { List } from 'react-native-paper';
@@ -10,13 +10,14 @@ const HomeScreen = ({ isDarkMode, toggleDarkMode, navigation }) => {
   const { courses, loading } = useCourses();
 
  
-  console.warn(courses);
-
-  const renderCourse = ({ item }) => {
+const renderCourse = ({ item }) => {
     return (
-      <View style={styles.courseCard}>
+      <TouchableOpacity
+        style={styles.courseCard}
+        onPress={() => navigation.navigate('CourseDetails', { course: item })} 
+      >
         <ImageBackground
-         source={item.image ? { uri: item.image } : null}
+          source={item.imgPath ? { uri: item.imgPath } : null}
           style={styles.courseImage}
           resizeMode="cover"
         >
@@ -29,7 +30,7 @@ const HomeScreen = ({ isDarkMode, toggleDarkMode, navigation }) => {
             </View>
           </View>
         </ImageBackground>
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -72,12 +73,14 @@ const HomeScreen = ({ isDarkMode, toggleDarkMode, navigation }) => {
               <Text style={[styles.loadingText, isDarkMode && styles.darkText]}>Loading courses...</Text> 
             ) : (
               <FlatList
+              
                 data={courses}
                 renderItem={renderCourse}
                 keyExtractor={(item) => item.id}
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={styles.courseList}
+              onPress={()=> navigation.navigate(item)}
               />
             )}
           </ImageBackground>
