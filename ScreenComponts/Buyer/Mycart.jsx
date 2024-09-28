@@ -34,8 +34,8 @@ const handlePayment = async () => {
     console.log('Calling createPaymentIntent function...');
     const createPaymentIntent = httpsCallable(functions, 'createPaymentIntent');
     console.log('Function retrieved, calling with amount:', Math.round(totalAmount * 100));
-    const response = await createPaymentIntent({ amount: Math.round(totalAmount * 100) });
-    console.log('Response received:', response);
+    const response = createPaymentIntent({ amount: Math.round(totalAmount * 10) });
+    console.warn('Response received:', response);
 
     if (response.data && response.data.clientSecret) {
       const { clientSecret } = response.data;
@@ -64,12 +64,12 @@ const handlePayment = async () => {
       }
     } else {
       console.log('Error: Client secret not found in response.');
-      Alert.alert('Payment Error', 'Client secret not found in response. Please try again.');
+      alert('Payment Error', 'Client secret not found in response. Please try again.');
     }
   } catch (error) {
     console.error('Error processing payment:', error);
     console.error('Error details:', error.details);
-    Alert.alert('Payment Error', `There was an error processing your payment: ${error.message}`);
+    alert('Payment Error', `There was an error processing your payment: ${error.message}`);
   }
 };
 
