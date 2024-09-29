@@ -9,10 +9,11 @@ import Wishlist from './Wishlist';
 import CourseDetailes from './CourseDetailes';
 import { GetData } from '../../Contexts/GetDataContext';
 
+
 const Tab = createBottomTabNavigator();
 
 function Buyer({ isDarkMode, toggleDarkMode }) {
-  const {courseBuyerCart,courseBuyerWish} = useContext(GetData);
+  const { courseBuyerCart, courseBuyerWish } = useContext(GetData);
   return (
     <Tab.Navigator
       initialRouteName="Courses"
@@ -67,16 +68,16 @@ function Buyer({ isDarkMode, toggleDarkMode }) {
         {(props) => <Mylearning {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
       </Tab.Screen>
       <Tab.Screen
-  name="CourseDetailes"
-  options={{
-    
-      tabBarButton: () => null,
-      
-  
-  }}
->
-  {(props) => <CourseDetailes {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
-</Tab.Screen>
+        name="CourseDetailes"
+        options={{
+
+          tabBarButton: () => null,
+
+
+        }}
+      >
+        {(props) => <CourseDetailes {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 }
