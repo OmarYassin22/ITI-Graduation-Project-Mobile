@@ -1,17 +1,18 @@
-import React, { useContext, useEffect } from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Mylearning from "./Mylearning";
-import Mycart from "./Mycart";
-import Courses from "./Courses";
-import Wishlist from "./Wishlist";
-import CourseDetailes from "./CourseDetailes";
-import { GetData } from "../../Contexts/GetDataContext";
+
+import React, { useContext } from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Mylearning from './Mylearning';
+import Mycart from './Mycart';
+import Courses from './Courses';
+import Wishlist from './Wishlist';
+import CourseDetailes from './CourseDetailes';
+import { GetData } from '../../Contexts/GetDataContext';
+
 
 const Tab = createBottomTabNavigator();
 
 function Buyer({ isDarkMode, toggleDarkMode }) {
-
   const { courseBuyerCart, courseBuyerWish } = useContext(GetData);
   return (
     <Tab.Navigator
@@ -101,16 +102,13 @@ function Buyer({ isDarkMode, toggleDarkMode }) {
       <Tab.Screen
         name="CourseDetailes"
         options={{
+
           tabBarButton: () => null,
+
+
         }}
       >
-        {(props) => (
-          <CourseDetailes
-            {...props}
-            isDarkMode={isDarkMode}
-            toggleDarkMode={toggleDarkMode}
-          />
-        )}
+        {(props) => <CourseDetailes {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
       </Tab.Screen>
     </Tab.Navigator>
   );
