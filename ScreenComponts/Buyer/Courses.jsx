@@ -1,12 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { View, ScrollView, SafeAreaView, StyleSheet } from 'react-native';
-import { GetData } from '../../Contexts/GetDataContext';
-import { TextInput, Text, Headline, Searchbar, useTheme } from 'react-native-paper';
-import CourseList from './CourseList';
-import { useNavigation } from '@react-navigation/native';
+import React, { useContext, useEffect, useState } from "react";
+import { View, ScrollView, SafeAreaView, StyleSheet } from "react-native";
+import { GetData } from "../../Contexts/GetDataContext";
+import {
+  TextInput,
+  Text,
+  Headline,
+  Searchbar,
+  useTheme,
+} from "react-native-paper";
+import CourseList from "./CourseList";
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Courses = () => {
-  const {getAllCourses} = useContext(GetData);
+  const { getAllCourses } = useContext(GetData);
   const [courses, setCourses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const theme = useTheme();
@@ -16,6 +23,7 @@ const Courses = () => {
     setCourses(data);
   }
 
+
   useEffect(() => {
     fetchCourses();
   }, []);
@@ -24,10 +32,10 @@ const Courses = () => {
     course.data.title?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-
-
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
+    >
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.header}>
           <Headline style={styles.title}>All Courses in our App</Headline>
@@ -38,10 +46,7 @@ const Courses = () => {
             style={styles.searchBar}
           />
         </View>
-        <CourseList 
-          filteredCourses={filteredCourses} 
-         
-        />
+        <CourseList filteredCourses={filteredCourses} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -60,7 +65,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 16,
   },
   searchBar: {
