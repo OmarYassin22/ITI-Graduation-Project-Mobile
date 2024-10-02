@@ -6,7 +6,6 @@ import CustomDrawerContent from './Navigations/CustomDrawerContent';
 import HomeScreen from './Screens/homeScreen/homeScreen';
 import ProfileScreen from './Screens/profileScreen';
 import Buyer from './ScreenComponts/Buyer/Buyer.jsx';
-import About from './Screens/About Page/About';
 import Account from './Screens/Account.jsx';
 
 import CourseDetails from './Screens/homeScreen/courseDetails.jsx'; 
