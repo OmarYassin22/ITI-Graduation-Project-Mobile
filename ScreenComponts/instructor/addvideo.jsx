@@ -17,10 +17,11 @@ const Video = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadTask, setUploadTask] = useState(null);
 
-  useEffect(() => {
+  const fullName = 'Emad Elshplangy';
 
+  useEffect(() => {
     if (!dataFetched) {
-      fetchData(`Emad Elshplangy`);
+      fetchData(fullName);
     }
   }, [dataFetched]);
 
@@ -52,13 +53,29 @@ const Video = () => {
     }
   };
 
+  // const handleFilePick = async () => {
+  //   try {
+  //     const result = await DocumentPicker.getDocumentAsync({
+  //       type: 'video/*',
+  //     });
+
+  //     if (result.type === 'success') {
+  //       setFile(result);
+  //     }
+  //   } catch (err) {
+  //     console.error('Error picking file:', err);
+  //   }
+  // };
+
   const handleFilePick = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
         type: 'video/*',
       });
-
-      if (result.type === 'success') {
+  
+      if (result.assets && result.assets.length > 0) {
+        setFile(result.assets[0]);
+      } else if (result.type === 'success') {
         setFile(result);
       }
     } catch (err) {
@@ -89,16 +106,16 @@ const Video = () => {
 
     setIsUploading(true);
 
-    const fullName = await AsyncStorage.getItem('fname') + ' ' + await AsyncStorage.getItem('lname');
+    // const fullName = await AsyncStorage.getItem('fname') + ' ' + await AsyncStorage.getItem('lname');
     const storageRef = ref(storage, `${fullName}/${selectedCourse}/${file.name}`);
 
-    let coursesData = JSON.parse(await AsyncStorage.getItem('coursesData')) || [];
-    const newCourseData = {
-      selectedCourse: selectedCourse,
-      fileName: file.name,
-    };
-    coursesData.push(newCourseData);
-    await AsyncStorage.setItem('coursesData', JSON.stringify(coursesData));
+    // let coursesData = JSON.parse(await AsyncStorage.getItem('coursesData')) || [];
+    // const newCourseData = {
+    //   selectedCourse: selectedCourse,
+    //   fileName: file.name,
+    // };
+    // coursesData.push(newCourseData);
+    // await AsyncStorage.setItem('coursesData', JSON.stringify(coursesData));
 
     const response = await fetch(file.uri);
     const blob = await response.blob();
@@ -113,13 +130,32 @@ const Video = () => {
         setUploadProgress(progress);
       },
       (error) => {
-        console.error('Error uploading file: ', error);
+        if (error.code === 'storage/canceled') {
+          console.log('Upload was cancelled');
+          // Do not show an error message for cancellation
+        } else {
+          console.error('Error uploading file: ', error);
+          Alert.alert(
+            'Upload Error',
+            'An error occurred while uploading the file.',
+            [{ text: 'OK', style: 'cancel' }],
+            { titleStyle: { color: 'white' }, containerStyle: { backgroundColor: 'black' } }
+          );
+        }
         setIsUploading(false);
+        setUploadProgress(0);
       },
       () => {
         getDownloadURL(task.snapshot.ref).then((downloadURL) => {
           console.log('File available at', downloadURL);
           setIsUploading(false);
+          setUploadProgress(0);
+          Alert.alert(
+            'Upload Complete',
+            'Your file has been successfully uploaded.',
+            [{ text: 'OK', style: 'cancel' }],
+            { titleStyle: { color: 'white' }, containerStyle: { backgroundColor: 'black' } }
+          );
         });
       }
     );
@@ -128,25 +164,97 @@ const Video = () => {
   const handleStopUpload = () => {
     if (uploadTask) {
       uploadTask.cancel();
-      setIsUploading(false);
-      setUploadProgress(0);
+      // The error handling in the upload task will take care of resetting states
       Alert.alert(
         'Upload cancelled',
-        '',
-        [
-          {
-            text: 'OK',
-            onPress: () => console.log('OK Pressed'),
-            style: 'cancel',
-          },
-        ],
-        {
-          titleStyle: { color: 'white' },
-          containerStyle: { backgroundColor: 'black' },
-        }
+        'The upload has been cancelled.',
+        [{ text: 'OK', style: 'cancel' }],
+        { titleStyle: { color: 'white' }, containerStyle: { backgroundColor: 'black' } }
       );
     }
   };
+
+  // const handleUpload = async () => {
+  //   if (!file || !selectedCourse) {
+  //     Alert.alert(
+  //       'Fill inputs',
+  //       'Please select a course and a file to upload.',
+  //       [
+  //         {
+  //           text: 'OK',
+  //           onPress: () => console.log('OK Pressed'),
+  //           style: 'cancel',
+  //         },
+  //       ],
+  //       {
+  //         titleStyle: { color: 'white' },
+  //         messageStyle: { color: 'white' },
+  //         containerStyle: { backgroundColor: 'black' },
+  //       }
+  //     );
+  //     return;
+  //   }
+
+  //   setIsUploading(true);
+
+  //   const fullName = await AsyncStorage.getItem('fname') + ' ' + await AsyncStorage.getItem('lname');
+  //   const storageRef = ref(storage, `${fullName}/${selectedCourse}/${file.name}`);
+
+  //   let coursesData = JSON.parse(await AsyncStorage.getItem('coursesData')) || [];
+  //   const newCourseData = {
+  //     selectedCourse: selectedCourse,
+  //     fileName: file.name,
+  //   };
+  //   coursesData.push(newCourseData);
+  //   await AsyncStorage.setItem('coursesData', JSON.stringify(coursesData));
+
+  //   const response = await fetch(file.uri);
+  //   const blob = await response.blob();
+
+  //   const task = uploadBytesResumable(storageRef, blob);
+  //   setUploadTask(task);
+
+  //   task.on(
+  //     'state_changed',
+  //     (snapshot) => {
+  //       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+  //       setUploadProgress(progress);
+  //     },
+  //     (error) => {
+  //       console.error('Error uploading file: ', error);
+  //       setIsUploading(false);
+  //     },
+  //     () => {
+  //       getDownloadURL(task.snapshot.ref).then((downloadURL) => {
+  //         console.log('File available at', downloadURL);
+  //         setIsUploading(false);
+  //       });
+  //     }
+  //   );
+  // };
+
+  // const handleStopUpload = () => {
+  //   if (uploadTask) {
+  //     uploadTask.cancel();
+  //     setIsUploading(false);
+  //     setUploadProgress(0);
+  //     Alert.alert(
+  //       'Upload cancelled',
+  //       '',
+  //       [
+  //         {
+  //           text: 'OK',
+  //           onPress: () => console.log('OK Pressed'),
+  //           style: 'cancel',
+  //         },
+  //       ],
+  //       {
+  //         titleStyle: { color: 'white' },
+  //         containerStyle: { backgroundColor: 'black' },
+  //       }
+  //     );
+  //   }
+  // };
 
   return (
     <View style={styles.container}>
