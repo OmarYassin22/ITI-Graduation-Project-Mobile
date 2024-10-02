@@ -28,6 +28,7 @@ export default function App() {
       <Drawer.Navigator
         drawerContent={(props) => <CustomDrawerContent {...props} isDarkMode={isDarkMode} />}
       >
+
         <Drawer.Screen name="Home" options={{ headerShown: false }}>
           {props => <Home {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
         </Drawer.Screen>
