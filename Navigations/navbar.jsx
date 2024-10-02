@@ -14,10 +14,10 @@ const Navbar = ({ isDarkMode, toggleDarkMode, navigation }) => {
           source={{ uri: 'https://e-learning-ebon-three.vercel.app/_next/image?url=%2Ftest3.png&w=256&q=75' }}
           style={styles.logo}
         />
-        <Switch
+        {/* <Switch
           value={isDarkMode}
           onValueChange={toggleDarkMode}
-        />
+        /> */}
       </View>
     </SafeAreaView>
   );

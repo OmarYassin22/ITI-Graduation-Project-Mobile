@@ -22,13 +22,17 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     paddingHorizontal: 20,
     borderBottomColor: '#ccc',
-    height: 80,
-    marginBottom: 5,
+    height:80,
+    marginBottom:5,
+
   },
   logo: {
     width: 100,
     height: 40,
     resizeMode: 'contain',
+    // marginHorizontal:'auto'
+    position:'absolute',
+    left: '40%',
   },
   contentContainer: {
     flex: 1,
