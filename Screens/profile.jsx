@@ -3,7 +3,9 @@ import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput, Alert } fro
 import { FontAwesome } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import Navbar from '../Navigations/navbar';
-const ProfilePage = ({ isDarkMode, toggleDarkMode, navigation }) => {
+import { useTranslation } from 'react-i18next';
+const ProfilePage = ({ isDarkMode, navigation }) => {
+  const { t } = useTranslation();
   const [profileImage, setProfileImage] = useState(require('../assets/default-img.jpg'));
   const [userName, setUserName] = useState('Mahmoud badr');
   const [isEditingName, setIsEditingName] = useState(false);
@@ -30,7 +32,7 @@ const ProfilePage = ({ isDarkMode, toggleDarkMode, navigation }) => {
   };
   return (
     <View style={[styles.container, isDarkMode && styles.darkContainer]}>
-      <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} navigation={navigation} />
+      <Navbar isDarkMode={isDarkMode} navigation={navigation} />
       <View style={styles.profileImageContainer}>
         <Image 
           source={profileImage.uri ? profileImage.uri : require('../assets/default-img.jpg')} 
@@ -43,20 +45,20 @@ const ProfilePage = ({ isDarkMode, toggleDarkMode, navigation }) => {
       <View style={styles.userInfo}>
         {isEditingName ? (
           <TextInput
-            style={styles.userNameInput}
+            style={[styles.userNameInput, isDarkMode && styles.darkText]}
             value={userName}
             onChangeText={setUserName}
             onBlur={() => setIsEditingName(false)}
           />
         ) : (
           <TouchableOpacity onPress={() => setIsEditingName(true)}>
-            <Text style={styles.userName}>{userName}</Text>
+            <Text style={[styles.userName, isDarkMode && styles.darkText]}>{userName}</Text>
           </TouchableOpacity>
         )}
         <Text style={styles.userRole}>Student</Text>
       </View>
       <View style={styles.aboutMeContainer}>
-        <Text style={styles.aboutMeTitle}>About Me</Text>
+        <Text style={[styles.aboutMeTitle, isDarkMode && styles.darkText]}>{t('profile.aboutMe')}</Text>
         <View style={styles.aboutMeTextInput}>
           {isEditingAbout ? (
             <TextInput
