@@ -6,18 +6,21 @@ import MapView from 'react-native-maps';
 import { Marker } from 'react-native-maps';
 import Navbar from '../../Navigations/navbar';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-const About = ({ isDarkMode, toggleDarkMode, navigation }) => {
+import { useTranslation } from 'react-i18next';
+const About = ({ isDarkMode}) => {
+    const { t } = useTranslation(); 
     const [location, setLocation] = useState({
         latitude: 30.475815373448597,
         longitude: 31.197868152742487,
         latitudeDelta: 0.01,
         longitudeDelta: 0.01,
     });
-    const items = [{ label: "Benha", value: "Benha" },
-    { label: "Alex", value: "Alex" },
-    { label: "Smart Village", value: "Smart Village" },
-    { label: "Menoufia", value: "Menoufia" },];
+    const items = [
+        { label: t('about.benha'), value: "Benha" },
+        { label: t('about.alex'), value: "Alex" },
+        { label: t('about.smartVillage'), value: "Smart Village" },
+        { label: t('about.menoufia'), value: "Menoufia" },
+    ];
     const handleChange = (value) => {
         if (value == "Benha") {
             setLocation({
@@ -49,39 +52,38 @@ const About = ({ isDarkMode, toggleDarkMode, navigation }) => {
             });
         }
     };
-
     return (
         <SafeAreaView style={[styles.mainContainer, isDarkMode && styles.mainContainerDark]}>
             <ScrollView showsVerticalScrollIndicator={false}>
-                <Text style={styles.txtAbout}>About Us</Text>
-                <Text style={[styles.txtAboutContent, isDarkMode && styles.txtAboutContentDark]}>At E-learning, we believe that learning should be accessible, engaging, and empowering for everyone, no matter where they are in the world. Our e-learning platform is designed to provide you with high-quality educational content that fits into your life, helping you achieve your goals at your own pace.</Text>
-                <Image source={require("../../assets/About Images/About-Image2.jpg")} style={styles.aboutImage} />
-                <Text style={styles.txtMession}>Our Mission</Text>
-                <Text style={[styles.txtMessionContent, isDarkMode && styles.txtMessionContentDark]}>Our mission is simple: to democratize education by providing affordable and flexible learning opportunities to people everywhere. Whether you are looking to develop new skills, advance in your career, or simply learn something new, we are here to support you on your journey.</Text>
-                <Image source={require("../../assets/About Images/About-Image.jpg")} style={styles.aboutImage} />
-                <View style={[styles.dropDownMenu, isDarkMode && styles.dropDownMenuDark]} >
-                    <RNPickerSelect key={"1"} onValueChange={(value) => handleChange(value)} items={items} activeItemStyle={isDarkMode ? styles.dropDownMenu2Dark : styles.dropDownMenu2} placeholder={{ label: "Choose a branch", valid: false, value: null }} />
-                </View>
-                <MapView key={"2"} initialRegion={{
-                    latitude: 30.475815373448597,
-                    longitude: 31.197868152742487,
-                    latitudeDelta: 0,
-                    longitudeDelta: 0,
-                }} region={location} style={styles.map}>
-                    <Marker
-                        draggable
-                        coordinate={{
-                            latitude: location.latitude,
-                            longitude: location.longitude,
-                        }}
-                    />
-                </MapView>
-            </ScrollView>
-        </SafeAreaView>
+            <Text style={styles.txtAbout}>{t('about.title')}</Text>
+        <Text style={[styles.txtAboutContent, isDarkMode && styles.txtAboutContentDark]}>
+          {t('about.content')}
+        </Text>
+        <Image source={require("../../assets/About Images/About-Image2.jpg")} style={styles.aboutImage} />
+        <Text style={styles.txtMession}>{t('about.mission')}</Text>
+        <Text style={[styles.txtMessionContent, isDarkMode && styles.txtMessionContentDark]}>
+          {t('about.missionContent')}
+        </Text>
+        <Image source={require("../../assets/About Images/About-Image.jpg")} style={styles.aboutImage} />
+        <View style={[styles.dropDownMenu, isDarkMode && styles.dropDownMenuDark]} >
+            <RNPickerSelect key={"1"} onValueChange={(value) => handleChange(value)} items={items} activeItemStyle={isDarkMode ? styles.dropDownMenu2Dark : styles.dropDownMenu2} placeholder={{ label: t('about.ChooseBranch'), valid: false, value: null }} />
+        </View>
+        <MapView key={"2"} initialRegion={{
+            latitude: 30.475815373448597,
+            longitude: 31.197868152742487,
+            latitudeDelta: 0,
+            longitudeDelta: 0,
+        }} region={location} style={styles.map}>
+            <Marker
+                draggable
+                coordinate={{
+                    latitude: location.latitude,
+                    longitude: location.longitude,
+                }}
+            />
+        </MapView>
+    </ScrollView>
+</SafeAreaView>
     );
 }
-
-
 export default About;
-
-

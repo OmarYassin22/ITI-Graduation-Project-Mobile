@@ -4,7 +4,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import CustomDrawerContent from './Navigations/CustomDrawerContent';
 import About from './Screens/About Page/About';
-import { Text } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from './Screens/homeScreen/homeScreen'; 
 import Buyer from './ScreenComponts/Buyer/Buyer.jsx';
@@ -14,17 +13,13 @@ import InstructorsProvider from './api/instructors/InstructorsContext.jsx';
 import ProfilePage from './Screens/profile.jsx'
 import SettingsScreen from './Screens/settings';
 import Contact from './Screens/Contact Page/Contact.jsx';
-
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
-
 export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
-
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
   };
-
   return (
     <GetDataProvider>
     <NavigationContainer>
@@ -54,7 +49,6 @@ export default function App() {
         <Drawer.Screen name="Contact" options={{ headerShown: false }}>
           {props => <Contact {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
         </Drawer.Screen>
-
       </Drawer.Navigator>
       </InstructorsProvider>
       </CourseProvider>

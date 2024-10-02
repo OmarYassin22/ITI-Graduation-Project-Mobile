@@ -9,7 +9,7 @@ import {
 import styles from '../styles';
 import Navbar from '../Navigations/navbar';
 
-const Login = ({ isDarkMode, toggleDarkMode, navigation }) => {
+const Login = ({ isDarkMode, navigation }) => {
   const [nameValue, setNameValue] = useState('');
   const [ageValue, setAgeValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
@@ -43,7 +43,7 @@ const Login = ({ isDarkMode, toggleDarkMode, navigation }) => {
   return (
 
     <SafeAreaView style={[styles.screenContainer, isDarkMode && styles.darkContainer]}>
-      <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} navigation={navigation} />
+      <Navbar isDarkMode={isDarkMode} navigation={navigation} />
       <Text style={[styles.header,isDarkMode && styles.darkText]}>Login</Text>
 
       <View style={styles.inputSection}>
