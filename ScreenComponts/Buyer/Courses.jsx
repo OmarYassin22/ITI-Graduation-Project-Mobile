@@ -19,12 +19,15 @@ const Courses = () => {
   const theme = useTheme();
 
   async function fetchCourses() {
+    console.warn("buyer email is " + (await AsyncStorage.getItem("email")));
+    const email = await AsyncStorage.getItem("email");
+    console.error(email);
+
     const data = await getAllCourses();
     setCourses(data);
   }
 
-
-  useEffect(() => {
+  useEffect(async () => {
     fetchCourses();
   }, []);
 

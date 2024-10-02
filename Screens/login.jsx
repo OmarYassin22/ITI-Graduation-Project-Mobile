@@ -40,10 +40,13 @@ const Login = ({ isDarkMode, toggleDarkMode, navigation }) => {
       querySnapshot.forEach(async (doc) => {
         if (doc.exists()) {
           const userType = doc.data().type;
-          console.warn(doc.data().email);
-          await storeEmail(doc.data().email); // Store email in AsyncStorage
-          var email = await AsyncStorage.getItem("email");
-          console.error("Email:", email);
+          console.warn("email in login page"+doc.data().email);
+          await AsyncStorage.setItem('email', JSON.stringify(doc.data().email));
+
+          // await AsyncStorage.setItem("email ",JSON.stringify(doc.data().email));
+          
+          // var email = await AsyncStorage.getItem("email");
+          // console.error("Email:", email);
           if (userType === "buyer") {
             navigation.navigate("Buyer");
           } else if (userType === "instructor") {
@@ -90,7 +93,7 @@ const Login = ({ isDarkMode, toggleDarkMode, navigation }) => {
 
   const storeEmail = async (email) => {
     try {
-      await AsyncStorage.setItem("email ", email);
+      await AsyncStorage.setItem("email", email);
       console.log("Email stored successfully");
     } catch (error) {
       console.error("Error storing email:", error);
