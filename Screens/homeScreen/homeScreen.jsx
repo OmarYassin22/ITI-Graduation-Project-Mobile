@@ -12,15 +12,15 @@ const HomeScreen = ({ isDarkMode, toggleDarkMode, navigation }) => {
  
 const renderCourse = ({ item }) => {
     return (
-      <TouchableOpacity
-        style={styles.courseCard}
-        onPress={() => navigation.navigate('CourseDetails', { course: item })} 
-      >
+     <TouchableOpacity
+  style={styles.courseCard}
+  onPress={() => navigation.navigate('CourseDetails', { course: item, isDarkMode })} 
+>
+
         <ImageBackground
           source={item.imgPath ? { uri: item.imgPath } : null}
           style={styles.courseImage}
-          resizeMode="cover"
-        >
+          resizeMode="cover">
           <View style={styles.overlay}></View>
           <View style={styles.cardContent}>
             <Text style={styles.courseTitle}>{item.title}</Text>
