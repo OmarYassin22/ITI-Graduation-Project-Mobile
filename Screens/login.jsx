@@ -18,21 +18,10 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Login = ({ isDarkMode, toggleDarkMode, navigation }) => {
   // authontication
-
-  const handleSignUp = async () => {
-    try {
-      const userCredential = await auth().createUserWithEmailAndPassword(
-        email,
-        password
-      );
-      setUser(userCredential.user);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const handleSignIn = async () => {
     try {
@@ -48,37 +37,33 @@ const Login = ({ isDarkMode, toggleDarkMode, navigation }) => {
         where("uid", "==", userCredential.user.uid)
       );
       const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
+      querySnapshot.forEach(async (doc) => {
         if (doc.exists()) {
           const userType = doc.data().type;
-          console.warn("User type:", userType);
+          console.warn("email in login page"+doc.data().email);
+          await AsyncStorage.setItem('email', JSON.stringify(doc.data().email));
+
+          // await AsyncStorage.setItem("email ",JSON.stringify(doc.data().email));
+          
+          // var email = await AsyncStorage.getItem("email");
+          // console.error("Email:", email);
           if (userType === "buyer") {
             navigation.navigate("Buyer");
           } else if (userType === "instructor") {
             navigation.navigate("instructor");
-          }
-          else if (userType === "student") {
+          } else if (userType === "student") {
             navigation.navigate("student");
           }
         } else {
           console.warn("No such document!");
         }
       });
-      
     } catch (error) {
       setErrors({ general: "Invalid email or password" });
       console.error(error);
     }
   };
 
-  const handleSignOut = async () => {
-    try {
-      await auth().signOut();
-      setUser(null);
-    } catch (error) {
-      console.error(error);
-    }
-  };
   //======================= end authontication ================================
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -86,12 +71,7 @@ const Login = ({ isDarkMode, toggleDarkMode, navigation }) => {
   const [errors, setErrors] = useState({});
   const validateInputs = () => {
     let errors = {};
-    // if (!nameValue) errors.name = "Please enter a name!";
-    // else if (nameValue.length < 3) errors.name = "Name must be at least 3 characters long.";
-    // else if (typeof nameValue !== 'string') errors.name = "Name must be a string.";
-    // if (!ageValue) errors.age = "Please enter an age!";
-    // else if (isNaN(Number(ageValue))) errors.age = "Age must be a number.";
-    // else if (ageValue.length > 2) errors.age = "Age must not exceed 2 characters.";
+
     if (!email) errors.email = "Please enter an email!";
     if (!password) errors.password = "Please enter a password!";
     else if (!/\w+@\w+\.\w+/.test(email))
@@ -111,6 +91,14 @@ const Login = ({ isDarkMode, toggleDarkMode, navigation }) => {
     setPassword("");
   };
 
+  const storeEmail = async (email) => {
+    try {
+      await AsyncStorage.setItem("email", email);
+      console.log("Email stored successfully");
+    } catch (error) {
+      console.error("Error storing email:", error);
+    }
+  };
   return (
     <SafeAreaView
       style={[styles.screenContainer, isDarkMode && styles.darkContainer]}

@@ -78,7 +78,7 @@ return (
 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 <Text>No courses in your wishlist yet.</Text>
 </View>
-); // if wishlist is empty return a message.
+); 
 }
 
 return (

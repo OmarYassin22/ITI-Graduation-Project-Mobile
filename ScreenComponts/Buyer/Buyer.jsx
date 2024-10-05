@@ -11,6 +11,7 @@ import { GetData } from '../../Contexts/GetDataContext';
 
 const Tab = createBottomTabNavigator();
 
+// eslint-disable-next-line react/prop-types
 function Buyer({ isDarkMode, toggleDarkMode }) {
   const {courseBuyerCart,courseBuyerWish} = useContext(GetData);
   return (

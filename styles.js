@@ -22,13 +22,17 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     paddingHorizontal: 20,
     borderBottomColor: '#ccc',
-    height: 80,
-    marginBottom: 5,
+    height:80,
+    marginBottom:5,
+
   },
   logo: {
     width: 100,
     height: 40,
     resizeMode: 'contain',
+    // marginHorizontal:'auto'
+    position:'absolute',
+    left: '40%',
   },
   contentContainer: {
     flex: 1,
@@ -133,5 +137,10 @@ const styles = StyleSheet.create({
   dropDownMenu2: { color: "black" },
   dropDownMenu2Dark: { color: "red" },
   map: { width: "90%", height: 1100, alignSelf: "center", marginBottom: 10 },
+  tableContainer: { padding: 15 },
+  tableHeader: { backgroundColor: '#DCDCDC', },
+  coursesImages: { width: 50, height: 50 },
+  coursesCardodd: { marginBottom: 10, backgroundColor: "red" },
+  coursesCardeven: { marginBottom: 10, backgroundColor: "green" }
 });
 export default styles;
