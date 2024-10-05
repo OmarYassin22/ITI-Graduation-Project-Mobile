@@ -1,3 +1,5 @@
+import InsHome from './ScreenComponts/instructor/InstructorHome';
+import { NavigationContainer } from '@react-navigation/native';
 import Login from "./Screens/login";
 import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
@@ -102,6 +104,18 @@ export default function App() {
               >
                 {(props) => (
                   <Scholarship
+                    {...props}
+                    isDarkMode={isDarkMode}
+                    toggleDarkMode={toggleDarkMode}
+                  />
+                )}
+              </Drawer.Screen>
+              <Drawer.Screen
+                name="Instructor"
+                options={{ headerShown: false }}
+              >
+                {(props) => (
+                  <InsHome
                     {...props}
                     isDarkMode={isDarkMode}
                     toggleDarkMode={toggleDarkMode}
