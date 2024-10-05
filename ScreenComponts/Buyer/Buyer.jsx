@@ -1,137 +1,83 @@
-import React, { useContext, useEffect, useState } from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Mylearning from "./Mylearning";
-import Mycart from "./Mycart";
-import Courses from "./Courses";
-import Wishlist from "./Wishlist";
-import CourseDetailes from "./CourseDetailes";
-import { GetData } from "../../Contexts/GetDataContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Text } from "react-native-paper";
+
+import React, { useContext } from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Mylearning from './Mylearning';
+import Mycart from './Mycart';
+import Courses from './Courses';
+import Wishlist from './Wishlist';
+import CourseDetailes from './CourseDetailes';
+import { GetData } from '../../Contexts/GetDataContext';
 
 const Tab = createBottomTabNavigator();
 
+// eslint-disable-next-line react/prop-types
 function Buyer({ isDarkMode, toggleDarkMode }) {
-  const [email,setEmail] = useState('');
-  useEffect(() => {
-    const fetchEmail = async () => {
-      try {
-        const email = await AsyncStorage.getItem('email');
-        if (email !== null) {
-          setEmail(email);
-          console.warn('Buyer email is ' + email);
-        } else {
-          console.warn('No email found in storage');
-        }
-      } catch (error) {
-        console.error('Error fetching email from storage:', error);
-      }
-    };
-
-    fetchEmail();
-  }, []);
-
-  const { courseBuyerCart, courseBuyerWish } = useContext(GetData);
+  const {courseBuyerCart,courseBuyerWish} = useContext(GetData);
   return (
     <Tab.Navigator
       initialRouteName="Courses"
       screenOptions={{
-        tabBarActiveTintColor: "#e91e63",
+        tabBarActiveTintColor: '#e91e63',
       }}
     >
       <Tab.Screen
         name="Courses"
         options={{
-          tabBarLabel: "Courses",
+          tabBarLabel: 'Courses',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name="book-open-page-variant"
-              color={color}
-              size={size}
-            />
+            <MaterialCommunityIcons name="book-open-page-variant" color={color} size={size} />
           ),
         }}
       >
-        {(props) => (
-          <Courses
-            {...props}
-            isDarkMode={isDarkMode}
-            toggleDarkMode={toggleDarkMode}
-          />
-        )}
+        {(props) => <Courses {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
       </Tab.Screen>
       <Tab.Screen
         name="Mycart"
         options={{
-          tabBarLabel: "Mycart",
+          tabBarLabel: 'Mycart',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="cart" color={color} size={size} />
           ),
           tabBarBadge: courseBuyerCart.length,
         }}
       >
-        {(props) => (
-          <Mycart
-            {...props}
-            isDarkMode={isDarkMode}
-            toggleDarkMode={toggleDarkMode}
-          />
-        )}
+        {(props) => <Mycart {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
       </Tab.Screen>
       <Tab.Screen
         name="Wishlist"
         options={{
-          tabBarLabel: "Wishlist",
+          tabBarLabel: 'Wishlist',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="heart" color={color} size={size} />
           ),
           tabBarBadge: courseBuyerWish.length,
         }}
       >
-        {(props) => (
-          <Wishlist
-            {...props}
-            isDarkMode={isDarkMode}
-            toggleDarkMode={toggleDarkMode}
-          />
-        )}
+        {(props) => <Wishlist {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
       </Tab.Screen>
       <Tab.Screen
         name="Mylearning"
         options={{
-          tabBarLabel: "My learning",
+          tabBarLabel: 'My learning',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons
-              name="play-circle"
-              color={color}
-              size={size}
-            />
+            <MaterialCommunityIcons name="play-circle" color={color} size={size} />
           ),
         }}
       >
-        {(props) => (
-          <Mylearning
-            {...props}
-            isDarkMode={isDarkMode}
-            toggleDarkMode={toggleDarkMode}
-          />
-        )}
+        {(props) => <Mylearning {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
       </Tab.Screen>
       <Tab.Screen
-        name="CourseDetailes"
-        options={{
-          tabBarButton: () => null,
-        }}
-      >
-        {(props) => (
-          <CourseDetailes
-            {...props}
-            isDarkMode={isDarkMode}
-            toggleDarkMode={toggleDarkMode}
-          />
-        )}
-      </Tab.Screen>
+  name="CourseDetailes"
+  options={{
+    
+      tabBarButton: () => null,
+      
+  
+  }}
+>
+  {(props) => <CourseDetailes {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
+</Tab.Screen>
     </Tab.Navigator>
   );
 }

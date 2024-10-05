@@ -4,9 +4,11 @@ import Icon from "react-native-vector-icons/Ionicons";
 import styles from "../styles";
 import { useTranslation } from 'react-i18next';
 
+// eslint-disable-next-line react/prop-types
 function CustomDrawerContent({ navigation, isDarkMode }) {
   const { t } = useTranslation(); 
   const currentRoute =
+    // eslint-disable-next-line react/prop-types
     navigation.getState().routeNames[navigation.getState().index];
   return (
     <DrawerContentScrollView>
@@ -16,6 +18,7 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
           <Icon name="home-outline" size={size} color={color} />
         )}
         focused={currentRoute === "Home"}
+        // eslint-disable-next-line react/prop-types
         onPress={() => navigation.navigate("Home")}
         style={styles.selectedItem}
       />
@@ -28,15 +31,7 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
         onPress={() => navigation.navigate("Profile")}
         style={styles.selectedItem}
       />
-      {/* <DrawerItem
-        label="Login"
-        icon={({ color, size }) => (
-          <Icon name="log-in-outline" size={size} color={color} />
-        )}
-        focused={currentRoute === "Account"}
-        onPress={() => navigation.navigate("Account")}
-        style={styles.selectedItem}
-      /> */}
+
       {/* <DrawerItem
         label="About Us"
         icon={({ color, size }) => <Icon name="book-outline" size={size} color={color} />}
@@ -72,6 +67,17 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
         onPress={() => navigation.navigate("Settings")}
         style={styles.selectedItem}
       />
+
+      <DrawerItem
+        label="Instructor"
+        icon={({ color, size }) => (
+          <Icon name="log-in-outline" size={size} color={color} />
+        )}
+        focused={currentRoute === "Instructor"}
+        onPress={() => navigation.navigate("Instructor")}
+        style={styles.selectedItem}
+      />
+
       <DrawerItem
         label={t('drawer.login')}
         icon={({ color, size }) => (
