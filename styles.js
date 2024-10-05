@@ -137,5 +137,10 @@ const styles = StyleSheet.create({
   dropDownMenu2: { color: "black" },
   dropDownMenu2Dark: { color: "red" },
   map: { width: "90%", height: 1100, alignSelf: "center", marginBottom: 10 },
+  tableContainer: { padding: 15 },
+  tableHeader: { backgroundColor: '#DCDCDC', },
+  coursesImages: { width: 50, height: 50 },
+  coursesCardodd: { marginBottom: 10, backgroundColor: "red" },
+  coursesCardeven: { marginBottom: 10, backgroundColor: "green" }
 });
 export default styles;

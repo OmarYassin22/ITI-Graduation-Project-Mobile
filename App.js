@@ -1,4 +1,4 @@
-import Login from './Screens/login';
+import Login from './Screens/login.jsx';
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -6,6 +6,7 @@ import CustomDrawerContent from './Navigations/CustomDrawerContent';
 import About from './Screens/About Page/About';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from './Screens/homeScreen/homeScreen'; 
+import StHome from './Screens/Student Pages/StHome.jsx'; 
 import Buyer from './ScreenComponts/Buyer/Buyer.jsx';
 import { GetDataProvider } from './Contexts/GetDataContext.js';
 import CourseProvider from './api/courses/CourseContext.jsx';
@@ -37,6 +38,9 @@ export default function App() {
         </Drawer.Screen>
         <Drawer.Screen name="Buyer" options={{ headerShown: false }}>
           {props => <Buyer {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
+        </Drawer.Screen>
+        <Drawer.Screen name="Student" options={{ headerShown: false }}>
+          {props => <StHome {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
         </Drawer.Screen>
         <Drawer.Screen name="Settings" options={{ headerShown: false }}>
           {props => <SettingsScreen {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
