@@ -1,5 +1,3 @@
-import InsHome from './ScreenComponts/instructor/InstructorHome';
-import { NavigationContainer } from '@react-navigation/native';
 import Login from "./Screens/login";
 import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
@@ -17,6 +15,7 @@ import ProfilePage from "./Screens/profile.jsx";
 import SettingsScreen from "./Screens/settings";
 import Contact from "./Screens/Contact Page/Contact.jsx";
 import Scholarship from "./ScreenComponts/Buyer/Scholarship/Scholarship.jsx";
+import InsHome from "./ScreenComponts/instructor/InstructorHome.jsx";
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 export default function App() {
