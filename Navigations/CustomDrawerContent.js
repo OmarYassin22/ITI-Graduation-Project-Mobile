@@ -2,16 +2,18 @@ import React from "react";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import Icon from "react-native-vector-icons/Ionicons";
 import styles from "../styles";
+import { useTranslation } from 'react-i18next';
 
 // eslint-disable-next-line react/prop-types
 function CustomDrawerContent({ navigation, isDarkMode }) {
+  const { t } = useTranslation(); 
   const currentRoute =
     // eslint-disable-next-line react/prop-types
     navigation.getState().routeNames[navigation.getState().index];
   return (
     <DrawerContentScrollView>
       <DrawerItem
-        label="Home"
+        label={t('drawer.home')}
         icon={({ color, size }) => (
           <Icon name="home-outline" size={size} color={color} />
         )}
@@ -21,7 +23,7 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
         style={styles.selectedItem}
       />
       <DrawerItem
-        label="Profile"
+        label={t('drawer.profile')}
         icon={({ color, size }) => (
           <Icon name="person-outline" size={size} color={color} />
         )}
@@ -57,7 +59,7 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
       ></DrawerItem> */}
 
       <DrawerItem
-        label="Settings"
+        label={t('drawer.settings')}
         icon={({ color, size }) => (
           <Icon name="settings-outline" size={size} color={color} />
         )}
@@ -77,7 +79,7 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
       /> */}
 
       <DrawerItem
-        label="Login"
+        label={t('drawer.login')}
         icon={({ color, size }) => (
           <Icon name="log-in-outline" size={size} color={color} />
         )}

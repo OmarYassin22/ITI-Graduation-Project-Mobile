@@ -1,9 +1,14 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-
-const Mylearning = () => {
+import Navbar from "../../Navigations/navbar";
+const Mylearning = ({ isDarkMode, toggleDarkMode, navigation }) => {
   return (
     <View>
+      <Navbar
+        isDarkMode={isDarkMode}
+        toggleDarkMode={toggleDarkMode}
+        navigation={navigation}
+      />
       <Text>Mylearning</Text>
     </View>
   )
