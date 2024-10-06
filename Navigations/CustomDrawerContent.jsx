@@ -121,7 +121,7 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
         style={styles.selectedItem}
       />
 
-      {/* <DrawerItem
+      <DrawerItem
         label="Instructor"
         icon={({ color, size }) => (
           <Icon name="log-in-outline" size={size} color={color} />
@@ -129,7 +129,7 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
         focused={currentRoute === "Instructor"}
         onPress={() => navigation.navigate("Instructor")}
         style={styles.selectedItem}
-      /> */}
+      />
 
       <DrawerItem
         label={t("drawer.login")}
