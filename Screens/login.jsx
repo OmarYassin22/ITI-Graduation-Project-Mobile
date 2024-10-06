@@ -42,6 +42,7 @@ const Login = ({ isDarkMode, toggleDarkMode, navigation }) => {
           const userType = doc.data().type;
           console.warn("email in login page"+doc.data().email);
           await AsyncStorage.setItem('email', JSON.stringify(doc.data().email));
+          
           // await AsyncStorage.setItem("email ",JSON.stringify(doc.data().email));
           // var email = await AsyncStorage.getItem("email");
           // console.error("Email:", email);
