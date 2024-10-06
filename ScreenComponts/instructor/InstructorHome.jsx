@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Schedule from "./Schedule";
-// import AddVideo from "./AddVideo";
+import AddVideo from "./addvideo";
 import Students from "./Students";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -58,7 +58,7 @@ const InsHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
             headerShown: false,
             tabBarLabel: "Students",
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="Students" color={color} size={size} />
+              <MaterialCommunityIcons name="table" color={color} size={size} />
             ),
           }}
         >
@@ -70,7 +70,7 @@ const InsHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
             />
           )}
         </Tab.Screen>
-        {/* <Tab.Screen
+        <Tab.Screen
           name="AddVideo"
           options={{
             tabBarLabel: "AddVideo",
@@ -90,7 +90,7 @@ const InsHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
               toggleDarkMode={toggleDarkMode}
             />
           )}
-        </Tab.Screen> */}
+        </Tab.Screen>
       </Tab.Navigator>
     </>
   );

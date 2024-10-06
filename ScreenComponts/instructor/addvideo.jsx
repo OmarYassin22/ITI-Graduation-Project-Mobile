@@ -211,7 +211,6 @@ const AddVideo = () => {
     </View>
   );
 };
-export default AddVideo;
 
 const styles = StyleSheet.create({
   container: {
@@ -273,3 +272,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+export default AddVideo;
