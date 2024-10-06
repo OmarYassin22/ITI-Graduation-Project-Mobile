@@ -40,16 +40,13 @@ const Login = ({ isDarkMode, toggleDarkMode, navigation }) => {
       querySnapshot.forEach(async (doc) => {
         if (doc.exists()) {
           const userType = doc.data().type;
-          console.warn("email in login page"+doc.data().email);
+          
           await AsyncStorage.setItem('email', JSON.stringify(doc.data().email));
           await AsyncStorage.setItem('fname', JSON.stringify(doc.data().fname));
           await AsyncStorage.setItem('lname', JSON.stringify(doc.data().lname));
 
-          // await AsyncStorage.setItem("email ",JSON.stringify(doc.data().email));
           
-          // var email = await AsyncStorage.getItem("email");
-          // console.error("Email:", email);
-          if (userType === "buyer") {
+          if (userType === "buyer" || userType === "applicant") {
             navigation.navigate("Buyer");
           } else if (userType === "instructor") {
             navigation.navigate("instructor");
@@ -93,14 +90,6 @@ const Login = ({ isDarkMode, toggleDarkMode, navigation }) => {
     setPassword("");
   };
 
-  const storeEmail = async (email) => {
-    try {
-      await AsyncStorage.setItem("email", email);
-      console.log("Email stored successfully");
-    } catch (error) {
-      console.error("Error storing email:", error);
-    }
-  };
   return (
     <SafeAreaView
       style={[styles.screenContainer, isDarkMode && styles.darkContainer]}
