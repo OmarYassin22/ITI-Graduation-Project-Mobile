@@ -7,17 +7,32 @@ import { db } from '../../firebase';
 
 const Table = () => {
   const [courseData, setCourseData] = useState([]);
-  const [dataFetched, setDataFetched] = useState(false);
   const [gradeInputs, setGradeInputs] = useState({});
   const [uniqueFieldsArray, setUniqueFieldsArray] = useState([]);
   const [selectedField, setSelectedField] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
 
   useEffect(() => {
-    if (!dataFetched) {
-      fetchData('Emad Elshplangy');
+    const fetchDataWithName = async () => {
+      const fullName = await getFullName();
+      fetchData(fullName.replace(/"/g, ''));
+    };
+    fetchDataWithName();
+  }, []);
+
+  const getFullName = async () => {
+    try {
+      const fname = await AsyncStorage.getItem('fname');
+      const lname = await AsyncStorage.getItem('lname');
+      if (fname !== null) {
+        return lname === null || lname === 'undefined' ? fname : `${fname} ${lname}`;
+      }
+      return '';
+    } catch (error) {
+      console.error('Error retrieving data', error);
+      return '';
     }
-  }, [dataFetched]);
+  };
 
   const fetchData = async (fullName) => {
     try {
@@ -27,19 +42,12 @@ const Table = () => {
         ...doc.data(),
       }));
 
-      // console.error(fullName);
-  
       const instructorCourses = students.flatMap((student) => {
         if (!student.courses || !Array.isArray(student.courses) || student.courses.length === 0) {
-          // console.warn(`Student ${student.id} has no courses`);
           return [];
         }
-  
-        // console.warn(`Student courses:`, student.courses);
 
         let filtered = student.courses.filter((course) => course.instructor === fullName);
-  
-        // console.warn(`Filtered courses:`, filtered);
 
         return filtered.map((course) => ({
           studentId: student.id,
@@ -49,13 +57,10 @@ const Table = () => {
           field: student.field || "",
         }));
       });
-  
-      // console.warn('Processed instructor courses:', instructorCourses);
-  
+
       const uniqueFields = new Set(instructorCourses.map((course) => course.field));
       setUniqueFieldsArray(Array.from(uniqueFields));
       setCourseData(instructorCourses);
-      setDataFetched(true);
     } catch (error) {
       console.error('Error fetching data: ', error);
     }
