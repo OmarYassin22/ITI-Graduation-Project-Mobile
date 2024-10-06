@@ -8,7 +8,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
-const Video = () => {
+const AddVideo = () => {
   const [courseData, setCourseData] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState('');
   const [file, setFile] = useState(null);
@@ -273,4 +273,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Video;
+export default AddVideo;

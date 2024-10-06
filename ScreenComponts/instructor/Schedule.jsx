@@ -5,7 +5,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const CalendarComponent = () => {
+const Schedule = () => {
   const [events, setEvents] = useState({});
   const [markedDates, setMarkedDates] = useState({});
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -240,4 +240,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CalendarComponent;
+export default Schedule;
