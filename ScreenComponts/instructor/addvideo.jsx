@@ -8,8 +8,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
-const Video = () => {
-  const [dataFetched, setDataFetched] = useState(false);
+const AddVideo = () => {
   const [courseData, setCourseData] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState('');
   const [file, setFile] = useState(null);
@@ -17,13 +16,27 @@ const Video = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadTask, setUploadTask] = useState(null);
 
-  const fullName = 'Emad Elshplangy';
-
   useEffect(() => {
-    if (!dataFetched) {
-      fetchData(fullName);
+    const fetchDataWithName = async () => {
+      const fullName = await getFullName();
+      fetchData(fullName.replace(/"/g, ''));
+    };
+    fetchDataWithName();
+  }, []);
+
+  const getFullName = async () => {
+    try {
+      const fname = await AsyncStorage.getItem('fname');
+      const lname = await AsyncStorage.getItem('lname');
+      if (fname !== null) {
+        return lname === null || lname === 'undefined' ? fname : `${fname} ${lname}`;
+      }
+      return '';
+    } catch (error) {
+      console.error('Error retrieving data', error);
+      return '';
     }
-  }, [dataFetched]);
+  };
 
   const fetchData = async (fullName) => {
     try {
@@ -47,25 +60,10 @@ const Video = () => {
       }));
 
       setCourseData(uniqueCourses);
-      setDataFetched(true);
     } catch (error) {
       console.error('Error fetching data: ', error);
     }
   };
-
-  // const handleFilePick = async () => {
-  //   try {
-  //     const result = await DocumentPicker.getDocumentAsync({
-  //       type: 'video/*',
-  //     });
-
-  //     if (result.type === 'success') {
-  //       setFile(result);
-  //     }
-  //   } catch (err) {
-  //     console.error('Error picking file:', err);
-  //   }
-  // };
 
   const handleFilePick = async () => {
     try {
@@ -106,16 +104,7 @@ const Video = () => {
 
     setIsUploading(true);
 
-    // const fullName = await AsyncStorage.getItem('fname') + ' ' + await AsyncStorage.getItem('lname');
     const storageRef = ref(storage, `${fullName}/${selectedCourse}/${file.name}`);
-
-    // let coursesData = JSON.parse(await AsyncStorage.getItem('coursesData')) || [];
-    // const newCourseData = {
-    //   selectedCourse: selectedCourse,
-    //   fileName: file.name,
-    // };
-    // coursesData.push(newCourseData);
-    // await AsyncStorage.setItem('coursesData', JSON.stringify(coursesData));
 
     const response = await fetch(file.uri);
     const blob = await response.blob();
@@ -174,88 +163,6 @@ const Video = () => {
     }
   };
 
-  // const handleUpload = async () => {
-  //   if (!file || !selectedCourse) {
-  //     Alert.alert(
-  //       'Fill inputs',
-  //       'Please select a course and a file to upload.',
-  //       [
-  //         {
-  //           text: 'OK',
-  //           onPress: () => console.log('OK Pressed'),
-  //           style: 'cancel',
-  //         },
-  //       ],
-  //       {
-  //         titleStyle: { color: 'white' },
-  //         messageStyle: { color: 'white' },
-  //         containerStyle: { backgroundColor: 'black' },
-  //       }
-  //     );
-  //     return;
-  //   }
-
-  //   setIsUploading(true);
-
-  //   const fullName = await AsyncStorage.getItem('fname') + ' ' + await AsyncStorage.getItem('lname');
-  //   const storageRef = ref(storage, `${fullName}/${selectedCourse}/${file.name}`);
-
-  //   let coursesData = JSON.parse(await AsyncStorage.getItem('coursesData')) || [];
-  //   const newCourseData = {
-  //     selectedCourse: selectedCourse,
-  //     fileName: file.name,
-  //   };
-  //   coursesData.push(newCourseData);
-  //   await AsyncStorage.setItem('coursesData', JSON.stringify(coursesData));
-
-  //   const response = await fetch(file.uri);
-  //   const blob = await response.blob();
-
-  //   const task = uploadBytesResumable(storageRef, blob);
-  //   setUploadTask(task);
-
-  //   task.on(
-  //     'state_changed',
-  //     (snapshot) => {
-  //       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-  //       setUploadProgress(progress);
-  //     },
-  //     (error) => {
-  //       console.error('Error uploading file: ', error);
-  //       setIsUploading(false);
-  //     },
-  //     () => {
-  //       getDownloadURL(task.snapshot.ref).then((downloadURL) => {
-  //         console.log('File available at', downloadURL);
-  //         setIsUploading(false);
-  //       });
-  //     }
-  //   );
-  // };
-
-  // const handleStopUpload = () => {
-  //   if (uploadTask) {
-  //     uploadTask.cancel();
-  //     setIsUploading(false);
-  //     setUploadProgress(0);
-  //     Alert.alert(
-  //       'Upload cancelled',
-  //       '',
-  //       [
-  //         {
-  //           text: 'OK',
-  //           onPress: () => console.log('OK Pressed'),
-  //           style: 'cancel',
-  //         },
-  //       ],
-  //       {
-  //         titleStyle: { color: 'white' },
-  //         containerStyle: { backgroundColor: 'black' },
-  //       }
-  //     );
-  //   }
-  // };
-
   return (
     <View style={styles.container}>
       <View style={styles.pickerContainer}>
@@ -281,24 +188,6 @@ const Video = () => {
         </TouchableOpacity>
       </View>
 
-      {/* <View style={styles.filePickerContainer}>
-        <Text style={styles.label}>Upload Course Video</Text>
-        <TouchableOpacity style={styles.filePickerButton} onPress={handleFilePick}>
-          <Text style={styles.filePickerButtonText}>
-            {file ? file.name : 'Pick a video file'}
-          </Text>
-        </TouchableOpacity>
-      </View> */}
-
-      {/* <View style={styles.filePickerContainer}>
-        <Text style={styles.label}>Upload Course Video</Text>
-        <TouchableOpacity style={styles.filePickerButton} onPress={handleFilePick}>
-          <Text style={styles.filePickerButtonText}>
-            {file ? file.name : 'Pick a video file'}
-          </Text>
-        </TouchableOpacity>
-      </View> */}
-
       {isUploading && (
         <View style={styles.progressContainer}>
           <AnimatedCircularProgress
@@ -322,6 +211,7 @@ const Video = () => {
     </View>
   );
 };
+export default AddVideo;
 
 const styles = StyleSheet.create({
   container: {
@@ -329,6 +219,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
+    backgroundColor: 'white',
   },
   pickerContainer: {
     width: '100%',
@@ -382,5 +273,3 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
-export default Video;

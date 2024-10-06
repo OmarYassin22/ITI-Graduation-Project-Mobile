@@ -1,18 +1,23 @@
 import React, { useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Calendar from "./calendar";
-import AddVideo from "./addvideo";
-import Table from "./table";
+import Schedule from "./Schedule";
+// import AddVideo from "./AddVideo";
+import Students from "./Students";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Tab = createBottomTabNavigator();
 
 const InsHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
+
   useEffect(() => {
     async function getEmail() {
       var email = await AsyncStorage.getItem("email");
+      var email = await AsyncStorage.getItem("fname");
+      var email = await AsyncStorage.getItem("lname");
       console.warn(email);
+      console.warn(fname);
+      console.warn(lname);
     }
     getEmail();
   }, []);
@@ -20,16 +25,16 @@ const InsHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
   return (
     <>
       <Tab.Navigator
-        initialRouteName="Calendar"
+        initialRouteName="Schedule"
         screenOptions={{
           tabBarActiveTintColor: "#e91e63",
         }}
       >
         <Tab.Screen
-          name="Calendar"
+          name="Schedule"
           options={{
             headerShown: false,
-            tabBarLabel: "Calendar",
+            tabBarLabel: "Schedule",
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons
                 name="calendar-blank"
@@ -40,7 +45,7 @@ const InsHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
           }}
         >
           {(props) => (
-            <Calendar
+            <Schedule
               {...props}
               isDarkMode={isDarkMode}
               toggleDarkMode={toggleDarkMode}
@@ -48,30 +53,30 @@ const InsHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
           )}
         </Tab.Screen>
         <Tab.Screen
-          name="Table"
+          name="Students"
           options={{
             headerShown: false,
-            tabBarLabel: "Table",
+            tabBarLabel: "Students",
             tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="table" color={color} size={size} />
+              <MaterialCommunityIcons name="Students" color={color} size={size} />
             ),
           }}
         >
           {(props) => (
-            <Table
+            <Students
               {...props}
               isDarkMode={isDarkMode}
               toggleDarkMode={toggleDarkMode}
             />
           )}
         </Tab.Screen>
-        <Tab.Screen
+        {/* <Tab.Screen
           name="AddVideo"
           options={{
             tabBarLabel: "AddVideo",
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons
-                name="content-paste"
+                name="video-plus"
                 color={color}
                 size={size}
               />
@@ -85,7 +90,7 @@ const InsHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
               toggleDarkMode={toggleDarkMode}
             />
           )}
-        </Tab.Screen>
+        </Tab.Screen> */}
       </Tab.Navigator>
     </>
   );
