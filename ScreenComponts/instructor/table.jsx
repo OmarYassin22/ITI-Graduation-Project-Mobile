@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { collection, getDocs, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 
-const Table = () => {
+const Table = ({ isDarkMode }) => {
   const [courseData, setCourseData] = useState([]);
   const [dataFetched, setDataFetched] = useState(false);
   const [gradeInputs, setGradeInputs] = useState({});
@@ -27,20 +27,12 @@ const Table = () => {
         ...doc.data(),
       }));
 
-      // console.error(fullName);
-  
       const instructorCourses = students.flatMap((student) => {
         if (!student.courses || !Array.isArray(student.courses) || student.courses.length === 0) {
-          // console.warn(`Student ${student.id} has no courses`);
           return [];
         }
-  
-        // console.warn(`Student courses:`, student.courses);
 
         let filtered = student.courses.filter((course) => course.instructor === fullName);
-  
-        // console.warn(`Filtered courses:`, filtered);
-
         return filtered.map((course) => ({
           studentId: student.id,
           courseStudent: student.fname + " " + student.lname,
@@ -49,9 +41,7 @@ const Table = () => {
           field: student.field || "",
         }));
       });
-  
-      // console.warn('Processed instructor courses:', instructorCourses);
-  
+
       const uniqueFields = new Set(instructorCourses.map((course) => course.field));
       setUniqueFieldsArray(Array.from(uniqueFields));
       setCourseData(instructorCourses);
@@ -133,34 +123,34 @@ const Table = () => {
   };
 
   const renderHeader = () => (
-    <View style={styles.headerRow}>
+    <View style={[styles.headerRow, { backgroundColor: isDarkMode ? '#1e1e1e' : '#f0f0f0' }]}>
       <TouchableOpacity style={styles.headerCell} onPress={() => sortData('courseStudent')}>
-        <Text style={styles.headerText}>Name {getSortDirection('courseStudent')}</Text>
+        <Text style={[styles.headerText, { color: isDarkMode ? '#fff' : '#000' }]}>Name {getSortDirection('courseStudent')}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.headerCell} onPress={() => sortData('courseName')}>
-        <Text style={styles.headerText}>Course {getSortDirection('courseName')}</Text>
+        <Text style={[styles.headerText, { color: isDarkMode ? '#fff' : '#000' }]}>Course {getSortDirection('courseName')}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.headerCell} onPress={() => sortData('degree')}>
-        <Text style={styles.headerText}>Grade {getSortDirection('degree')}</Text>
+        <Text style={[styles.headerText, { color: isDarkMode ? '#fff' : '#000' }]}>Grade {getSortDirection('degree')}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.headerCell} onPress={() => sortData('field')}>
-        <Text style={styles.headerText}>Field {getSortDirection('field')}</Text>
+        <Text style={[styles.headerText, { color: isDarkMode ? '#fff' : '#000' }]}>Field {getSortDirection('field')}</Text>
       </TouchableOpacity>
       <View style={styles.headerCell}>
-        <Text style={styles.headerText}>Add Grade</Text>
+        <Text style={[styles.headerText, { color: isDarkMode ? '#fff' : '#000' }]}>Add Grade</Text>
       </View>
     </View>
   );
 
   const renderItem = ({ item }) => (
-    <View style={styles.row}>
-      <Text style={styles.cell}>{item.courseStudent}</Text>
-      <Text style={styles.cell}>{item.courseName}</Text>
-      <Text style={styles.cell}>{item.degree}</Text>
-      <Text style={styles.cell}>{item.field}</Text>
+    <View style={[styles.row, { backgroundColor: isDarkMode ? '#1e1e1e' : '#fff' }]}>
+      <Text style={[styles.cell, { color: isDarkMode ? '#fff' : '#000' }]}>{item.courseStudent}</Text>
+      <Text style={[styles.cell, { color: isDarkMode ? '#fff' : '#000' }]}>{item.courseName}</Text>
+      <Text style={[styles.cell, { color: isDarkMode ? '#fff' : '#000' }]}>{item.degree}</Text>
+      <Text style={[styles.cell, { color: isDarkMode ? '#fff' : '#000' }]}>{item.field}</Text>
       <View style={styles.gradeInputContainer}>
         <TextInput
-          style={styles.gradeInput}
+          style={[styles.gradeInput, { borderColor: isDarkMode ? '#fff' : '#ccc', color: isDarkMode ? '#fff' : '#000' }]}
           keyboardType="numeric"
           value={gradeInputs[`${item.studentId}-${item.courseName}`] || ''}
           onChangeText={(value) => handleGradeInputChange(item.studentId, item.courseName, value)}
@@ -176,20 +166,26 @@ const Table = () => {
   );
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: isDarkMode ? '#121212' : '#fff' }]}>
       <View style={styles.container}>
         <View style={styles.pickerContainer}>
-          <Text style={styles.pickerLabel}>Select The Field</Text>
+          <Text style={[styles.pickerLabel, { color: isDarkMode ? '#fff' : '#000' }]}>Select The Field</Text>
           <Picker
             selectedValue={selectedField}
             onValueChange={(itemValue) => setSelectedField(itemValue)}
-            style={styles.picker}
+            style={[styles.picker, { backgroundColor: isDarkMode ? '#333' : '#f0f0f0' }]}
+            itemStyle={{ color: isDarkMode ? '#fff' : '#000' }}
           >
-            <Picker.Item label="Choose a field" value="" />
+            <Picker.Item label="Choose a field" value="" color={isDarkMode ? '#fff' : '#000'} 
+            style={{ backgroundColor: isDarkMode ? '#121212' : '#fff' }}
+            />
             {uniqueFieldsArray.map((field, index) => (
-              <Picker.Item key={index} label={field} value={field} />
+              <Picker.Item key={index} label={field} value={field} color={isDarkMode ? '#fff' : '#000'}
+              style={{ backgroundColor: isDarkMode ? '#121212' : '#fff' }}
+              />
             ))}
           </Picker>
+
         </View>
         <FlatList
           data={selectedField ? courseData.filter((course) => course.field === selectedField) : courseData}
@@ -197,7 +193,7 @@ const Table = () => {
           keyExtractor={(item, index) => `${item.studentId}-${item.courseName}-${index}`}
           ListHeaderComponent={renderHeader}
           stickyHeaderIndices={[0]}
-          contentContainerStyle={styles.flatListContent}
+          contentContainerStyle={[styles.flatListContent, { backgroundColor: isDarkMode ? '#121212' : '#fff' }]}
         />
       </View>
     </SafeAreaView>
@@ -208,7 +204,6 @@ const styles = StyleSheet.create({
   safeArea: {
     paddingTop: Platform.OS === 'android' ? 40 : 0,
     flex: 1,
-    backgroundColor: '#fff',
   },
   container: {
     flex: 1,
@@ -224,14 +219,12 @@ const styles = StyleSheet.create({
   picker: {
     height: 50,
     padding: 30,
-    backgroundColor: '#f0f0f0',
   },
   flatListContent: {
     flexGrow: 1,
   },
   headerRow: {
     flexDirection: 'row',
-    backgroundColor: '#f0f0f0',
     padding: 10,
   },
   headerCell: {
@@ -263,7 +256,6 @@ const styles = StyleSheet.create({
   gradeInput: {
     flex: 1,
     borderWidth: 1,
-    borderColor: '#ccc',
     padding: 5,
     fontSize: 12,
   },

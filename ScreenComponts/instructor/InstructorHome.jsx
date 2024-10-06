@@ -4,6 +4,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import Calendar from "./calendar";
 import AddVideo from "./addvideo";
 import Table from "./table";
+import Navbar from '../../Navigations/navbar'; 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Tab = createBottomTabNavigator();
@@ -19,6 +20,11 @@ const InsHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
 
   return (
     <>
+      <Navbar 
+        isDarkMode={isDarkMode} 
+        toggleDarkMode={toggleDarkMode} 
+        navigation={navigation}
+      />
       <Tab.Navigator
         initialRouteName="Calendar"
         screenOptions={{
@@ -68,7 +74,7 @@ const InsHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
         <Tab.Screen
           name="AddVideo"
           options={{
-            tabBarLabel: "AddVideo",
+            tabBarLabel: "Add Video",
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons
                 name="content-paste"

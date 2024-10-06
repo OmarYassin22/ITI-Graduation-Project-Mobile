@@ -8,8 +8,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
-const Video = () => {
-  const [dataFetched, setDataFetched] = useState(false);
+const AddVideo = ({ isDarkMode }) => {
   const [courseData, setCourseData] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState('');
   const [file, setFile] = useState(null);
@@ -17,13 +16,27 @@ const Video = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadTask, setUploadTask] = useState(null);
 
-  const fullName = 'Emad Elshplangy';
-
   useEffect(() => {
-    if (!dataFetched) {
-      fetchData(fullName);
+    const fetchDataWithName = async () => {
+      const fullName = await getFullName();
+      fetchData(fullName.replace(/"/g, ''));
+    };
+    fetchDataWithName();
+  }, []);
+
+  const getFullName = async () => {
+    try {
+      const fname = await AsyncStorage.getItem('fname');
+      const lname = await AsyncStorage.getItem('lname');
+      if (fname !== null) {
+        return lname === null || lname === 'undefined' ? fname : `${fname} ${lname}`;
+      }
+      return '';
+    } catch (error) {
+      console.error('Error retrieving data', error);
+      return '';
     }
-  }, [dataFetched]);
+  };
 
   const fetchData = async (fullName) => {
     try {
@@ -47,25 +60,10 @@ const Video = () => {
       }));
 
       setCourseData(uniqueCourses);
-      setDataFetched(true);
     } catch (error) {
       console.error('Error fetching data: ', error);
     }
   };
-
-  // const handleFilePick = async () => {
-  //   try {
-  //     const result = await DocumentPicker.getDocumentAsync({
-  //       type: 'video/*',
-  //     });
-
-  //     if (result.type === 'success') {
-  //       setFile(result);
-  //     }
-  //   } catch (err) {
-  //     console.error('Error picking file:', err);
-  //   }
-  // };
 
   const handleFilePick = async () => {
     try {
@@ -106,16 +104,7 @@ const Video = () => {
 
     setIsUploading(true);
 
-    // const fullName = await AsyncStorage.getItem('fname') + ' ' + await AsyncStorage.getItem('lname');
     const storageRef = ref(storage, `${fullName}/${selectedCourse}/${file.name}`);
-
-    // let coursesData = JSON.parse(await AsyncStorage.getItem('coursesData')) || [];
-    // const newCourseData = {
-    //   selectedCourse: selectedCourse,
-    //   fileName: file.name,
-    // };
-    // coursesData.push(newCourseData);
-    // await AsyncStorage.setItem('coursesData', JSON.stringify(coursesData));
 
     const response = await fetch(file.uri);
     const blob = await response.blob();
@@ -132,7 +121,6 @@ const Video = () => {
       (error) => {
         if (error.code === 'storage/canceled') {
           console.log('Upload was cancelled');
-          // Do not show an error message for cancellation
         } else {
           console.error('Error uploading file: ', error);
           Alert.alert(
@@ -164,7 +152,6 @@ const Video = () => {
   const handleStopUpload = () => {
     if (uploadTask) {
       uploadTask.cancel();
-      // The error handling in the upload task will take care of resetting states
       Alert.alert(
         'Upload cancelled',
         'The upload has been cancelled.',
@@ -174,96 +161,14 @@ const Video = () => {
     }
   };
 
-  // const handleUpload = async () => {
-  //   if (!file || !selectedCourse) {
-  //     Alert.alert(
-  //       'Fill inputs',
-  //       'Please select a course and a file to upload.',
-  //       [
-  //         {
-  //           text: 'OK',
-  //           onPress: () => console.log('OK Pressed'),
-  //           style: 'cancel',
-  //         },
-  //       ],
-  //       {
-  //         titleStyle: { color: 'white' },
-  //         messageStyle: { color: 'white' },
-  //         containerStyle: { backgroundColor: 'black' },
-  //       }
-  //     );
-  //     return;
-  //   }
-
-  //   setIsUploading(true);
-
-  //   const fullName = await AsyncStorage.getItem('fname') + ' ' + await AsyncStorage.getItem('lname');
-  //   const storageRef = ref(storage, `${fullName}/${selectedCourse}/${file.name}`);
-
-  //   let coursesData = JSON.parse(await AsyncStorage.getItem('coursesData')) || [];
-  //   const newCourseData = {
-  //     selectedCourse: selectedCourse,
-  //     fileName: file.name,
-  //   };
-  //   coursesData.push(newCourseData);
-  //   await AsyncStorage.setItem('coursesData', JSON.stringify(coursesData));
-
-  //   const response = await fetch(file.uri);
-  //   const blob = await response.blob();
-
-  //   const task = uploadBytesResumable(storageRef, blob);
-  //   setUploadTask(task);
-
-  //   task.on(
-  //     'state_changed',
-  //     (snapshot) => {
-  //       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-  //       setUploadProgress(progress);
-  //     },
-  //     (error) => {
-  //       console.error('Error uploading file: ', error);
-  //       setIsUploading(false);
-  //     },
-  //     () => {
-  //       getDownloadURL(task.snapshot.ref).then((downloadURL) => {
-  //         console.log('File available at', downloadURL);
-  //         setIsUploading(false);
-  //       });
-  //     }
-  //   );
-  // };
-
-  // const handleStopUpload = () => {
-  //   if (uploadTask) {
-  //     uploadTask.cancel();
-  //     setIsUploading(false);
-  //     setUploadProgress(0);
-  //     Alert.alert(
-  //       'Upload cancelled',
-  //       '',
-  //       [
-  //         {
-  //           text: 'OK',
-  //           onPress: () => console.log('OK Pressed'),
-  //           style: 'cancel',
-  //         },
-  //       ],
-  //       {
-  //         titleStyle: { color: 'white' },
-  //         containerStyle: { backgroundColor: 'black' },
-  //       }
-  //     );
-  //   }
-  // };
-
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: isDarkMode ? '#333' : 'white' }]}>
       <View style={styles.pickerContainer}>
-        <Text style={styles.label}>Select Your Course</Text>
+        <Text style={[styles.label, { color: isDarkMode ? 'white' : 'black' }]}>Select Your Course</Text>
         <Picker
           selectedValue={selectedCourse}
           onValueChange={(itemValue) => setSelectedCourse(itemValue)}
-          style={styles.picker}
+          style={[styles.picker, { backgroundColor: isDarkMode ? '#444' : '#f0f0f0', color: isDarkMode ? 'white' : 'black' }]}
         >
           <Picker.Item label="Choose a course" value="" />
           {courseData.map((course, key) => (
@@ -273,51 +178,42 @@ const Video = () => {
       </View>
 
       <View style={styles.filePickerContainer}>
-        <Text style={styles.label}>Upload Course Video</Text>
-        <TouchableOpacity style={styles.filePickerButton} onPress={handleFilePick}>
-          <Text style={styles.filePickerButtonText}>
+        <Text style={[styles.label, { color: isDarkMode ? 'white' : 'black' }]}>Upload Course Video</Text>
+        <TouchableOpacity style={[styles.filePickerButton, { backgroundColor: isDarkMode ? '#444' : '#f0f0f0' }]} onPress={handleFilePick}>
+          <Text style={[styles.filePickerButtonText, { color: isDarkMode ? 'white' : 'black' }]}>
             {file ? file.name : 'Pick a video file'}
           </Text>
         </TouchableOpacity>
       </View>
-
-      {/* <View style={styles.filePickerContainer}>
-        <Text style={styles.label}>Upload Course Video</Text>
-        <TouchableOpacity style={styles.filePickerButton} onPress={handleFilePick}>
-          <Text style={styles.filePickerButtonText}>
-            {file ? file.name : 'Pick a video file'}
-          </Text>
-        </TouchableOpacity>
-      </View> */}
-
-      {/* <View style={styles.filePickerContainer}>
-        <Text style={styles.label}>Upload Course Video</Text>
-        <TouchableOpacity style={styles.filePickerButton} onPress={handleFilePick}>
-          <Text style={styles.filePickerButtonText}>
-            {file ? file.name : 'Pick a video file'}
-          </Text>
-        </TouchableOpacity>
-      </View> */}
-
       {isUploading && (
         <View style={styles.progressContainer}>
           <AnimatedCircularProgress
             size={120}
             width={15}
             fill={uploadProgress}
-            tintColor="#4A90E2"
-            backgroundColor="#d6d6d6"
+            tintColor={isDarkMode ? '#1abc9c' : '#4A90E2'}
+            backgroundColor={isDarkMode ? '#555' : '#d6d6d6'}
           >
-            {(fill) => <Text style={styles.progressText}>{`${Math.round(fill)}%`}</Text>}
+            {(fill) => (
+              <Text style={[styles.progressText, { color: isDarkMode ? 'white' : 'black' }]}>
+                {`${Math.round(fill)}%`}
+              </Text>
+            )}
           </AnimatedCircularProgress>
         </View>
       )}
 
       <TouchableOpacity
-        style={[styles.button, isUploading ? styles.stopButton : styles.uploadButton]}
+        style={[
+          styles.button,
+          isUploading ? styles.stopButton : styles.uploadButton,
+          { backgroundColor: isUploading ? (isDarkMode ? '#e74c3c' : '#E25C5C') : isDarkMode ? '#3498db' : '#4A90E2' },
+        ]}
         onPress={isUploading ? handleStopUpload : handleUpload}
       >
-        <Text style={styles.buttonText}>{isUploading ? 'Stop Upload' : 'Add'}</Text>
+        <Text style={[styles.buttonText, { color: isDarkMode ? '#333' : 'white' }]}>
+          {isUploading ? 'Stop Upload' : 'Add'}
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -342,7 +238,6 @@ const styles = StyleSheet.create({
   picker: {
     width: '100%',
     height: 50,
-    backgroundColor: '#f0f0f0',
     borderRadius: 8,
     padding: 30,
   },
@@ -351,7 +246,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   filePickerButton: {
-    backgroundColor: '#f0f0f0',
     padding: 10,
     borderRadius: 8,
   },
@@ -370,17 +264,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginTop: 20,
   },
-  uploadButton: {
-    backgroundColor: '#4A90E2',
-  },
-  stopButton: {
-    backgroundColor: '#E25C5C',
-  },
+  uploadButton: {},
+  stopButton: {},
   buttonText: {
-    color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
   },
 });
 
-export default Video;
+export default AddVideo;
