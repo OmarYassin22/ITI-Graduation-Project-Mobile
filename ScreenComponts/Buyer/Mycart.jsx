@@ -109,7 +109,7 @@ const Mycart = () => {
         querySnapshot.forEach(doc => {
           const userData = doc.data();
           console.log(doc.id, "=>", userData);
-          if (userData.email && userData.email.toLowerCase() === buyerEmail.toLowerCase()) {
+          if (userData.email && userData.email.toLowerCase() === buyerEmail.toLowerCase().substring(1, buyerEmail.length-1)) {
             buyerUser = { id: doc.id, ...userData };
           }
         });
