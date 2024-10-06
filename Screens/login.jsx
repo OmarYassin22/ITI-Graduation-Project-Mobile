@@ -40,18 +40,18 @@ const Login = ({ isDarkMode, toggleDarkMode, navigation }) => {
       querySnapshot.forEach(async (doc) => {
         if (doc.exists()) {
           const userType = doc.data().type;
-
+          console.error("email in login page" + userType);
           await AsyncStorage.setItem("email", JSON.stringify(doc.data().email));
           await AsyncStorage.setItem("fname", JSON.stringify(doc.data().fname));
           await AsyncStorage.setItem("lname", JSON.stringify(doc.data().lname));
+          await AsyncStorage.setItem("type", JSON.stringify(userType));
 
           if (userType === "buyer" || userType === "applicant") {
-            // navigation.navigate("Profile");
             navigation.navigate("Buyer");
           } else if (userType === "instructor") {
-            navigation.navigate("instructor");
+            navigation.navigate("Instructor");
           } else if (userType === "student") {
-            navigation.navigate("student");
+            navigation.navigate("Student");
           }
         } else {
           console.warn("No such document!");
@@ -88,6 +88,17 @@ const Login = ({ isDarkMode, toggleDarkMode, navigation }) => {
     setUser([...user, { email: email, password: password }]);
     setEmail("");
     setPassword("");
+  };
+  const storeEmail = async (email) => {
+    try {
+      await AsyncStorage.setItem("email", email);
+      console.log("Email stored successfully");
+    } catch (error) {
+      console.error("Error storing email:", error);
+    }
+  };
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
   };
   return (
     <SafeAreaView

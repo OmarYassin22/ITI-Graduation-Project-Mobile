@@ -39,7 +39,7 @@ import Navbar from "../../Navigations/navbar";
 const STRIPE_PUBLISHABLE_KEY =
   "pk_test_51PrP4TBp38FM06vYjqUSTOWFAdyY60sB8ibBsgfWBIbVReUBAauq8qRPyJR4TRdBgzyBY1SnxeRN23cmyQg4wu2Y00iBHn5Kvm";
 
-const Mycart = ({ isDarkMode, toggleDarkMode, navigation }) => {
+const Mycart = ({ isDarkMode, toggleDarkMode }) => {
   const { courseBuyerCart, setCourseBuyerCart } = useContext(GetData);
   const [courses, setCourses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");

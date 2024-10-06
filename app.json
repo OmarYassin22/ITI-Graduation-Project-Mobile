@@ -7,9 +7,9 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/Gemini_Generated_Image_y6l0riy6l0riy6l0.jpg",
+      "resizeMode": "cover",
+      "backgroundColor": "#485053"
     },
     "ios": {
       "supportsTablet": true

@@ -1,19 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import Icon from "react-native-vector-icons/Ionicons";
 import styles from "../styles";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 // eslint-disable-next-line react/prop-types
 function CustomDrawerContent({ navigation, isDarkMode }) {
-  const { t } = useTranslation(); 
+  const [type, setType] = useState(null);
+  const { t } = useTranslation();
   const currentRoute =
     // eslint-disable-next-line react/prop-types
     navigation.getState().routeNames[navigation.getState().index];
+  async function fetechType() {
+    setType(await AsyncStorage.getItem("type"));
+    console.error(type);
+  }
+  useEffect(() => {
+    fetechType();
+
+    console.warn(
+      "====================================================================",
+      type,
+      "======================="
+    );
+  }, []);
+
   return (
     <DrawerContentScrollView>
       <DrawerItem
-        label={t('drawer.home')}
+        label={t("drawer.home")}
         icon={({ color, size }) => (
           <Icon name="home-outline" size={size} color={color} />
         )}
@@ -23,7 +38,7 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
         style={styles.selectedItem}
       />
       <DrawerItem
-        label={t('drawer.profile')}
+        label={t("drawer.profile")}
         icon={({ color, size }) => (
           <Icon name="person-outline" size={size} color={color} />
         )}
@@ -32,6 +47,37 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
         style={styles.selectedItem}
       />
 
+      {type != null && type == "buyer" ? (
+        <DrawerItem
+          label="Buyer"
+          icon={({ color, size }) => (
+            <Icon name="book-outline" size={size} color={color} />
+          )}
+          focused={currentRoute === "Buyer"}
+          onPress={() => navigation.navigate("Buyer")}
+          style={styles.selectedItem}
+        />
+      ) : type == "instructor" ? (
+        <DrawerItem
+          label="Instructor"
+          icon={({ color, size }) => (
+            <Icon name="book-outline" size={size} color={color} />
+          )}
+          focused={currentRoute === "Instructor"}
+          onPress={() => navigation.navigate("Instructor")}
+          style={styles.selectedItem}
+        />
+      ) : type == "student" ? (
+        <DrawerItem
+          label="Student"
+          icon={({ color, size }) => (
+            <Icon name="book-outline" size={size} color={color} />
+          )}
+          focused={currentRoute === "Student"}
+          onPress={() => navigation.navigate("Student")}
+          style={styles.selectedItem}
+        />
+      ) : null}
       {/* <DrawerItem
         label="About Us"
         icon={({ color, size }) => <Icon name="book-outline" size={size} color={color} />}
@@ -59,7 +105,7 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
       ></DrawerItem> */}
 
       <DrawerItem
-        label={t('drawer.settings')}
+        label={t("drawer.settings")}
         icon={({ color, size }) => (
           <Icon name="settings-outline" size={size} color={color} />
         )}
@@ -79,7 +125,7 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
       /> */}
 
       <DrawerItem
-        label={t('drawer.login')}
+        label={t("drawer.login")}
         icon={({ color, size }) => (
           <Icon name="log-in-outline" size={size} color={color} />
         )}
