@@ -3,30 +3,37 @@ import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import Icon from "react-native-vector-icons/Ionicons";
 import styles from "../styles";
 import { useTranslation } from "react-i18next";
+import { Text } from "react-native-paper";
 
-// eslint-disable-next-line react/prop-types
 function CustomDrawerContent({ navigation, isDarkMode }) {
   const [type, setType] = useState(null);
   const { t } = useTranslation();
   const currentRoute =
-    // eslint-disable-next-line react/prop-types
     navigation.getState().routeNames[navigation.getState().index];
-  async function fetechType() {
-    setType(await AsyncStorage.getItem("type"));
+
+
+
+
+  async function fetchType() {
+    var temp = await AsyncStorage.getItem("type");
+    setType(temp);
     console.error(type);
   }
+
+
   useEffect(() => {
-    fetechType();
+    fetchType();
 
     console.warn(
       "====================================================================",
       type,
       "======================="
     );
-  }, []);
+  }, [type]);
 
   return (
     <DrawerContentScrollView>
+      <Text>{type==null?'yes':'no'}</Text>
       <DrawerItem
         label={t("drawer.home")}
         icon={({ color, size }) => (

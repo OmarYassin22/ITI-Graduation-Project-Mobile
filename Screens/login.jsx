@@ -45,6 +45,7 @@ const Login = ({ isDarkMode, toggleDarkMode, navigation }) => {
           await AsyncStorage.setItem("fname", JSON.stringify(doc.data().fname));
           await AsyncStorage.setItem("lname", JSON.stringify(doc.data().lname));
           await AsyncStorage.setItem("type", JSON.stringify(userType));
+          console.error(`user type id ==> ${userType}`);
 
           if (userType === "buyer" || userType === "applicant") {
             navigation.navigate("Buyer");
