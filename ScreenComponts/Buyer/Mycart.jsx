@@ -33,12 +33,13 @@ import {
 import { db } from "../../firebase";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Navbar from "../../Navigations/navbar";
 
 // Use Stripe's test publishable key
 const STRIPE_PUBLISHABLE_KEY =
   "pk_test_51PrP4TBp38FM06vYjqUSTOWFAdyY60sB8ibBsgfWBIbVReUBAauq8qRPyJR4TRdBgzyBY1SnxeRN23cmyQg4wu2Y00iBHn5Kvm";
 
-const Mycart = () => {
+const Mycart = ({ isDarkMode, toggleDarkMode }) => {
   const { courseBuyerCart, setCourseBuyerCart } = useContext(GetData);
   const [courses, setCourses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -130,16 +131,11 @@ const Mycart = () => {
         let buyerUser = null;
         querySnapshot.docs.forEach((doc) => {
           const userData = doc.data();
-          console.warn(doc.id,'not found');
-          console.warn(userData.email.toLowerCase(), buyerEmail.substring(1, buyerEmail.length-1).toLowerCase());
-          if (userData.email.toLowerCase() ===  buyerEmail.substring(1, buyerEmail.length-1).toLowerCase()) {
-            console.warn(
-              "=====================user data with " +
-                userData.email +
-                " found========="
-            );
+          if (
+            userData.email.toLowerCase() ===
+            buyerEmail.substring(1, buyerEmail.length - 1).toLowerCase()
+          ) {
             buyerUser = { id: doc.id, ...userData };
-            console.warn(`+++++++++++++++++++++++++++Buyer user found: ${buyerUser.email}`);
           }
         });
 
@@ -188,58 +184,77 @@ const Mycart = () => {
 
   if (courseBuyerCart.length === 0) {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>No courses in your cart yet.</Text>
-      </View>
+      <SafeAreaView
+        style={[styles.container, { backgroundColor: theme.colors.background }]}
+      >
+        <Navbar
+          isDarkMode={isDarkMode}
+          toggleDarkMode={toggleDarkMode}
+          navigation={navigation}
+        />
+
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Text>No courses in your cart yet.</Text>
+        </View>
+      </SafeAreaView>
     );
   }
 
   return (
-    <StripeProvider publishableKey={STRIPE_PUBLISHABLE_KEY}>
-      <SafeAreaView
-        style={[styles.container, { backgroundColor: theme.colors.background }]}
-      >
-        <ScrollView contentContainerStyle={styles.scrollView}>
-          <View style={styles.header}>
-            <Headline style={styles.title}>All Courses in My Cart</Headline>
-            <Searchbar
-              placeholder="Search courses"
-              onChangeText={setSearchTerm}
-              value={searchTerm}
-              style={styles.searchBar}
-            />
-          </View>
-          <CourseListBuyer filteredCourses={filteredCourses} />
-          <View style={styles.paymentSection}>
-            <Text style={styles.totalAmount}>Total: ${totalAmount}</Text>
-            <CardField
-              postalCodeEnabled={true}
-              placeholder={{
-                number: "4242 4242 4242 4242",
-              }}
-              cardStyle={{
-                backgroundColor: "#FFFFFF",
-                textColor: "#000000",
-              }}
-              style={{
-                width: "100%",
-                height: 50,
-                marginVertical: 20,
-              }}
-            />
-            <Button
-              icon="cart"
-              mode="contained"
-              onPress={handlePayment}
-              disabled={loading}
-              loading={loading}
-            >
-              {loading ? "Processing..." : "Buy now "}
-            </Button>
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </StripeProvider>
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
+    >
+      <StripeProvider publishableKey={STRIPE_PUBLISHABLE_KEY}>
+        <SafeAreaView
+          style={[
+            styles.container,
+            { backgroundColor: theme.colors.background },
+          ]}
+        >
+          <ScrollView contentContainerStyle={styles.scrollView}>
+            <View style={styles.header}>
+              <Headline style={styles.title}>All Courses in My Cart</Headline>
+              <Searchbar
+                placeholder="Search courses"
+                onChangeText={setSearchTerm}
+                value={searchTerm}
+                style={styles.searchBar}
+              />
+            </View>
+            <CourseListBuyer filteredCourses={filteredCourses} />
+            <View style={styles.paymentSection}>
+              <Text style={styles.totalAmount}>Total: ${totalAmount}</Text>
+              <CardField
+                postalCodeEnabled={true}
+                placeholder={{
+                  number: "4242 4242 4242 4242",
+                }}
+                cardStyle={{
+                  backgroundColor: "#FFFFFF",
+                  textColor: "#000000",
+                }}
+                style={{
+                  width: "100%",
+                  height: 50,
+                  marginVertical: 20,
+                }}
+              />
+              <Button
+                icon="cart"
+                mode="contained"
+                onPress={handlePayment}
+                disabled={loading}
+                loading={loading}
+              >
+                {loading ? "Processing..." : "Buy now "}
+              </Button>
+            </View>
+          </ScrollView>
+        </SafeAreaView>
+      </StripeProvider>
+    </SafeAreaView>
   );
 };
 
