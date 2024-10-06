@@ -37,7 +37,7 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
         onPress={() => navigation.navigate('About Us')}
         style={styles.selectedItem}
       /> */}
-      <DrawerItem
+      {/* <DrawerItem
         label="Buyer"
         icon={({ color, size }) => (
           <Icon name="cart-outline" size={size} color={color} />
@@ -45,16 +45,16 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
         focused={currentRoute === "Buyer"}
         onPress={() => navigation.navigate("Buyer")}
         style={styles.selectedItem}
-      />
+      /> */}
 
-      <DrawerItem
+      {/* <DrawerItem
         label="Student"
         icon={({ color, size }) => (
           <Icon name="person-outline" size={size} color={color} />
         )}
         focused={currentRoute === "Student"}
         onPress={() => navigation.navigate("Student")}
-      ></DrawerItem>
+      ></DrawerItem> */}
 
       <DrawerItem
         label="Settings"
@@ -66,7 +66,7 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
         style={styles.selectedItem}
       />
 
-      <DrawerItem
+      {/* <DrawerItem
         label="Instructor"
         icon={({ color, size }) => (
           <Icon name="log-in-outline" size={size} color={color} />
@@ -74,7 +74,7 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
         focused={currentRoute === "Instructor"}
         onPress={() => navigation.navigate("Instructor")}
         style={styles.selectedItem}
-      />
+      /> */}
 
       <DrawerItem
         label="Login"
