@@ -14,12 +14,7 @@ import {
   Searchbar,
   ActivityIndicator,
 } from "react-native-paper";
-import {
-  View,
-  ScrollView,
-  SafeAreaView,
-  StyleSheet,
-} from "react-native";
+import { View, ScrollView, SafeAreaView, StyleSheet } from "react-native";
 
 import { db } from "../../firebase";
 import CourseListLearning from "./CourseListLearning";
@@ -37,7 +32,7 @@ const Mylearning = () => {
       const email = await AsyncStorage.getItem("email");
       console.log("Raw email from AsyncStorage:", email);
       if (email) {
-        const trimmedEmail = email.replace(/^"|"$/g, '');
+        const trimmedEmail = email.replace(/^"|"$/g, "");
         console.log("Trimmed buyer email:", trimmedEmail);
         setBuyerEmail(trimmedEmail);
       } else {
@@ -63,12 +58,21 @@ const Mylearning = () => {
       if (!querySnapshot.empty) {
         const userDoc = querySnapshot.docs[0];
         let userDocument = userDoc.data();
-        console.log("User document data:", JSON.stringify(userDocument, null, 2));
+        console.log(
+          "User document data:",
+          JSON.stringify(userDocument, null, 2)
+        );
         if (Array.isArray(userDocument.buyedCourses)) {
           setBuyedCourses(userDocument.buyedCourses);
-          console.log("Buyed courses:", JSON.stringify(userDocument.buyedCourses, null, 2));
+          console.log(
+            "Buyed courses:",
+            JSON.stringify(userDocument.buyedCourses, null, 2)
+          );
         } else {
-          console.warn("buyedCourses is not an array:", userDocument.buyedCourses);
+          console.warn(
+            "buyedCourses is not an array:",
+            userDocument.buyedCourses
+          );
           setBuyedCourses([]);
         }
       } else {
@@ -91,7 +95,12 @@ const Mylearning = () => {
             const courseSnap = await getDoc(courseRef);
             if (courseSnap.exists()) {
               const data = courseSnap.data();
-              console.log("Fetched course data for ID", courseId, ":", JSON.stringify(data, null, 2));
+              console.log(
+                "Fetched course data for ID",
+                courseId,
+                ":",
+                JSON.stringify(data, null, 2)
+              );
               return { id: courseId, ...data };
             } else {
               console.warn("No such course:", courseId);
@@ -103,8 +112,11 @@ const Mylearning = () => {
           }
         })
       );
-      const validCoursesData = coursesData.filter(course => course !== null);
-      console.log("Valid courses data:", JSON.stringify(validCoursesData, null, 2));
+      const validCoursesData = coursesData.filter((course) => course !== null);
+      console.log(
+        "Valid courses data:",
+        JSON.stringify(validCoursesData, null, 2)
+      );
       setCourseData(validCoursesData);
     } catch (error) {
       console.error("Error fetching course data:", error);
@@ -138,7 +150,9 @@ const Mylearning = () => {
       return false;
     }
     console.log("Filtering course:", JSON.stringify(course, null, 2));
-    return course?.title?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false;
+    return (
+      course?.title?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false
+    );
   });
 
   console.log("Filtered courses:", JSON.stringify(filteredCourses, null, 2));
