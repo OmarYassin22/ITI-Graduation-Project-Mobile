@@ -40,10 +40,20 @@ const Login = ({ isDarkMode, toggleDarkMode, navigation }) => {
       querySnapshot.forEach(async (doc) => {
         if (doc.exists()) {
           const userType = doc.data().type;
-          console.error("email in login page" + userType);
+          var fname = doc.data().fname;
+          var lname = doc.data().lname;
+
           await AsyncStorage.setItem("email", JSON.stringify(doc.data().email));
-          await AsyncStorage.setItem("fname", JSON.stringify(doc.data().fname));
-          await AsyncStorage.setItem("lname", JSON.stringify(doc.data().lname));
+          if (fname)
+            await AsyncStorage.setItem(
+              "fname",
+              JSON.stringify(doc.data().fname)
+            );
+          if (lname)
+            await AsyncStorage.setItem(
+              "lname",
+              JSON.stringify(doc.data().lname)
+            );
           await AsyncStorage.setItem("type", JSON.stringify(userType));
           console.error(`user type id ==> ${userType}`);
 

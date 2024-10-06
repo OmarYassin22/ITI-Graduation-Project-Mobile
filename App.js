@@ -79,6 +79,15 @@ export default function App() {
                   />
                 )}
               </Drawer.Screen>
+              <Drawer.Screen name="Instructor" options={{ headerShown: false }}>
+                {(props) => (
+                  <InsHome
+                    {...props}
+                    isDarkMode={isDarkMode}
+                    toggleDarkMode={toggleDarkMode}
+                  />
+                )}
+              </Drawer.Screen>
               <Drawer.Screen name="Settings" options={{ headerShown: false }}>
                 {(props) => (
                   <SettingsScreen
@@ -119,18 +128,7 @@ export default function App() {
                   />
                 )}
               </Drawer.Screen>
-              <Drawer.Screen
-                name="Instructor"
-                options={{ headerShown: false }}
-              >
-                {(props) => (
-                  <InsHome
-                    {...props}
-                    isDarkMode={isDarkMode}
-                    toggleDarkMode={toggleDarkMode}
-                  />
-                )}
-              </Drawer.Screen>
+              
 
               <Drawer.Screen
                 name="Login"
