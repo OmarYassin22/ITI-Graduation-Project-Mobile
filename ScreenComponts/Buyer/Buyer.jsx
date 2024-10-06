@@ -24,6 +24,7 @@ function Buyer({ isDarkMode, toggleDarkMode }) {
       <Tab.Screen
         name="Courses"
         options={{
+          headerShown:false,
           tabBarLabel: 'Courses',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="book-open-page-variant" color={color} size={size} />
@@ -35,6 +36,7 @@ function Buyer({ isDarkMode, toggleDarkMode }) {
       <Tab.Screen
         name="Mycart"
         options={{
+          headerShown:false,
           tabBarLabel: 'Mycart',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="cart" color={color} size={size} />
@@ -47,6 +49,7 @@ function Buyer({ isDarkMode, toggleDarkMode }) {
       <Tab.Screen
         name="Wishlist"
         options={{
+          headerShown:false,
           tabBarLabel: 'Wishlist',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="heart" color={color} size={size} />
@@ -59,6 +62,7 @@ function Buyer({ isDarkMode, toggleDarkMode }) {
       <Tab.Screen
         name="Mylearning"
         options={{
+          headerShown:false,
           tabBarLabel: 'My learning',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="play-circle" color={color} size={size} />

@@ -5,9 +5,10 @@ import { TextInput, Text, Headline, Searchbar, useTheme, Button } from 'react-na
 import CourseList from './CourseList';
 import { useNavigation } from '@react-navigation/native';
 import CourseListBuyer from './CourseListBuyer';
+import Navbar from "../../Navigations/navbar";
 
 
-const Mycart = () => {
+const Mycart = ({ isDarkMode, toggleDarkMode, navigation }) => {
   const {courseBuyerCart} = useContext(GetData);
   const [courses, setCourses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -28,14 +29,26 @@ const Mycart = () => {
 
   if(courseBuyerCart.length==0){
     return (
+      <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Navbar
+        isDarkMode={isDarkMode}
+        toggleDarkMode={toggleDarkMode}
+        navigation={navigation}
+      />
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>No courses in your wishlist yet.</Text>
+        <Text>No courses in your cart yet.</Text>
       </View>
-    );  // if wishlist is empty return a message.
+      </SafeAreaView>
+    ); 
   }
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Navbar
+        isDarkMode={isDarkMode}
+        toggleDarkMode={toggleDarkMode}
+        navigation={navigation}
+      />
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.header}>
           <Headline style={styles.title}>All Courses in My Cart</Headline>
