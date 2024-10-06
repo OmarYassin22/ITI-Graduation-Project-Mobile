@@ -8,6 +8,7 @@ import Courses from './Courses';
 import Wishlist from './Wishlist';
 import CourseDetailes from './CourseDetailes';
 import { GetData } from '../../Contexts/GetDataContext';
+import Scholarship from './Scholarship/Scholarship';
 
 const Tab = createBottomTabNavigator();
 
@@ -78,6 +79,17 @@ function Buyer({ isDarkMode, toggleDarkMode }) {
 >
   {(props) => <CourseDetailes {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
 </Tab.Screen>
+<Tab.Screen
+        name="Scholarship"
+        options={{
+          tabBarLabel: 'Scholarship',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="school" color={color} size={size} />
+          ),
+        }}
+      >
+        {(props) => <Scholarship {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 }

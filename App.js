@@ -15,6 +15,7 @@ import ProfilePage from "./Screens/profile.jsx";
 import SettingsScreen from "./Screens/settings";
 import Contact from "./Screens/Contact Page/Contact.jsx";
 import Scholarship from "./ScreenComponts/Buyer/Scholarship/Scholarship.jsx";
+import InsHome from "./ScreenComponts/instructor/InstructorHome.jsx";
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 export default function App() {
@@ -102,6 +103,18 @@ export default function App() {
               >
                 {(props) => (
                   <Scholarship
+                    {...props}
+                    isDarkMode={isDarkMode}
+                    toggleDarkMode={toggleDarkMode}
+                  />
+                )}
+              </Drawer.Screen>
+              <Drawer.Screen
+                name="Instructor"
+                options={{ headerShown: false }}
+              >
+                {(props) => (
+                  <InsHome
                     {...props}
                     isDarkMode={isDarkMode}
                     toggleDarkMode={toggleDarkMode}
