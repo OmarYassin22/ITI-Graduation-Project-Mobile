@@ -1,9 +1,5 @@
 import React from 'react';
-<<<<<<< HEAD
 import { View, Text, ScrollView, ImageBackground, FlatList, Image,TouchableOpacity } from 'react-native';
-=======
-import { View, Text, ScrollView, Image, FlatList } from 'react-native';
->>>>>>> bcb06babc6781453f84ba4b68b5b0a9caa8b4199
 import { useCourses } from '../../api/courses/CourseContext'; 
 import Navbar from '../../Navigations/navbar';
 import { List } from 'react-native-paper';
@@ -14,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 const HomeScreen = ({ isDarkMode, navigation }) => {
   const { t } = useTranslation();
   const { courses, loading } = useCourses();
-<<<<<<< HEAD
 
  
 const renderCourse = ({ item }) => {
@@ -41,22 +36,6 @@ const renderCourse = ({ item }) => {
     );
   };
 
-=======
-const {instructors}=useInstructors
-  const renderCourse = ({ item }) => (
-    <View style={styles.courseCard}>
-      <Image source={{ uri: item.image }} style={styles.courseImage} resizeMode="cover" />
-      <View style={styles.overlay}></View>
-      <View style={styles.cardContent}>
-        <Text style={styles.courseTitle}>{item.title}</Text>
-        <View style={styles.ratingContainer}>
-          <FontAwesome name="star" size={16} color="#FFD700" />
-          <Text style={styles.ratingText}>{parseFloat(item.rating).toFixed(2)}</Text>
-        </View>
-      </View>
-    </View>
-  );
->>>>>>> bcb06babc6781453f84ba4b68b5b0a9caa8b4199
   return (
     <View style={[styles.screenContainer, isDarkMode && styles.darkContainer]}>
       <Navbar isDarkMode={isDarkMode} navigation={navigation} />
@@ -81,7 +60,6 @@ const {instructors}=useInstructors
           </Text>
         </View>
         <View style={styles.coursesSection}>
-<<<<<<< HEAD
           <Text style={[styles.sectionHeading, isDarkMode && styles.darkText]}>Most Popular Courses</Text>
           <ImageBackground 
             style={styles.backgroundImage}
@@ -102,7 +80,6 @@ const {instructors}=useInstructors
               />
             )}
           </ImageBackground>
-=======
           <Text style={[styles.sectionHeading, isDarkMode && styles.darkText]}>{t('home.courses.sectionHeading')}</Text>
           {loading ? (
             <Text>{t('home.courses.loadingText')}</Text> 
@@ -116,7 +93,6 @@ const {instructors}=useInstructors
               contentContainerStyle={styles.courseList}
             />
           )}
->>>>>>> bcb06babc6781453f84ba4b68b5b0a9caa8b4199
         </View>
         <View style={styles.content}>
           <List.AccordionGroup style={[styles.sectionHeading, isDarkMode && styles.darkText]}>
