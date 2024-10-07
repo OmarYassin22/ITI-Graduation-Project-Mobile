@@ -9,7 +9,6 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
 
 
-const Tab = createBottomTabNavigator();
 
 const StCourses = ({ isDarkMode, toggleDarkMode, navigation, email2 }) => {
     const [data, setData] = useState([]);
