@@ -21,6 +21,7 @@ const Scholarship = () => {
   const [answers, setAnswers] = useState([]);
   const [docData, setDocData] = useState(null);
   const [docId, setDocId] = useState(null);
+  const [submitted, setSubmitted] = useState(false); 
   const navigation = useNavigation();
 
  const questions = {
@@ -306,6 +307,9 @@ const Scholarship = () => {
           console.log("Document ID found:", doc.id); 
           setDocId(doc.id);
           setDocData(doc.data());
+          if (doc.data().type === "applicant") {
+            setSubmitted(true); 
+          }
         });
 
       } catch (error) {
@@ -318,6 +322,11 @@ const Scholarship = () => {
   }, []);
 
   const submitHandle = () => {
+    if (submitted) {
+      Alert.alert("Already an Applicant", "You are already an applicant.");
+      return;
+    }
+
     if (field) {
       Alert.alert(
         "Scholarship Application",
@@ -364,11 +373,9 @@ const Scholarship = () => {
 
                 await updateDoc(docRef, updateData);
 
-                // After updating, check if user is an applicant
-                const updatedDoc = await getDoc(docRef);
-                if (updatedDoc.exists() && updatedDoc.data().type === "applicant") {
-                  Alert.alert("Already an Applicant", "You are already an applicant.");
-                }
+                setSubmitted(true);
+                Alert.alert("Success", "Submitted successfully!");
+
                 navigation.navigate("Courses");
               } catch (error) {
                 console.error("Error updating document: ", error);
@@ -382,14 +389,15 @@ const Scholarship = () => {
       Alert.alert("Error", "Please select a field");
     }
   };
-  //  if (docData?.type === "applicant") {
-  //   return (
-  //     <View style={styles.container}>
-  //       <Text style={styles.header}>You are already an applicant</Text>
-  //       <Text style={styles.text}>You cannot apply again</Text>
-  //     </View>
-  //   );
-  // }
+
+  if (docData?.type === "applicant") {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.header}>You are already an applicant</Text>
+        <Text style={styles.text}>You cannot apply again</Text>
+      </View>
+    );
+  }
 
   const renderQuestion = ({ item, index }) => (
     <View style={styles.questionContainer}>
