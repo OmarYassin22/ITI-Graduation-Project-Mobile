@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     paddingHorizontal: 20,
     borderBottomColor: '#ccc',
-    height:80,
-    marginBottom:5,
+    height: 80,
+    marginBottom: 5,
 
   },
   logo: {
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     height: 40,
     resizeMode: 'contain',
     // marginHorizontal:'auto'
-    position:'absolute',
+    position: 'absolute',
     left: '40%',
   },
   contentContainer: {
@@ -140,7 +140,8 @@ const styles = StyleSheet.create({
   tableContainer: { padding: 15 },
   tableHeader: { backgroundColor: '#DCDCDC', },
   coursesImages: { width: 50, height: 50 },
-  coursesCardodd: { marginBottom: 10, backgroundColor: "red" },
-  coursesCardeven: { marginBottom: 10, backgroundColor: "green" }
+  coursesCard: { marginbot: 10 },
+  pass: { color: "green" },
+  fail: { color: "red" },
 });
 export default styles;

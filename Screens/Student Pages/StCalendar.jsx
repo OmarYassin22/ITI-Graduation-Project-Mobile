@@ -6,51 +6,30 @@ import StTable from './StTable.jsx';
 import StCourses from './StCourses.jsx';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
-import { AsyncStorage } from '@react-native-async-storage/async-storage';
 
 
-const StCalendar = ({ isDarkMode, toggleDarkMode, navigation }) => {
+
+const StCalendar = ({ isDarkMode, toggleDarkMode, navigation, email2 }) => {
     const [events, setEvents] = useState({});
     const [markedDates, setMarkedDates] = useState({});
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
-    const getFullName = async () => {
-        try {
-            const fname = await AsyncStorage.getItem('fname');
-            const lname = await AsyncStorage.getItem('lname');
-            if (fname !== null) {
-                return lname === null || lname === 'undefined' ? fname : `${fname} ${lname}`;
-            }
-            return '';
-        } catch (error) {
-            console.error('Error retrieving data', error);
-            return '';
-        }
-    };
     useEffect(() => {
-        const fetchDataWithName = async () => {
-            const fullName = await getFullName();
-            fetchData(fullName.replace(/"/g, ''));
-        };
-        fetchDataWithName();
+        fetchData(email2);
     }, []);
-    const fetchData = async (fullName) => {
-        var nameArray = fullName.split(" ");
-        const fname = nameArray[0];
-        const lname = nameArray[1];
-        console.warn(`fname is ${fname} and lname is ${lname}`);
+    const fetchData = async (email) => {
+        console.warn(`email is ${email}`);
         var field;
         var cdata = [];
         const newEvents = {};
         const newMarkedDates = {};
         try {
             const querySnapshot = await getDocs(collection(db, "students"));
-            console.error(`Email is  ==== ${email}`);
             querySnapshot.forEach((doc) => {
                 const coursesData = doc.data();
                 if (typeof coursesData === 'object' && typeof coursesData.courses === "object" && coursesData.email && coursesData.field
                     && coursesData.fname && coursesData.lname && coursesData.number && coursesData.uid) {
-                    if (coursesData.fname = fname && coursesData.lname == lname) {
+                    if (coursesData.email == email) {
                         field = coursesData.field.toLowerCase();
                         coursesData.courses.map((c, index) => {
                             cdata.push(c.course);
@@ -80,6 +59,7 @@ const StCalendar = ({ isDarkMode, toggleDarkMode, navigation }) => {
                                                 day: 'numeric',
                                                 month: 'short',
                                             }),
+                                            instructor: course.instructor,
                                         };
                                         newMarkedDates[formattedDate2] = {
                                             marked: true,
@@ -157,6 +137,7 @@ const StCalendar = ({ isDarkMode, toggleDarkMode, navigation }) => {
                                     <>
                                         <Text style={styles.modalTitle}>{selectedEvent.title}</Text>
                                         <Text style={styles.modalDate}>Date: {selectedEvent.date}</Text>
+                                        <Text style={styles.modalDate}>with {selectedEvent.instructor}</Text>
                                     </>
                                 )}
                                 <TouchableOpacity

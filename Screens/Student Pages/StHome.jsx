@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useStat, useEffect } from 'react';
 import { ScrollView, Text, Image, View, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Calendar } from 'react-native-calendars';
@@ -11,7 +11,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 const Tab = createBottomTabNavigator();
 
-const StHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
+const StHome = ({ isDarkMode, toggleDarkMode, navigation, route }) => {
+    const { email2 } = route.params;
     return (
         <>
             <Tab.Navigator
@@ -21,26 +22,27 @@ const StHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
                 }}
             >
                 <Tab.Screen
-                    name="Calendar"
+                    name="Schedule"
                     options={{
-                        tabBarLabel: 'Calendar',
+                        tabBarLabel: 'Schedule',
+                        headerShown: false,
                         tabBarIcon: ({ color, size }) => (
                             <MaterialCommunityIcons name="calendar-blank" color={color} size={size} />
                         ),
                     }}
                 >
-                    {(props) => <StCalendar {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
+                    {(props) => <StCalendar {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} email2={email2} />}
                 </Tab.Screen>
                 <Tab.Screen
-                    name="Table"
+                    name="Grades"
                     options={{
-                        tabBarLabel: 'Table',
+                        tabBarLabel: 'Grades',
                         tabBarIcon: ({ color, size }) => (
                             <MaterialCommunityIcons name="table" color={color} size={size} />
                         ),
                     }}
                 >
-                    {(props) => <StTable {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
+                    {(props) => <StTable {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} email2={email2} />}
                 </Tab.Screen>
                 <Tab.Screen
                     name="Courses"
@@ -51,7 +53,7 @@ const StHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
                         ),
                     }}
                 >
-                    {(props) => <StCourses {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
+                    {(props) => <StCourses {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} email2={email2} />}
                 </Tab.Screen>
             </Tab.Navigator>
         </>
