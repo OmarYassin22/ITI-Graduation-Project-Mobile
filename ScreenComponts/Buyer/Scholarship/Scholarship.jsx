@@ -7,6 +7,7 @@ import {
   collection,
   doc,
   getDocs,
+  getDoc,
   query,
   updateDoc,
   where,
@@ -18,11 +19,11 @@ import styles from './styleScholarship';
 const Scholarship = () => {
   const [field, setField] = useState("Front-end");
   const [answers, setAnswers] = useState([]);
-  const [docData, setDocData] = useState();
-  const [docId, setDocId] = useState();
+  const [docData, setDocData] = useState(null);
+  const [docId, setDocId] = useState(null);
   const navigation = useNavigation();
 
-  const questions = {
+ const questions = {
       "Front-end": [
       {
         questions: "1. What does HTML stand for?",
@@ -103,7 +104,7 @@ const Scholarship = () => {
       {
         questions:
           "10. Which of the following properties is used to control the spacing between the border and the content of an element in CSS?",
-        answers: ["A) margin ", "B) padding ", "C) border-spacing ", "D) gap "],
+        answers: ["A) margin ", "B) padding ", "C) border-spacing  ", "D) gap "],
         rightAnswer: 1,
       },
     ],
@@ -129,7 +130,7 @@ const Scholarship = () => {
       {
         questions:
           "3. Which of the following is a relational database management system (RDBMS)?",
-        answers: ["A) MongoDB", "B) Firebase", "C) MySQL", "D) Redis"],
+        answers: ["A) MongoDB ", "B) Firebase ", "C) MySQL ", "D) Redis "],
         rightAnswer: 2,
       },
       {
@@ -146,7 +147,7 @@ const Scholarship = () => {
       {
         questions:
           "5. Which HTTP method is used to send data to a server to create a new resource?",
-        answers: ["A) GET", "B) POST", "C) PUT", "D) DELETE"],
+        answers: ["A) GET ", "B) POST ", "C) PUT ", "D) DELETE "],
         rightAnswer: 1,
       },
       {
@@ -162,7 +163,7 @@ const Scholarship = () => {
       {
         questions:
           "7. Which of the following is a common back-end framework for JavaScript?",
-        answers: ["A) Django", "B) Express", "C) Laravel", "D) Flask"],
+        answers: ["A) Django ", "B) Express ", "C) Laravel ", "D) Flask "],
 
         rightAnswer: 1,
       },
@@ -190,7 +191,7 @@ const Scholarship = () => {
       {
         questions:
           "10. Which of the following is an example of an Object-Relational Mapping (ORM) tool?",
-        answers: ["A) Sequelize", "B) Express", "C) Flask", "D) Bootstrap"],
+        answers: ["A) Sequelize ", "B) Express ", "C) Flask ", "D) Bootstrap "],
         rightAnswer: 0,
       },
     ],
@@ -198,14 +199,14 @@ const Scholarship = () => {
       {
         questions:
           "1. Which programming language is primarily used for Android app development?",
-        answers: ["A) Swift", "B) Java", "C) Kotlin", "D) Objective-C"],
+        answers: ["A) Swift ", "B) Java ", "C) Kotlin ", "D) Objective-C  "],
         rightAnswer: 1,
       },
       {
         questions:
           "2. Which of the following is the official IDE for Android development?",
         answers: [
-          "A) Xcode",
+          "A) Xcode ",
           "B) Visual Studio Code",
           "C) Android Studio",
           "D) IntelliJ IDEA",
@@ -215,13 +216,13 @@ const Scholarship = () => {
       {
         questions:
           "3. What is the primary language used for iOS app development?",
-        answers: ["A) Java", "B) Kotlin", "C) Swift", "D) Python"],
+        answers: ["A) Java ", "B) Kotlin ", "C) Swift ", "D) Python "],
         rightAnswer: 2,
       },
       {
         questions:
           "4. Which framework is commonly used for building cross-platform mobile applications?",
-        answers: ["A) Angular", "B) React Native", "C) Django", "D) Laravel"],
+        answers: ["A) Angular ", "B) React Native", "C) Django", "D) Laravel "],
         rightAnswer: 1,
       },
       {
@@ -238,10 +239,10 @@ const Scholarship = () => {
         questions:
           "6. Which of the following is used to handle data persistence in Android apps?",
         answers: [
-          "A) SQLite",
-          "B) MongoDB",
+          "A) SQLite ",
+          "B) MongoDB ",
           "C) Firebase Realtime Database",
-          "D) Redis",
+          "D) Redis ",
         ],
         rightAnswer: 0,
       },
@@ -269,7 +270,7 @@ const Scholarship = () => {
       {
         questions:
           "9. Which component in Flutter is used to build a user interface?",
-        answers: ["A) Widget", "B) Fragment", "C) View", "D) Activity"],
+        answers: ["A) Widget ", "B) Fragment ", "C) View ", "D) Activity "],
         rightAnswer: 0,
       },
       {
@@ -363,9 +364,12 @@ const Scholarship = () => {
 
                 await updateDoc(docRef, updateData);
 
-                Alert.alert("Submitted", "Your application has been submitted.", [
-                  { text: "OK", onPress: () => navigation.navigate("Buyer") },
-                ]);
+                // After updating, check if user is an applicant
+                const updatedDoc = await getDoc(docRef);
+                if (updatedDoc.exists() && updatedDoc.data().type === "applicant") {
+                  Alert.alert("Already an Applicant", "You are already an applicant.");
+                }
+                navigation.navigate("Courses");
               } catch (error) {
                 console.error("Error updating document: ", error);
                 Alert.alert("Error", "There was an issue submitting your application.");
@@ -378,15 +382,14 @@ const Scholarship = () => {
       Alert.alert("Error", "Please select a field");
     }
   };
-
-  if (docData?.type === "applicant") {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.header}>You are already an applicant</Text>
-        <Text style={styles.text}>You cannot apply again</Text>
-      </View>
-    );
-  }
+  //  if (docData?.type === "applicant") {
+  //   return (
+  //     <View style={styles.container}>
+  //       <Text style={styles.header}>You are already an applicant</Text>
+  //       <Text style={styles.text}>You cannot apply again</Text>
+  //     </View>
+  //   );
+  // }
 
   const renderQuestion = ({ item, index }) => (
     <View style={styles.questionContainer}>
@@ -445,7 +448,6 @@ const Scholarship = () => {
 };
 
 export default Scholarship;
-
 
   // const questions = {
   //     "Front-end": [

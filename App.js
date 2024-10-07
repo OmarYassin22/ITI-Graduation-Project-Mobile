@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import Login from "./Screens/login";
 import Signup from "./Screens/Signup.jsx";
 import React, { useState } from "react";
@@ -18,24 +17,7 @@ import Contact from "./Screens/Contact Page/Contact.jsx";
 import Scholarship from "./ScreenComponts/Buyer/Scholarship/Scholarship.jsx";
 import InsHome from "./ScreenComponts/instructor/InstructorHome.jsx";
 import CourseDetails from "./Screens/homeScreen/courseDetails.jsx"; 
-=======
-import React, { useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { createStackNavigator } from '@react-navigation/stack';
-import CustomDrawerContent from './Navigations/CustomDrawerContent';
-import HomeScreen from './Screens/homeScreen/homeScreen';
-import ProfileScreen from './Screens/profileScreen';
-import Buyer from './ScreenComponts/Buyer/Buyer.jsx';
-import Account from './Screens/Account.jsx';
-
-import CourseDetails from './Screens/homeScreen/courseDetails.jsx'; 
-import CoursesProvider from './api/courses/CourseContext'; 
-import InstructorsProvider from './api/instructors/InstructorsContext'; 
-import StudentsProvider from './api/students/StudentsContext';
-import { GetDataProvider } from './Contexts/GetDataContext.js';
-import Scholarship from './Screens/Scholarship/Scholarship.jsx';
->>>>>>> 81b72d9a675647f9260b3e412b8a3322e04ed249
+import Courses from "./ScreenComponts/Buyer/Courses.jsx"; 
 
 const Drawer = createDrawerNavigator();
 
@@ -157,6 +139,15 @@ export default function App() {
               <Drawer.Screen name="Signup" options={{ headerShown: false }}>
                 {(props) => (
                   <Signup
+                    {...props}
+                    isDarkMode={isDarkMode}
+                    toggleDarkMode={toggleDarkMode}
+                  />
+                )}
+              </Drawer.Screen>
+              <Drawer.Screen name="Courses" options={{ headerShown: false }}>
+                {(props) => (
+                  <Courses
                     {...props}
                     isDarkMode={isDarkMode}
                     toggleDarkMode={toggleDarkMode}
