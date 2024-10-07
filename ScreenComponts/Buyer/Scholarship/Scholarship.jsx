@@ -290,7 +290,7 @@ const Scholarship = () => {
     const fetchData = async () => {
       try {
         const email = await AsyncStorage.getItem('email');
-        const cleanedEmail = email?.replace(/^"|"$|'/g, '').trim().toLowerCase(); 
+        const cleanedEmail = email?.replace(/^"|"$|'/g, '').trim(); 
         console.log("Fetched email:", cleanedEmail);
 
         if (!cleanedEmail) {
