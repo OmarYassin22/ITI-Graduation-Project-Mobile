@@ -3,7 +3,7 @@ import { View, SafeAreaView, TouchableOpacity, Image, Switch } from 'react-nativ
 import Icon from 'react-native-vector-icons/Ionicons';
 import styles from '../styles';
 
-const Navbar = ({ isDarkMode, toggleDarkMode, navigation }) => {
+const Navbar = ({ isDarkMode, navigation }) => {
   return (
     <SafeAreaView style={{ backgroundColor: isDarkMode ? '#555' : '#007bff' }}>
       <View style={[styles.navbarContainer, { backgroundColor: isDarkMode ? '#555' : '#007bff' }]}>

@@ -11,8 +11,8 @@ import {
 import CourseList from "./CourseList";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-const Courses = () => {
+import Navbar from "../../Navigations/navbar";
+const Courses = ({ isDarkMode, toggleDarkMode, navigation }) => {
   const { getAllCourses } = useContext(GetData);
   const [courses, setCourses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -39,6 +39,11 @@ const Courses = () => {
     <SafeAreaView
       style={[styles.container, { backgroundColor: theme.colors.background }]}
     >
+      <Navbar
+        isDarkMode={isDarkMode}
+        toggleDarkMode={toggleDarkMode}
+        navigation={navigation}
+      />
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.header}>
           <Headline style={styles.title}>All Courses in our App</Headline>

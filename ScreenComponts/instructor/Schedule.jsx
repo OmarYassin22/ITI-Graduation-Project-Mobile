@@ -3,20 +3,43 @@ import { View, SafeAreaView, Text, StyleSheet, Modal, TouchableOpacity, Platform
 import { Calendar } from 'react-native-calendars';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
+<<<<<<< HEAD:ScreenComponts/instructor/calendar.jsx
 const CalendarComponent = ({ isDarkMode }) => {
+=======
+const Schedule = () => {
+>>>>>>> origin/master:ScreenComponts/instructor/Schedule.jsx
   const [events, setEvents] = useState({});
   const [markedDates, setMarkedDates] = useState({});
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const fullName = 'Emad Elshplangy';
 
   useEffect(() => {
-    fetchData(fullName);
+    const fetchDataWithName = async () => {
+      const fullName = await getFullName();
+      fetchData(fullName.replace(/"/g, ''));
+    };
+    fetchDataWithName();
   }, []);
+
+  const getFullName = async () => {
+    try {
+      const fname = await AsyncStorage.getItem('fname');
+      const lname = await AsyncStorage.getItem('lname');
+      if (fname !== null) {
+        return lname === null || lname === 'undefined' ? fname : `${fname} ${lname}`;
+      }
+      return '';
+    } catch (error) {
+      console.error('Error retrieving data', error);
+      return '';
+    }
+  };
 
   const fetchData = async (fullName) => {
     try {
+      console.log('Fetching data for instructor:', fullName);
       const querySnapshot = await getDocs(collection(db, 'course_instructor'));
       const newEvents = {};
       const newMarkedDates = {};
@@ -30,7 +53,8 @@ const CalendarComponent = ({ isDarkMode }) => {
             course.instructor &&
             course.title
           ) {
-            if (course.instructor === fullName) {
+            console.log(`Comparing: "${course.instructor}" with "${fullName}"`);
+            if (course.instructor.trim() === fullName.trim()) {
               const dateObj = new Date(course.date);
               const formattedDate = dateObj.toISOString().split('T')[0]; // YYYY-MM-DD format
               newEvents[formattedDate] = {
@@ -41,20 +65,75 @@ const CalendarComponent = ({ isDarkMode }) => {
                 }),
               };
               newMarkedDates[formattedDate] = {
+<<<<<<< HEAD:ScreenComponts/instructor/calendar.jsx
                 marked: true,
                 dotColor: isDarkMode ? '#4A90E2' : '#50cebb', // Adjust dot color based on mode
+=======
+                selected: true,
+                selectedColor: '#50cebb',
+                selectedTextColor: 'white',
+>>>>>>> origin/master:ScreenComponts/instructor/Schedule.jsx
               };
+              console.log('Match found:', course.title);
+            } else {
+              console.log('No match for:', course.title);
             }
           }
         });
       });
 
+      console.log('Total events found:', Object.keys(newEvents).length);
       setEvents(newEvents);
       setMarkedDates(newMarkedDates);
     } catch (error) {
       console.error('Error fetching data: ', error);
     }
   };
+
+  // const fetchData = async (fullName) => {
+  //   try {
+  //     const querySnapshot = await getDocs(collection(db, 'course_instructor'));
+  //     const newEvents = {};
+  //     const newMarkedDates = {};
+
+  //     querySnapshot.forEach((doc) => {
+  //       const courses = doc.data();
+  //       Object.entries(courses).forEach(([key, course]) => {
+  //         console.warn(course.instructor);
+  //         if (
+  //           typeof course === 'object' &&
+  //           course.date &&
+  //           course.instructor &&
+  //           course.title
+  //         ) {
+  //           if (course.instructor.trim() === fullName.trim()) {
+  //             const dateObj = new Date(course.date);
+  //             const formattedDate = dateObj.toISOString().split('T')[0]; // YYYY-MM-DD format
+  //             newEvents[formattedDate] = {
+  //               title: course.title,
+  //               date: dateObj.toLocaleDateString('en-GB', {
+  //                 day: 'numeric',
+  //                 month: 'short',
+  //               }),
+  //             };
+  //             newMarkedDates[formattedDate] = {
+  //               marked: true,
+  //               dotColor: '#50cebb',
+  //             };
+  //           }
+  //           else {
+  //             console.warn('not equall');
+  //           }
+  //         }
+  //       });
+  //     });
+
+  //     setEvents(newEvents);
+  //     setMarkedDates(newMarkedDates);
+  //   } catch (error) {
+  //     console.error('Error fetching data: ', error);
+  //   }
+  // };
 
   const onDayPress = (day) => {
     const selectedDate = day.dateString;
@@ -184,4 +263,8 @@ const getStyles = (isDarkMode) => {
   });
 };
 
+<<<<<<< HEAD:ScreenComponts/instructor/calendar.jsx
 export default CalendarComponent;
+=======
+export default Schedule;
+>>>>>>> origin/master:ScreenComponts/instructor/Schedule.jsx

@@ -1,9 +1,4 @@
 {
-<<<<<<< HEAD
-  "functions": {
-    "source": "functions"
-  }
-=======
   "functions": [
     {
       "source": "functions",
@@ -20,5 +15,4 @@
       ]
     }
   ]
->>>>>>> 2ace7ab243ed2784b7c3773e88d33b296f5cd858
 }

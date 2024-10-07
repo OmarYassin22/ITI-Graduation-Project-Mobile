@@ -6,10 +6,11 @@ import CourseList from './CourseList';
 import { useNavigation } from '@react-navigation/native';
 import CourseListBuyer from './CourseListBuyer';
 import CourseListWish from './CourseListWish';
+import Navbar from "../../Navigations/navbar";
 
 
 
-const Wishlist = () => {
+const Wishlist = ({ isDarkMode, toggleDarkMode, navigation }) => {
   const {courseBuyerWish} = useContext(GetData);
   const [courses, setCourses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -30,14 +31,26 @@ const Wishlist = () => {
 
   if(courseBuyerWish.length==0){
     return (
+      <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Navbar
+        isDarkMode={isDarkMode}
+        toggleDarkMode={toggleDarkMode}
+        navigation={navigation}
+      />
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>No courses in your wishlist yet.</Text>
       </View>
+      </SafeAreaView>
     );  
   }
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <Navbar
+        isDarkMode={isDarkMode}
+        toggleDarkMode={toggleDarkMode}
+        navigation={navigation}
+      />
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.header}>
           <Headline style={styles.title}>All Courses in Wishlist</Headline>
