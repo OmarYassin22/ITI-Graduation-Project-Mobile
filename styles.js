@@ -185,5 +185,11 @@ const styles = StyleSheet.create({
   },
   button: { backgroundColor: "blue", textAlign: "center", alignSelf: "center", borderRadius: 5, width: "40%", height: "10%", marginTop: 50 },
   btnTxt: { textAlign: "center", padding: "15%", height: "100%", color: "white", fontSize: 18 },
+  pass: { color: "green" },
+  fail: { color: "red" },
+  coursesImages: { width: 50, height: 50 },
+  coursesCard: { marginbot: 10, color: "red" },
+  TableHeader: { color: "black" },
+  TableHeaderDark: { color: "white" },
 });
 export default styles;

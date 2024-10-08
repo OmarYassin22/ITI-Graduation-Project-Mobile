@@ -47,17 +47,17 @@ const StTable = ({ isDarkMode, toggleDarkMode, navigation, email2 }) => {
             <ScrollView showsVerticalScrollIndicator={false}>
                 <DataTable style={styles.tableContainer}>
                     <DataTable.Header style={styles.tableHeader}>
-                        <DataTable.Title>Name</DataTable.Title>
-                        <DataTable.Title>Percentage</DataTable.Title>
-                        <DataTable.Title>Status</DataTable.Title>
-                        <DataTable.Title>instructor</DataTable.Title>
+                        <DataTable.Title><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>Name</Text></DataTable.Title>
+                        <DataTable.Title><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>Percentage</Text></DataTable.Title>
+                        <DataTable.Title><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>Status</Text></DataTable.Title>
+                        <DataTable.Title><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>instructor</Text></DataTable.Title>
                     </DataTable.Header>
                     {data.map(function (course, key) {
                         return <DataTable.Row>
-                            <DataTable.Cell onPress={() => handlePress("Name", course.course)}>{course.course}  </DataTable.Cell>
+                            <DataTable.Cell onPress={() => handlePress("Name", course.course)}><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>{course.course}</Text></DataTable.Cell>
                             <DataTable.Cell onPress={() => handlePress("Percentage", `${course.percentage}%`)}><Text style={course.coursePercentage >= 50 ? styles.pass : styles.fail}>{course.percentage}%</Text></DataTable.Cell>
                             <DataTable.Cell onPress={() => handlePress("Status", course.status)}><Text style={course.status == "Pass" ? styles.pass : styles.fail}>{course.status}</Text></DataTable.Cell>
-                            <DataTable.Cell onPress={() => handlePress("instructor", course.instructor)}>{course.instructor}</DataTable.Cell>
+                            <DataTable.Cell onPress={() => handlePress("instructor", course.instructor)}><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>{course.instructor}</Text></DataTable.Cell>
                         </DataTable.Row>
                     })}
                 </DataTable>
