@@ -68,7 +68,7 @@ const StCourses = ({ isDarkMode, toggleDarkMode, navigation, email2 }) => {
                         title={courses.course}
                         subtitle={courses.instructor}
                         left={(props) => <Image source={courses.course == "Bootstrap" ? require("../../assets/coureses images/Bootstrap.jpeg") : courses.course == "Flutter" ? require("../../assets/coureses images/flutterr.png") : courses.course == "php" ? require("../../assets/coureses images/PHP.png") : courses.course == "React Native" ? require("../../assets/coureses images/react-native-1.png") : courses.course == "Java" ? require("../../assets/coureses images/java.png") : require("../../assets/coureses images/node.png")} style={styles.coursesImages} />}
-                        style={styles.coursesCard}
+                        style={[styles.coursesCard, isDarkMode && styles.coursesCardDark]}
                         right={(props) => <IconButton {...props} icon="eye" onPress={() => { }} />}
                     />
                 })}

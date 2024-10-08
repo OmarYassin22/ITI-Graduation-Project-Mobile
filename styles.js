@@ -139,9 +139,14 @@ const styles = StyleSheet.create({
   map: { width: "90%", height: 1100, alignSelf: "center", marginBottom: 10 },
   tableContainer: { padding: 15 },
   tableHeader: { backgroundColor: '#DCDCDC', },
-  coursesImages: { width: 50, height: 50 },
-  coursesCard: { marginbot: 10 },
   pass: { color: "green" },
   fail: { color: "red" },
+  coursesImages: { width: 50, height: 50 },
+  coursesCardDark: { marginBottom: 10 },
+  coursesCard: { marginBottom: 10, backgroundColor: "white" },
+  TableHeader: { color: "black" },
+  TableHeaderDark: { color: "white" },
+  calendar: { backgroundColor: "white", color: "balck" },
+  calendarDark: { backgroundColor: "black", color: "white" },
 });
 export default styles;
