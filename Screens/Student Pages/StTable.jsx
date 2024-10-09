@@ -47,10 +47,10 @@ const StTable = ({ isDarkMode, toggleDarkMode, navigation, email2 }) => {
             <ScrollView showsVerticalScrollIndicator={false}>
                 <DataTable style={styles.tableContainer}>
                     <DataTable.Header style={styles.tableHeader}>
-                        <DataTable.Title>Name</DataTable.Title>
-                        <DataTable.Title>Percentage</DataTable.Title>
-                        <DataTable.Title>Status</DataTable.Title>
-                        <DataTable.Title>instructor</DataTable.Title>
+                        <DataTable.Title><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>Name</Text></DataTable.Title>
+                        <DataTable.Title><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>Percentage</Text></DataTable.Title>
+                        <DataTable.Title><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>Status</Text></DataTable.Title>
+                        <DataTable.Title><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>instructor</Text></DataTable.Title>
                     </DataTable.Header>
                     {data.map(function (course, key) {
                         return <DataTable.Row>

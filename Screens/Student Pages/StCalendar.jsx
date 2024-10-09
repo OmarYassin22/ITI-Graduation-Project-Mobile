@@ -100,27 +100,6 @@ const StCalendar = ({ isDarkMode, toggleDarkMode, navigation, email2 }) => {
         textMonthFontSize: 16,
         textDayHeaderFontSize: 16
     });
-    const [calendarThemeDark, setCalendarThemeDark] = useState({
-        backgroundColor: 'black',
-        calendarBackground: 'black',
-        textSectionTitleColor: '#b6c1cd',
-        selectedDayBackgroundColor: '#00adf5',
-        selectedDayTextColor: '#ffffff',
-        todayTextColor: '#00adf5',
-        dayTextColor: '#2d4150',
-        textDisabledColor: '#d9e1e8',
-        dotColor: '#00adf5',
-        selectedDotColor: '#ffffff',
-        arrowColor: '#00adf5',
-        monthTextColor: '#00adf5',
-        indicatorColor: 'blue',
-        textDayFontFamily: 'monospace',
-        textMonthFontFamily: 'monospace',
-        textDayHeaderFontFamily: 'monospace',
-        textDayFontSize: 16,
-        textMonthFontSize: 16,
-        textDayHeaderFontSize: 16
-    });
     const onDayPress = (day) => {
         const selectedDate = day.dateString;
         if (events[selectedDate]) {
@@ -145,7 +124,6 @@ const StCalendar = ({ isDarkMode, toggleDarkMode, navigation, email2 }) => {
                             dotColor: '#50cebb',
                             arrowColor: '#00adf5',
                         }}
-                        style={isDarkMode ? calendarThemeDark : calendarTheme}
                     />
                     <Modal
                         animationType="slide"
