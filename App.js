@@ -34,15 +34,6 @@ export default function App() {
                 <CustomDrawerContent {...props} isDarkMode={isDarkMode} />
               )}
             >
-              <Drawer.Screen name="Signup" options={{ headerShown: false }}>
-                {(props) => (
-                  <Signup
-                    {...props}
-                    isDarkMode={isDarkMode}
-                    toggleDarkMode={toggleDarkMode}
-                  />
-                )}
-              </Drawer.Screen>
               <Drawer.Screen name="Home" options={{ headerShown: false }}>
                 {(props) => (
                   <Home
@@ -73,15 +64,6 @@ export default function App() {
               <Drawer.Screen name="Student" options={{ headerShown: false }}>
                 {(props) => (
                   <StHome
-                    {...props}
-                    isDarkMode={isDarkMode}
-                    toggleDarkMode={toggleDarkMode}
-                  />
-                )}
-              </Drawer.Screen>
-              <Drawer.Screen name="Instructor" options={{ headerShown: false }}>
-                {(props) => (
-                  <InsHome
                     {...props}
                     isDarkMode={isDarkMode}
                     toggleDarkMode={toggleDarkMode}

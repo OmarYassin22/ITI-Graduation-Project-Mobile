@@ -5,11 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { collection, getDocs, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 
-<<<<<<< HEAD:ScreenComponts/instructor/Students.jsx
-const Students = () => {
-=======
 const Table = ({ isDarkMode }) => {
->>>>>>> origin/Mostafa:ScreenComponts/instructor/table.jsx
   const [courseData, setCourseData] = useState([]);
   const [gradeInputs, setGradeInputs] = useState({});
   const [uniqueFieldsArray, setUniqueFieldsArray] = useState([]);
@@ -52,10 +48,6 @@ const Table = ({ isDarkMode }) => {
         }
 
         let filtered = student.courses.filter((course) => course.instructor === fullName);
-<<<<<<< HEAD:ScreenComponts/instructor/Students.jsx
-
-=======
->>>>>>> origin/Mostafa:ScreenComponts/instructor/table.jsx
         return filtered.map((course) => ({
           studentId: student.id,
           courseStudent: student.fname + " " + student.lname,
@@ -293,8 +285,4 @@ const styles = StyleSheet.create({
   },
 });
 
-<<<<<<< HEAD:ScreenComponts/instructor/Students.jsx
-export default Students;
-=======
 export default Table;
->>>>>>> origin/Mostafa:ScreenComponts/instructor/table.jsx

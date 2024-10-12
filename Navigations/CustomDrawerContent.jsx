@@ -54,7 +54,7 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
         style={styles.selectedItem}
       />
 
-      {type != null && type == "buyer" ? (
+      {/* {type != null && type == "buyer" ? (
         <DrawerItem
           label="Buyer"
           icon={({ color, size }) => (
@@ -84,7 +84,7 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
           onPress={() => navigation.navigate("Student")}
           style={styles.selectedItem}
         />
-      ) : null}
+      ) : null} */}
       {/* <DrawerItem
         label="About Us"
         icon={({ color, size }) => <Icon name="book-outline" size={size} color={color} />}
@@ -118,16 +118,6 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
         )}
         focused={currentRoute === "Settings"}
         onPress={() => navigation.navigate("Settings")}
-        style={styles.selectedItem}
-      />
-
-      <DrawerItem
-        label="Instructor"
-        icon={({ color, size }) => (
-          <Icon name="log-in-outline" size={size} color={color} />
-        )}
-        focused={currentRoute === "Instructor"}
-        onPress={() => navigation.navigate("Instructor")}
         style={styles.selectedItem}
       />
 
