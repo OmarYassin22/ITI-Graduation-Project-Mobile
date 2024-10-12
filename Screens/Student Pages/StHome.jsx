@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useStat, useEffect } from 'react';
+import { ScrollView, Text, Image, View, Alert } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Calendar } from 'react-native-calendars';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import StTable from './StTable.jsx';
 import StCourses from './StCourses.jsx';
 import StCalendar from './StCalendar.jsx';
-import Navbar from '../../Navigations/navbar';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -12,11 +15,6 @@ const StHome = ({ isDarkMode, toggleDarkMode, navigation, route }) => {
     const { email2 } = route.params;
     return (
         <>
-            <Navbar 
-                isDarkMode={isDarkMode} 
-                toggleDarkMode={toggleDarkMode} 
-                navigation={navigation} 
-            />
             <Tab.Navigator
                 initialRouteName="Calendar"
                 screenOptions={{
@@ -59,7 +57,11 @@ const StHome = ({ isDarkMode, toggleDarkMode, navigation, route }) => {
                 </Tab.Screen>
             </Tab.Navigator>
         </>
+
     );
 }
 
+
 export default StHome;
+
+
