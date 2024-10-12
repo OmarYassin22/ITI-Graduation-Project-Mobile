@@ -13,7 +13,7 @@ const HomeScreen = ({ isDarkMode, navigation }) => {
 const {instructors}=useInstructors
   const renderCourse = ({ item }) => (
     <View style={styles.courseCard}>
-      <Image source={{ uri: item.image }} style={styles.courseImage} resizeMode="cover" />
+      <Image source={{ uri: item.cImage }} style={styles.courseImage} resizeMode="cover" />
       <View style={styles.overlay}></View>
       <View style={styles.cardContent}>
         <Text style={styles.courseTitle}>{item.title}</Text>

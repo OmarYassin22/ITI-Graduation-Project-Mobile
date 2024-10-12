@@ -17,14 +17,60 @@ import Contact from "./Screens/Contact Page/Contact.jsx";
 import Scholarship from "./ScreenComponts/Buyer/Scholarship/Scholarship.jsx";
 import InsHome from "./ScreenComponts/instructor/InstructorHome.jsx";
 import Signup from "./Screens/Signup.jsx";
+import MessagesProvider from "./api/messages/MessagesContext.jsx"
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
+export function SettingsStack({ isDarkMode, toggleDarkMode }) {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen 
+        name="Settings" 
+        options={{ headerShown: false }}
+      >
+        {(props) => (
+          <SettingsScreen
+            {...props}
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+          />
+        )}
+      </Stack.Screen>
+      <Stack.Screen 
+        name="About" 
+        options={{ headerShown: false }}
+      >
+        {(props) => (
+          <About
+            {...props}
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+          />
+        )}
+      </Stack.Screen>
+      
+      <Stack.Screen 
+        name="Contact" 
+        options={{ headerShown: false }}
+      >
+        {(props) => (
+          <Contact
+            {...props}
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+          />
+        )}
+      </Stack.Screen>
+    </Stack.Navigator>
+  );
+}
 export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
   };
+  
   return (
+    <MessagesProvider>
     <GetDataProvider>
       <NavigationContainer>
         <CourseProvider>
@@ -34,18 +80,18 @@ export default function App() {
                 <CustomDrawerContent {...props} isDarkMode={isDarkMode} />
               )}
             >
-              <Drawer.Screen name="Signup" options={{ headerShown: false }}>
+              <Drawer.Screen name="Home" options={{ headerShown: false }}>
                 {(props) => (
-                  <Signup
+                  <Home
                     {...props}
                     isDarkMode={isDarkMode}
                     toggleDarkMode={toggleDarkMode}
                   />
                 )}
               </Drawer.Screen>
-              <Drawer.Screen name="Home" options={{ headerShown: false }}>
+              <Drawer.Screen name="Signup" options={{ headerShown: false }}>
                 {(props) => (
-                  <Home
+                  <Signup
                     {...props}
                     isDarkMode={isDarkMode}
                     toggleDarkMode={toggleDarkMode}
@@ -89,32 +135,13 @@ export default function App() {
                 )}
               </Drawer.Screen>
               <Drawer.Screen name="Settings" options={{ headerShown: false }}>
-                {(props) => (
-                  <SettingsScreen
-                    {...props}
-                    isDarkMode={isDarkMode}
-                    toggleDarkMode={toggleDarkMode}
-                  />
-                )}
-              </Drawer.Screen>
-              <Drawer.Screen name="About" options={{ headerShown: false }}>
-                {(props) => (
-                  <About
-                    {...props}
-                    isDarkMode={isDarkMode}
-                    toggleDarkMode={toggleDarkMode}
-                  />
-                )}
-              </Drawer.Screen>
-
-              <Drawer.Screen name="Contact" options={{ headerShown: false }}>
-                {(props) => (
-                  <Contact
-                    {...props}
-                    isDarkMode={isDarkMode}
-                    toggleDarkMode={toggleDarkMode}
-                  />
-                )}
+              {(props) => (
+              <SettingsStack
+              {...props}
+              isDarkMode={isDarkMode}
+              toggleDarkMode={toggleDarkMode}
+            />
+          )}
               </Drawer.Screen>
               <Drawer.Screen
                 name="Scholarship"
@@ -128,8 +155,6 @@ export default function App() {
                   />
                 )}
               </Drawer.Screen>
-              
-
               <Drawer.Screen
                 name="Login"
                 options={{ headerShown: false }}
@@ -147,5 +172,6 @@ export default function App() {
         </CourseProvider>
       </NavigationContainer>
     </GetDataProvider>
+    </MessagesProvider>
   );
 }

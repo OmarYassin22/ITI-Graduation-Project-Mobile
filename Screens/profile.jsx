@@ -5,7 +5,6 @@ import * as ImagePicker from 'expo-image-picker';
 import Navbar from '../Navigations/navbar';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import firestore from '@react-native-firebase/firestore';
 const ProfilePage = ({ isDarkMode, navigation }) => {
   const { t } = useTranslation();
   const [profileImage, setProfileImage] = useState(require('../assets/default-img.jpg'));
@@ -31,20 +30,11 @@ const ProfilePage = ({ isDarkMode, navigation }) => {
     try {
       const storedEmail = await AsyncStorage.getItem("email");
       setEmail(storedEmail);
-      if (storedEmail) {
-        const userSnapshot = await firestore()
-          .collection('UserData')
-          .where('email', '==', storedEmail)
-          .limit(1)
-          .get();
-        if (!userSnapshot.empty) {
-          const userData = userSnapshot.docs[0].data();
-          setFname(userData.fname);
-          setType(userData.type);
-        } else {
-          console.log("No user found with the given email.");
-        }
-      }
+      const storedName = await AsyncStorage.getItem("fname");
+      setFname(storedName);
+      const storedType = await AsyncStorage.getItem("type");
+      setType(storedType);
+
     } catch (error) {
       console.error("Error retrieving user data:", error);
     }
@@ -60,17 +50,7 @@ const ProfilePage = ({ isDarkMode, navigation }) => {
       }
     })();
   }, []);
-  // const pickImage = async (setImage) => {
-  //   let result = await ImagePicker.launchImageLibraryAsync({
-  //     mediaTypes: ImagePicker.MediaTypeOptions.Images,
-  //     allowsEditing: true,
-  //     aspect: [4, 3],
-  //     quality: 1,
-  //   });
-  //   if (!result.canceled) {
-  //     setImage({ uri: result.uri || null });
-  //   }
-  // };
+
   const openImagePicker = () => {
     setIsModalVisible(true);
   };
@@ -97,7 +77,7 @@ const ProfilePage = ({ isDarkMode, navigation }) => {
         {isEditingName ? (
           <TextInput
             style={[styles.userNameInput, isDarkMode && styles.darkText]}
-            value={fname}
+            value={fname.replaceAll('"','')}
             onChangeText={setFname}
             onBlur={() => setIsEditingName(false)}
           />
@@ -105,11 +85,11 @@ const ProfilePage = ({ isDarkMode, navigation }) => {
           <TouchableOpacity onPress={() => setIsEditingName(true)}>
             <Text style={[styles.userName, isDarkMode && styles.darkText]}>
               {/* {fname ? fname : 'No Name Available'} */}
-              {email}
+              welcome, {fname.replaceAll('"','')}
             </Text>
           </TouchableOpacity>
         )}
-        <Text style={styles.userRole}>{type ? type : 'No type'}</Text>
+        <Text style={styles.userRole}>{type ? type.replaceAll('"','') : 'No type'}</Text>
       </View>
 
       <View style={styles.aboutMeContainer}>

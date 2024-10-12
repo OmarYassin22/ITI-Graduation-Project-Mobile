@@ -112,7 +112,7 @@ const CourseDetailes = ({ route }) => {
   return (
     <ScrollView>
       <Card>
-        <Card.Cover source={{ uri: course.data.imgPath }} />
+        <Card.Cover source={{ uri: course.data.cImage }} />
         <Card.Content>
           <Title>{course.data.title}</Title>
           <Paragraph>{course.data.details}</Paragraph>
