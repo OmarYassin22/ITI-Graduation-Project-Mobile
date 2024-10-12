@@ -4,6 +4,8 @@ import { Calendar } from 'react-native-calendars';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Navbar from '../../Navigations/navbar';
+
 
 const CalendarComponent = ({ isDarkMode }) => {
   const [events, setEvents] = useState({});
@@ -143,6 +145,7 @@ const CalendarComponent = ({ isDarkMode }) => {
 
   return (
     <SafeAreaView edges={['top']} style={styles.safeArea}>
+      <Navbar isDarkMode={isDarkMode} navigation={navigation} />
       <View style={styles.container}>
         <Text style={styles.header}>Schedule</Text>
         <Calendar
