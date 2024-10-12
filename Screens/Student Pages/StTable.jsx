@@ -1,71 +1,74 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, Alert } from "react-native";
+import React from "react";
+import { StyleSheet, SafeAreaView, ScrollView, Alert } from "react-native";
 import { DataTable } from 'react-native-paper';
-import styles from "../../styles.js";
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../../firebase';
 
-const StTable = ({ isDarkMode, toggleDarkMode, navigation, email2 }) => {
-    const [data, setData] = useState([]);
-    useEffect(() => {
-        fetchData(email2);
-    }, []);
-    const fetchData = async (email) => {
-        console.warn(`Email is${email}`);
-        try {
-            const querySnapshot = await getDocs(collection(db, "students"));
-            var newData = [];
-
-            querySnapshot.forEach((doc) => {
-                const coursesData = doc.data();
-                if (typeof coursesData === 'object' && typeof coursesData.courses === "object" && coursesData.email && coursesData.field
-                    && coursesData.fname && coursesData.lname && coursesData.number && coursesData.uid) {
-                    if (coursesData.email == email) {
-                        coursesData.courses.forEach((coursedata) => {
-                            var coursePercentage = (coursedata.degree / 100) * 100;
-                            var courseStatus = "Pass";
-                            if (coursePercentage >= 50) {
-                                courseStatus = "Pass";
-                            } else {
-                                courseStatus = "Fail";
-                            }
-                            newData.push({ "course": coursedata.course, "degree": coursedata.degree, "instructor": coursedata.instructor, "percentage": coursePercentage, "status": courseStatus });
-                        });
-                    }
-                }
-            });
-            setData(newData);
-        } catch (error) {
-            console.error("Error fetching data: ", error);
-        };
-    };
+const StTable = ({ isDarkMode }) => {
     const handlePress = (title, name) => {
         Alert.alert(title, name);
     };
+
     return (
-        <SafeAreaView style={[styles.mainContainer, isDarkMode && styles.mainContainerDark]}>
+        <SafeAreaView style={[styles.mainContainer, isDarkMode ? styles.mainContainerDark : styles.mainContainer]}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <DataTable style={styles.tableContainer}>
-                    <DataTable.Header style={styles.tableHeader}>
-                        <DataTable.Title><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>Name</Text></DataTable.Title>
-                        <DataTable.Title><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>Percentage</Text></DataTable.Title>
-                        <DataTable.Title><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>Status</Text></DataTable.Title>
-                        <DataTable.Title><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>instructor</Text></DataTable.Title>
+                    <DataTable.Header style={[styles.tableHeader, isDarkMode ? styles.tableHeaderDark : styles.tableHeader]}>
+                        <DataTable.Title textStyle={isDarkMode ? styles.titleTextDark : styles.titleText}>Name</DataTable.Title>
+                        <DataTable.Title textStyle={isDarkMode ? styles.titleTextDark : styles.titleText}>Grade</DataTable.Title>
+                        <DataTable.Title textStyle={isDarkMode ? styles.titleTextDark : styles.titleText}>Percentage</DataTable.Title>
+                        <DataTable.Title textStyle={isDarkMode ? styles.titleTextDark : styles.titleText}>Status</DataTable.Title>
+                        <DataTable.Title textStyle={isDarkMode ? styles.titleTextDark : styles.titleText}>Instructor</DataTable.Title>
                     </DataTable.Header>
-                    {data.map(function (course, key) {
-                        return <DataTable.Row>
-                            <DataTable.Cell onPress={() => handlePress("Name", course.course)}><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>{course.course}</Text></DataTable.Cell>
-                            <DataTable.Cell onPress={() => handlePress("Percentage", `${course.percentage}%`)}><Text style={course.coursePercentage >= 50 ? styles.pass : styles.fail}>{course.percentage}%</Text></DataTable.Cell>
-                            <DataTable.Cell onPress={() => handlePress("Status", course.status)}><Text style={course.status == "Pass" ? styles.pass : styles.fail}>{course.status}</Text></DataTable.Cell>
-                            <DataTable.Cell onPress={() => handlePress("instructor", course.instructor)}><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>{course.instructor}</Text></DataTable.Cell>
-                        </DataTable.Row>
-                    })}
+                    <DataTable.Row>
+                        <DataTable.Cell textStyle={isDarkMode ? styles.cellTextDark : styles.cellText} onPress={() => handlePress("Name", "Java Script")}>Java Script</DataTable.Cell>
+                        <DataTable.Cell textStyle={isDarkMode ? styles.cellTextDark : styles.cellText} onPress={() => handlePress("Grade", "80/100")}>80/100</DataTable.Cell>
+                        <DataTable.Cell textStyle={isDarkMode ? styles.cellTextDark : styles.cellText} onPress={() => handlePress("Percentage", "80%")}>80%</DataTable.Cell>
+                        <DataTable.Cell textStyle={isDarkMode ? styles.cellTextDark : styles.cellText} onPress={() => handlePress("Status", "Pass")}>Pass</DataTable.Cell>
+                        <DataTable.Cell textStyle={isDarkMode ? styles.cellTextDark : styles.cellText} onPress={() => handlePress("instructor", "Amr Gado")}>Amr Gado</DataTable.Cell>
+                    </DataTable.Row>
+                    <DataTable.Row>
+                        <DataTable.Cell textStyle={isDarkMode ? styles.cellTextDark : styles.cellText} onPress={() => handlePress("Name", "HTML")}>HTML</DataTable.Cell>
+                        <DataTable.Cell textStyle={isDarkMode ? styles.cellTextDark : styles.cellText} onPress={() => handlePress("Grade", "60/100")}>60/100</DataTable.Cell>
+                        <DataTable.Cell textStyle={isDarkMode ? styles.cellTextDark : styles.cellText} onPress={() => handlePress("Percentage", "60%")}>60%</DataTable.Cell>
+                        <DataTable.Cell textStyle={isDarkMode ? styles.cellTextDark : styles.cellText} onPress={() => handlePress("Status", "Pass")}>Pass</DataTable.Cell>
+                        <DataTable.Cell textStyle={isDarkMode ? styles.cellTextDark : styles.cellText} onPress={() => handlePress("instructor", "Amr Gado")}>Amr Gado</DataTable.Cell>
+                    </DataTable.Row>
                 </DataTable>
             </ScrollView>
-        </SafeAreaView >
+        </SafeAreaView>
     );
 }
 
+// الأنماط هنا
+const styles = StyleSheet.create({
+    mainContainer: {
+        flex: 1,
+        backgroundColor: '#ffffff', 
+    },
+    mainContainerDark: {
+        backgroundColor: '#121212', 
+    },
+    tableContainer: {
+        margin: 16,
+        borderRadius: 8,
+    },
+    tableHeader: {
+        backgroundColor: '#f0f0f0', 
+    },
+    tableHeaderDark: {
+        backgroundColor: '#333333',
+    },
+    titleText: {
+        color: '#000',
+    },
+    titleTextDark: {
+        color: '#fff', 
+    },
+    cellText: {
+        color: '#000', 
+    },
+    cellTextDark: {
+        color: '#fff', 
+    },
+});
+
 export default StTable;
-
-

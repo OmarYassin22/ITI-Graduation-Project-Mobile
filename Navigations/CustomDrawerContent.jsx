@@ -140,6 +140,13 @@ function CustomDrawerContent({ navigation, isDarkMode }) {
         onPress={() => navigation.navigate("Login")}
         style={styles.selectedItem}
       />
+         <DrawerItem
+        label="Scholarship"
+        icon={({ color, size }) => <Icon name="cart-outline" size={size} color={color} />}
+        focused={currentRoute === 'Scholarship'}
+        onPress={() => navigation.navigate('Scholarship')}
+        style={styles.selectedItem}
+      />
     </DrawerContentScrollView>
   );
 }

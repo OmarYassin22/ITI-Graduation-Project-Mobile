@@ -8,7 +8,11 @@ import { collection, getDocs } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
+<<<<<<< HEAD
 const AddVideo = () => {
+=======
+const AddVideo = ({ isDarkMode }) => {
+>>>>>>> origin/Mostafa
   const [courseData, setCourseData] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState('');
   const [file, setFile] = useState(null);
@@ -121,7 +125,6 @@ const AddVideo = () => {
       (error) => {
         if (error.code === 'storage/canceled') {
           console.log('Upload was cancelled');
-          // Do not show an error message for cancellation
         } else {
           console.error('Error uploading file: ', error);
           Alert.alert(
@@ -153,7 +156,6 @@ const AddVideo = () => {
   const handleStopUpload = () => {
     if (uploadTask) {
       uploadTask.cancel();
-      // The error handling in the upload task will take care of resetting states
       Alert.alert(
         'Upload cancelled',
         'The upload has been cancelled.',
@@ -164,13 +166,13 @@ const AddVideo = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: isDarkMode ? '#333' : 'white' }]}>
       <View style={styles.pickerContainer}>
-        <Text style={styles.label}>Select Your Course</Text>
+        <Text style={[styles.label, { color: isDarkMode ? 'white' : 'black' }]}>Select Your Course</Text>
         <Picker
           selectedValue={selectedCourse}
           onValueChange={(itemValue) => setSelectedCourse(itemValue)}
-          style={styles.picker}
+          style={[styles.picker, { backgroundColor: isDarkMode ? '#444' : '#f0f0f0', color: isDarkMode ? 'white' : 'black' }]}
         >
           <Picker.Item label="Choose a course" value="" />
           {courseData.map((course, key) => (
@@ -180,33 +182,46 @@ const AddVideo = () => {
       </View>
 
       <View style={styles.filePickerContainer}>
-        <Text style={styles.label}>Upload Course Video</Text>
-        <TouchableOpacity style={styles.filePickerButton} onPress={handleFilePick}>
-          <Text style={styles.filePickerButtonText}>
+        <Text style={[styles.label, { color: isDarkMode ? 'white' : 'black' }]}>Upload Course Video</Text>
+        <TouchableOpacity style={[styles.filePickerButton, { backgroundColor: isDarkMode ? '#444' : '#f0f0f0' }]} onPress={handleFilePick}>
+          <Text style={[styles.filePickerButtonText, { color: isDarkMode ? 'white' : 'black' }]}>
             {file ? file.name : 'Pick a video file'}
           </Text>
         </TouchableOpacity>
       </View>
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/Mostafa
       {isUploading && (
         <View style={styles.progressContainer}>
           <AnimatedCircularProgress
             size={120}
             width={15}
             fill={uploadProgress}
-            tintColor="#4A90E2"
-            backgroundColor="#d6d6d6"
+            tintColor={isDarkMode ? '#1abc9c' : '#4A90E2'}
+            backgroundColor={isDarkMode ? '#555' : '#d6d6d6'}
           >
-            {(fill) => <Text style={styles.progressText}>{`${Math.round(fill)}%`}</Text>}
+            {(fill) => (
+              <Text style={[styles.progressText, { color: isDarkMode ? 'white' : 'black' }]}>
+                {`${Math.round(fill)}%`}
+              </Text>
+            )}
           </AnimatedCircularProgress>
         </View>
       )}
 
       <TouchableOpacity
-        style={[styles.button, isUploading ? styles.stopButton : styles.uploadButton]}
+        style={[
+          styles.button,
+          isUploading ? styles.stopButton : styles.uploadButton,
+          { backgroundColor: isUploading ? (isDarkMode ? '#e74c3c' : '#E25C5C') : isDarkMode ? '#3498db' : '#4A90E2' },
+        ]}
         onPress={isUploading ? handleStopUpload : handleUpload}
       >
-        <Text style={styles.buttonText}>{isUploading ? 'Stop Upload' : 'Add'}</Text>
+        <Text style={[styles.buttonText, { color: isDarkMode ? '#333' : 'white' }]}>
+          {isUploading ? 'Stop Upload' : 'Add'}
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -232,7 +247,6 @@ const styles = StyleSheet.create({
   picker: {
     width: '100%',
     height: 50,
-    backgroundColor: '#f0f0f0',
     borderRadius: 8,
     padding: 30,
   },
@@ -241,7 +255,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   filePickerButton: {
-    backgroundColor: '#f0f0f0',
     padding: 10,
     borderRadius: 8,
   },
@@ -260,17 +273,16 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginTop: 20,
   },
-  uploadButton: {
-    backgroundColor: '#4A90E2',
-  },
-  stopButton: {
-    backgroundColor: '#E25C5C',
-  },
+  uploadButton: {},
+  stopButton: {},
   buttonText: {
-    color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
   },
 });
 
+<<<<<<< HEAD
 export default AddVideo;
+=======
+export default AddVideo;
+>>>>>>> origin/Mostafa

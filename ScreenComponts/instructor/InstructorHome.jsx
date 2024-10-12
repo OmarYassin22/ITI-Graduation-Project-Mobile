@@ -3,7 +3,12 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Schedule from "./Schedule";
 import AddVideo from "./addvideo";
+<<<<<<< HEAD
 import Students from "./Students";
+=======
+import Table from "./table";
+import Navbar from '../../Navigations/navbar'; 
+>>>>>>> origin/Mostafa
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Tab = createBottomTabNavigator();
@@ -24,6 +29,11 @@ const InsHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
 
   return (
     <>
+      <Navbar 
+        isDarkMode={isDarkMode} 
+        toggleDarkMode={toggleDarkMode} 
+        navigation={navigation}
+      />
       <Tab.Navigator
         initialRouteName="Schedule"
         screenOptions={{
@@ -73,7 +83,7 @@ const InsHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
         <Tab.Screen
           name="AddVideo"
           options={{
-            tabBarLabel: "AddVideo",
+            tabBarLabel: "Add Video",
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons
                 name="video-plus"
