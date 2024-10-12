@@ -4,12 +4,11 @@ import { Calendar } from 'react-native-calendars';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Navbar from '../../Navigations/navbar';
 
-<<<<<<< HEAD:ScreenComponts/instructor/Schedule.jsx
-const Schedule = () => {
-=======
+
 const CalendarComponent = ({ isDarkMode }) => {
->>>>>>> origin/Mostafa:ScreenComponts/instructor/calendar.jsx
+
   const [events, setEvents] = useState({});
   const [markedDates, setMarkedDates] = useState({});
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -65,14 +64,11 @@ const CalendarComponent = ({ isDarkMode }) => {
                 }),
               };
               newMarkedDates[formattedDate] = {
-<<<<<<< HEAD:ScreenComponts/instructor/Schedule.jsx
                 selected: true,
                 selectedColor: '#50cebb',
                 selectedTextColor: 'white',
-=======
                 marked: true,
                 dotColor: isDarkMode ? '#4A90E2' : '#50cebb', // Adjust dot color based on mode
->>>>>>> origin/Mostafa:ScreenComponts/instructor/calendar.jsx
               };
               console.log('Match found:', course.title);
             } else {
@@ -150,6 +146,7 @@ const CalendarComponent = ({ isDarkMode }) => {
 
   return (
     <SafeAreaView edges={['top']} style={styles.safeArea}>
+      <Navbar isDarkMode={isDarkMode} navigation={navigation} />
       <View style={styles.container}>
         <Text style={styles.header}>Schedule</Text>
         <Calendar
@@ -263,8 +260,4 @@ const getStyles = (isDarkMode) => {
   });
 };
 
-<<<<<<< HEAD:ScreenComponts/instructor/Schedule.jsx
-export default Schedule;
-=======
 export default CalendarComponent;
->>>>>>> origin/Mostafa:ScreenComponts/instructor/calendar.jsx

@@ -12,7 +12,7 @@ const CourseList = ({ filteredCourses }) => {
   };
   const renderCourseItem = ({ item: course }) => (
     <Card style={styles.card}>
-      <Card.Cover source={{ uri: course.image }} />
+      <Card.Cover source={{ uri: course.data.cImage }} />
       <Card.Content>
         <Title>{course.data.title}</Title>
         <Paragraph>{`by: ${course.data.instructor.split(" ").slice(0, 3).join(" ")}`}</Paragraph>

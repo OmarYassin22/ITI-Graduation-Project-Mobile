@@ -20,9 +20,9 @@ const InsHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
       var email = await AsyncStorage.getItem("email");
       var email = await AsyncStorage.getItem("fname");
       var email = await AsyncStorage.getItem("lname");
-      console.warn(email);
-      console.warn(fname);
-      console.warn(lname);
+      // console.warn(email);
+      // console.warn(fname);
+      // console.warn(lname);
     }
     getEmail();
   }, []);

@@ -10,31 +10,20 @@ import { useTranslation } from 'react-i18next';
 const HomeScreen = ({ isDarkMode, navigation }) => {
   const { t } = useTranslation();
   const { courses, loading } = useCourses();
-
-  const renderCourse = ({ item }) => {
-    return (
-      <TouchableOpacity
-        style={styles.courseCard}
-        onPress={() => navigation.navigate('CourseDetails', { course: item, isDarkMode })} 
-      >
-        <ImageBackground
-          source={item.imgPath ? { uri: item.imgPath } : null}
-          style={styles.courseImage}
-          resizeMode="cover"
-        >
-          <View style={styles.overlay}></View>
-          <View style={styles.cardContent}>
-            <Text style={styles.courseTitle}>{item.title}</Text>
-            <View style={styles.ratingContainer}>
-              <FontAwesome name="star" size={16} color="#FFD700" />
-              <Text style={styles.ratingText}>{parseFloat(item.rating).toFixed(2)}</Text>
-            </View>
-          </View>
-        </ImageBackground>
-      </TouchableOpacity>
-    );
-  };
-
+const {instructors}=useInstructors
+  const renderCourse = ({ item }) => (
+    <View style={styles.courseCard}>
+      <Image source={{ uri: item.cImage }} style={styles.courseImage} resizeMode="cover" />
+      <View style={styles.overlay}></View>
+      <View style={styles.cardContent}>
+        <Text style={styles.courseTitle}>{item.title}</Text>
+        <View style={styles.ratingContainer}>
+          <FontAwesome name="star" size={16} color="#FFD700" />
+          <Text style={styles.ratingText}>{parseFloat(item.rating).toFixed(2)}</Text>
+        </View>
+      </View>
+    </View>
+  );
   return (
     <View style={[styles.screenContainer, isDarkMode && styles.darkContainer]}>
       <Navbar isDarkMode={isDarkMode} navigation={navigation} />
