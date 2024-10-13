@@ -62,7 +62,7 @@ const Login = ({ isDarkMode, toggleDarkMode, navigation }) => {
           } else if (userType === "instructor") {
             navigation.navigate("Instructor");
           } else if (userType === "student") {
-            navigation.navigate("Student",{email2:email});
+            navigation.navigate("Student Pages", { email2: email });
           }
         } else {
           console.warn("No such document!");
