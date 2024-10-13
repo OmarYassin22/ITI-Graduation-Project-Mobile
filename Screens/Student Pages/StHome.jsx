@@ -1,4 +1,4 @@
-import React, { useStat, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ScrollView, Text, Image, View, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Calendar } from 'react-native-calendars';
@@ -7,12 +7,11 @@ import StTable from './StTable.jsx';
 import StCourses from './StCourses.jsx';
 import StCalendar from './StCalendar.jsx';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import { useRoute } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
-const StHome = ({ isDarkMode, toggleDarkMode, navigation, route }) => {
-    const { email2 } = route.params;
+const StHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
     return (
         <>
             <Tab.Navigator
@@ -31,29 +30,31 @@ const StHome = ({ isDarkMode, toggleDarkMode, navigation, route }) => {
                         ),
                     }}
                 >
-                    {(props) => <StCalendar {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} email2={email2} />}
+                    {(props) => <StCalendar {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
                 </Tab.Screen>
                 <Tab.Screen
                     name="Grades"
                     options={{
                         tabBarLabel: 'Grades',
+                        headerShown: false,
                         tabBarIcon: ({ color, size }) => (
                             <MaterialCommunityIcons name="table" color={color} size={size} />
                         ),
                     }}
                 >
-                    {(props) => <StTable {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} email2={email2} />}
+                    {(props) => <StTable {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
                 </Tab.Screen>
                 <Tab.Screen
                     name="Courses"
                     options={{
                         tabBarLabel: 'Courses',
+                        headerShown: false,
                         tabBarIcon: ({ color, size }) => (
                             <MaterialCommunityIcons name="content-paste" color={color} size={size} />
                         ),
                     }}
                 >
-                    {(props) => <StCourses {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} email2={email2} />}
+                    {(props) => <StCourses {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
                 </Tab.Screen>
             </Tab.Navigator>
         </>

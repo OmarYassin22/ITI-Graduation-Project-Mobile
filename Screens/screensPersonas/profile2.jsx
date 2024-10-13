@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, TextInput, Alert, Modal, ScrollView } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import Navbar from '../Navigations/navbar';
+// import Navbar from '../Navigations/navbar';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-const ProfilePage = ({ isDarkMode, navigation }) => {
+import SecondNavbar from '../../Navigations/secondNav/secondNavbar';
+const ProfilePage2 = ({ isDarkMode, navigation }) => {
   const { t } = useTranslation();
-  const [profileImage, setProfileImage] = useState(require('../assets/default-img.jpg'));
+  const [profileImage, setProfileImage] = useState(require('../../assets/default-img.jpg'));
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEditingName, setIsEditingName] = useState(false);
   const [aboutMeText, setAboutMeText] = useState('Enter some details about yourself...');
@@ -17,13 +18,13 @@ const ProfilePage = ({ isDarkMode, navigation }) => {
   const [type, setType] = useState(''); 
 
   const imageOptions = [
-    require('../assets/default-img.jpg'),
-    require('../assets/profImags/man-profile.jpg'),
-    require('../assets/profImags/man-profile2.jpg'),
-    require('../assets/profImags/old.jpeg'),
-    require('../assets/profImags/woman-profile.jpg'),
-    require('../assets/profImags/woman-profile2.jpg'),
-    require('../assets/profImags/womanold.jpg')
+    require('../../assets/default-img.jpg'),
+    require('../../assets/profImags/man-profile.jpg'),
+    require('../../assets/profImags/man-profile2.jpg'),
+    require('../../assets/profImags/old.jpeg'),
+    require('../../assets/profImags/woman-profile.jpg'),
+    require('../../assets/profImags/woman-profile2.jpg'),
+    require('../../assets/profImags/womanold.jpg')
   ];
 
   async function fetchUserData() {
@@ -61,8 +62,11 @@ const ProfilePage = ({ isDarkMode, navigation }) => {
   };
   return (
     <View style={[styles.container, isDarkMode && styles.darkContainer]}>
-      <Navbar isDarkMode={isDarkMode} navigation={navigation} />
-
+      {/* <Navbar isDarkMode={isDarkMode} navigation={navigation} /> */}
+      <SecondNavbar
+      isDarkMode={isDarkMode}
+      navigation={navigation}
+      />
       <View style={styles.profileImageContainer}>
         <Image 
           source={profileImage} 
@@ -219,4 +223,4 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
 });
-export default ProfilePage;
+export default ProfilePage2;

@@ -8,6 +8,7 @@ import {
   collection,
   doc,
   getDocs,
+  getDoc,
   query,
   updateDoc,
   where,
@@ -20,11 +21,12 @@ import Navbar from "../../../Navigations/navbar";
 const Scholarship = ({isDarkMode, toggleDarkMode}) => {
   const [field, setField] = useState(null);
   const [answers, setAnswers] = useState([]);
-  const [docData, setDocData] = useState();
-  const [docId, setDocId] = useState();
+  const [docData, setDocData] = useState(null);
+  const [docId, setDocId] = useState(null);
+  const [submitted, setSubmitted] = useState(false); 
   const navigation = useNavigation();
 
-  const questions = {
+ const questions = {
       "Front-end": [
       {
         questions: "1. What does HTML stand for?",
@@ -105,7 +107,7 @@ const Scholarship = ({isDarkMode, toggleDarkMode}) => {
       {
         questions:
           "10. Which of the following properties is used to control the spacing between the border and the content of an element in CSS?",
-        answers: ["A) margin ", "B) padding ", "C) border-spacing ", "D) gap "],
+        answers: ["A) margin ", "B) padding ", "C) border-spacing  ", "D) gap "],
         rightAnswer: 1,
       },
     ],
@@ -131,7 +133,7 @@ const Scholarship = ({isDarkMode, toggleDarkMode}) => {
       {
         questions:
           "3. Which of the following is a relational database management system (RDBMS)?",
-        answers: ["A) MongoDB", "B) Firebase", "C) MySQL", "D) Redis"],
+        answers: ["A) MongoDB ", "B) Firebase ", "C) MySQL ", "D) Redis "],
         rightAnswer: 2,
       },
       {
@@ -148,7 +150,7 @@ const Scholarship = ({isDarkMode, toggleDarkMode}) => {
       {
         questions:
           "5. Which HTTP method is used to send data to a server to create a new resource?",
-        answers: ["A) GET", "B) POST", "C) PUT", "D) DELETE"],
+        answers: ["A) GET ", "B) POST ", "C) PUT ", "D) DELETE "],
         rightAnswer: 1,
       },
       {
@@ -164,7 +166,7 @@ const Scholarship = ({isDarkMode, toggleDarkMode}) => {
       {
         questions:
           "7. Which of the following is a common back-end framework for JavaScript?",
-        answers: ["A) Django", "B) Express", "C) Laravel", "D) Flask"],
+        answers: ["A) Django ", "B) Express ", "C) Laravel ", "D) Flask "],
 
         rightAnswer: 1,
       },
@@ -192,7 +194,7 @@ const Scholarship = ({isDarkMode, toggleDarkMode}) => {
       {
         questions:
           "10. Which of the following is an example of an Object-Relational Mapping (ORM) tool?",
-        answers: ["A) Sequelize", "B) Express", "C) Flask", "D) Bootstrap"],
+        answers: ["A) Sequelize ", "B) Express ", "C) Flask ", "D) Bootstrap "],
         rightAnswer: 0,
       },
     ],
@@ -200,14 +202,14 @@ const Scholarship = ({isDarkMode, toggleDarkMode}) => {
       {
         questions:
           "1. Which programming language is primarily used for Android app development?",
-        answers: ["A) Swift", "B) Java", "C) Kotlin", "D) Objective-C"],
+        answers: ["A) Swift ", "B) Java ", "C) Kotlin ", "D) Objective-C  "],
         rightAnswer: 1,
       },
       {
         questions:
           "2. Which of the following is the official IDE for Android development?",
         answers: [
-          "A) Xcode",
+          "A) Xcode ",
           "B) Visual Studio Code",
           "C) Android Studio",
           "D) IntelliJ IDEA",
@@ -217,13 +219,13 @@ const Scholarship = ({isDarkMode, toggleDarkMode}) => {
       {
         questions:
           "3. What is the primary language used for iOS app development?",
-        answers: ["A) Java", "B) Kotlin", "C) Swift", "D) Python"],
+        answers: ["A) Java ", "B) Kotlin ", "C) Swift ", "D) Python "],
         rightAnswer: 2,
       },
       {
         questions:
           "4. Which framework is commonly used for building cross-platform mobile applications?",
-        answers: ["A) Angular", "B) React Native", "C) Django", "D) Laravel"],
+        answers: ["A) Angular ", "B) React Native", "C) Django", "D) Laravel "],
         rightAnswer: 1,
       },
       {
@@ -240,10 +242,10 @@ const Scholarship = ({isDarkMode, toggleDarkMode}) => {
         questions:
           "6. Which of the following is used to handle data persistence in Android apps?",
         answers: [
-          "A) SQLite",
-          "B) MongoDB",
+          "A) SQLite ",
+          "B) MongoDB ",
           "C) Firebase Realtime Database",
-          "D) Redis",
+          "D) Redis ",
         ],
         rightAnswer: 0,
       },
@@ -271,7 +273,7 @@ const Scholarship = ({isDarkMode, toggleDarkMode}) => {
       {
         questions:
           "9. Which component in Flutter is used to build a user interface?",
-        answers: ["A) Widget", "B) Fragment", "C) View", "D) Activity"],
+        answers: ["A) Widget ", "B) Fragment ", "C) View ", "D) Activity "],
         rightAnswer: 0,
       },
       {
@@ -286,44 +288,47 @@ const Scholarship = ({isDarkMode, toggleDarkMode}) => {
       },
     ],
   };
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const email = await AsyncStorage.getItem('email');
-      console.log("Fetched email:", email);
 
-      if (!email) {
-        // console.error("Email is missing.");
-        Alert.alert("Error", "Email is missing. Please try again.");
-        return;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const email = await AsyncStorage.getItem('email');
+        const cleanedEmail = email?.replace(/^"|"$|'/g, '').trim(); 
+        console.log("Fetched email:", cleanedEmail);
+
+        if (!cleanedEmail) {
+          Alert.alert("Error", "Email is missing. Please try again.");
+          return;
+        }
+
+        const usersCollection = collection(db, "UserData");
+        const q = query(usersCollection, where("email", "==", cleanedEmail));
+        const querySnapshot = await getDocs(q);
+
+        querySnapshot.forEach((doc) => {
+          console.log("Document ID found:", doc.id); 
+          setDocId(doc.id);
+          setDocData(doc.data());
+          if (doc.data().type === "applicant") {
+            setSubmitted(true); 
+          }
+        });
+
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        Alert.alert("Error", "Failed to fetch user data. Please try again.");
       }
+    };
 
-      const usersCollection = collection(db, "UserData");
-      const q = query(usersCollection, where("email", "==", email));
-      const querySnapshot = await getDocs(q);
-
-      if (querySnapshot.empty) {
-        // console.error("No documents found for this email.");
-        Alert.alert("Error", "No user found with the given email.");
-        return;
-      }
-
-      querySnapshot.forEach((doc) => {
-        console.log("Document ID found:", doc.id);
-        setDocId(doc.id);
-        setDocData(doc.data());
-      });
-
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      Alert.alert("Error", "Failed to fetch user data. Please try again.");
-    }
-  };
-
-  fetchData();
-}, []);
+    fetchData();
+  }, []);
 
   const submitHandle = () => {
+    if (submitted) {
+      Alert.alert("Already an Applicant", "You are already an applicant.");
+      return;
+    }
+
     if (field) {
       Alert.alert(
         "Scholarship Application",
@@ -370,9 +375,10 @@ useEffect(() => {
 
                 await updateDoc(docRef, updateData);
 
-                Alert.alert("Submitted", "Your application has been submitted.", [
-                  { text: "OK", onPress: () => navigation.navigate("Buyer") },
-                ]);
+                setSubmitted(true);
+                Alert.alert("Success", "Submitted successfully!");
+
+                navigation.navigate("Courses");
               } catch (error) {
                 console.error("Error updating document: ", error);
                 Alert.alert("Error", "There was an issue submitting your application.");
