@@ -12,6 +12,7 @@ import CourseList from "./CourseList";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Navbar from "../../Navigations/navbar";
+import SecondNavbar from "../../Navigations/secondNav/secondNavbar";
 const Courses = ({ isDarkMode, toggleDarkMode, navigation }) => {
   const { getAllCourses } = useContext(GetData);
   const [courses, setCourses] = useState([]);
@@ -37,16 +38,20 @@ const Courses = ({ isDarkMode, toggleDarkMode, navigation }) => {
 
   return (
     <SafeAreaView
-      style={[styles.container, { backgroundColor: theme.colors.background }]}
+      style={[styles.container, { backgroundColor: theme.colors.background },isDarkMode && styles.darkContainer]}
     >
-      <Navbar
+      {/* <Navbar
         isDarkMode={isDarkMode}
         toggleDarkMode={toggleDarkMode}
         navigation={navigation}
+      /> */}
+      <SecondNavbar
+      isDarkMode={isDarkMode}
+      navigation={navigation}
       />
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.header}>
-          <Headline style={styles.title}>All Courses in our App</Headline>
+          <Headline style={[styles.title,isDarkMode&&styles.darkText]}>All Courses in our App</Headline>
           <Searchbar
             placeholder="Search courses"
             onChangeText={setSearchTerm}
@@ -54,7 +59,7 @@ const Courses = ({ isDarkMode, toggleDarkMode, navigation }) => {
             style={styles.searchBar}
           />
         </View>
-        <CourseList filteredCourses={filteredCourses} />
+        <CourseList filteredCourses={filteredCourses} isDarkMode={isDarkMode} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -79,6 +84,12 @@ const styles = StyleSheet.create({
   searchBar: {
     marginBottom: 16,
   },
+  darkText: {
+    color: '#fff',
+  },
+  darkContainer: {
+    backgroundColor: '#333',
+  }
 });
 
 export default Courses;

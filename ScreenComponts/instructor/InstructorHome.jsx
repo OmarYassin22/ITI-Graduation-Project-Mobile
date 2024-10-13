@@ -3,10 +3,17 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Schedule from "./Schedule";
 import AddVideo from "./addvideo";
+<<<<<<< HEAD
 // import Table from "./table";
 import Navbar from '../../Navigations/navbar'; 
 import Students from "./Students";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+=======
+import Students from "./Students";
+// import Table from "./table";
+import Navbar from '../../Navigations/navbar'; 
+// import AsyncStorage from "@react-native-async-storage/async-storage";
+>>>>>>> fbc9b60309694597f9914e1f5bae8ae31377260b
 
 const Tab = createBottomTabNavigator();
 
@@ -14,12 +21,12 @@ const InsHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
 
   useEffect(() => {
     async function getEmail() {
-      var email = await AsyncStorage.getItem("email");
-      var email = await AsyncStorage.getItem("fname");
-      var email = await AsyncStorage.getItem("lname");
-      console.warn(email);
-      console.warn(fname);
-      console.warn(lname);
+      // var email = await AsyncStorage.getItem("email");
+      // var email = await AsyncStorage.getItem("fname");
+      // var email = await AsyncStorage.getItem("lname");
+      // console.warn(email);
+      // console.warn(fname);
+      // console.warn(lname);
     }
     getEmail();
   }, []);

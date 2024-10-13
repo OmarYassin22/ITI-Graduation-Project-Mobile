@@ -31,29 +31,29 @@ const Wishlist = ({ isDarkMode, toggleDarkMode, navigation }) => {
 
   if(courseBuyerWish.length==0){
     return (
-      <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background },isDarkMode&&styles.darkContainer]}>
       <Navbar
         isDarkMode={isDarkMode}
         toggleDarkMode={toggleDarkMode}
         navigation={navigation}
       />
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>No courses in your wishlist yet.</Text>
+        <Text style={[isDarkMode&&styles.darkText]}>No courses in your wishlist yet.</Text>
       </View>
       </SafeAreaView>
     );  
   }
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background },isDarkMode && styles.darkContainer]}>
       <Navbar
         isDarkMode={isDarkMode}
         toggleDarkMode={toggleDarkMode}
         navigation={navigation}
       />
       <ScrollView contentContainerStyle={styles.scrollView}>
-        <View style={styles.header}>
-          <Headline style={styles.title}>All Courses in Wishlist</Headline>
+        <View style={[styles.header,isDarkMode&&styles.darkContainer]}>
+          <Headline style={[styles.title,isDarkMode&&styles.darkText]}>All Courses in Wishlist</Headline>
           <Searchbar
             placeholder="Search courses"
             onChangeText={setSearchTerm}
@@ -62,7 +62,7 @@ const Wishlist = ({ isDarkMode, toggleDarkMode, navigation }) => {
           />
         </View>
         <CourseListWish 
-          filteredCourses={filteredCourses} 
+          filteredCourses={filteredCourses} isDarkMode={isDarkMode}
          
         />
       </ScrollView>
@@ -89,6 +89,12 @@ const styles = StyleSheet.create({
   searchBar: {
     marginBottom: 16,
   },
+  darkText: {
+    color: '#fff',
+  },
+  darkContainer: {
+    backgroundColor: '#333',
+  }
 });
 
 export default Wishlist;

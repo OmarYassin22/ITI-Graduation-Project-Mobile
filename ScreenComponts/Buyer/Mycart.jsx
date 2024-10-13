@@ -15,6 +15,7 @@ import {
   Button,
 } from "react-native-paper";
 import CourseListBuyer from "./CourseListBuyer";
+import Navbar from "../../Navigations/navbar";
 import {
   StripeProvider,
   CardField,
@@ -33,13 +34,13 @@ import {
 import { db } from "../../firebase";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Navbar from "../../Navigations/navbar";
+
 
 // Use Stripe's test publishable key
 const STRIPE_PUBLISHABLE_KEY =
   "pk_test_51PrP4TBp38FM06vYjqUSTOWFAdyY60sB8ibBsgfWBIbVReUBAauq8qRPyJR4TRdBgzyBY1SnxeRN23cmyQg4wu2Y00iBHn5Kvm";
 
-const Mycart = ({ isDarkMode, toggleDarkMode }) => {
+const Mycart = ({  isDarkMode, toggleDarkMode }) => {
   const { courseBuyerCart, setCourseBuyerCart } = useContext(GetData);
   const [courses, setCourses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -185,7 +186,11 @@ const Mycart = ({ isDarkMode, toggleDarkMode }) => {
   if (courseBuyerCart.length === 0) {
     return (
       <SafeAreaView
-        style={[styles.container, { backgroundColor: theme.colors.background }]}
+      style={[styles.container, { backgroundColor: theme.colors.background },isDarkMode && styles.darkContainer]}
+    >
+     
+      <SafeAreaView
+      style={[styles.container, { backgroundColor: theme.colors.background },isDarkMode && styles.darkContainer]}
       >
         <Navbar
           isDarkMode={isDarkMode}
@@ -196,26 +201,33 @@ const Mycart = ({ isDarkMode, toggleDarkMode }) => {
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
-          <Text>No courses in your cart yet.</Text>
+          <Text style={ [styles.totalAmount,isDarkMode&&styles.darkText]}>No courses in your cart yet.</Text>
         </View>
+      </SafeAreaView>
       </SafeAreaView>
     );
   }
 
   return (
     <SafeAreaView
-      style={[styles.container, { backgroundColor: theme.colors.background }]}
+    style={[styles.container, { backgroundColor: theme.colors.background },isDarkMode && styles.darkContainer]}
+
     >
+             <Navbar
+        isDarkMode={isDarkMode}
+        toggleDarkMode={toggleDarkMode}
+        navigation={navigation}
+      />
       <StripeProvider publishableKey={STRIPE_PUBLISHABLE_KEY}>
         <SafeAreaView
           style={[
             styles.container,
-            { backgroundColor: theme.colors.background },
+            { backgroundColor: theme.colors.background },isDarkMode && styles.darkContainer
           ]}
         >
           <ScrollView contentContainerStyle={styles.scrollView}>
             <View style={styles.header}>
-              <Headline style={styles.title}>All Courses in My Cart</Headline>
+              <Headline style={[styles.title,isDarkMode&&styles.darkText]}>All Courses in My Cart</Headline>
               <Searchbar
                 placeholder="Search courses"
                 onChangeText={setSearchTerm}
@@ -223,9 +235,9 @@ const Mycart = ({ isDarkMode, toggleDarkMode }) => {
                 style={styles.searchBar}
               />
             </View>
-            <CourseListBuyer filteredCourses={filteredCourses} />
+            <CourseListBuyer filteredCourses={filteredCourses} isDarkMode={isDarkMode} />
             <View style={styles.paymentSection}>
-              <Text style={styles.totalAmount}>Total: ${totalAmount}</Text>
+              <Text style={[styles.totalAmount,isDarkMode&&styles.darkText]}>Total: ${totalAmount}</Text>
               <CardField
                 postalCodeEnabled={true}
                 placeholder={{
@@ -286,6 +298,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
+  darkText: {
+    color: '#fff',
+  },
+  darkContainer: {
+    backgroundColor: '#333',
+  }
 });
 
 export default Mycart;

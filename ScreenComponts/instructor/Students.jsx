@@ -48,7 +48,6 @@ const Students = ({ isDarkMode }) => {
         }
 
         let filtered = student.courses.filter((course) => course.instructor === fullName);
-
         return filtered.map((course) => ({
           studentId: student.id,
           courseStudent: student.fname + " " + student.lname,

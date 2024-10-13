@@ -4,8 +4,14 @@ import { Calendar } from 'react-native-calendars';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Navbar from '../../Navigations/navbar';
 
+
+<<<<<<< HEAD
 const Schedule = ({isDarkMode}) => {
+=======
+const CalendarComponent = ({ isDarkMode }) => {
+>>>>>>> fbc9b60309694597f9914e1f5bae8ae31377260b
   const [events, setEvents] = useState({});
   const [markedDates, setMarkedDates] = useState({});
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -61,11 +67,19 @@ const Schedule = ({isDarkMode}) => {
                 }),
               };
               newMarkedDates[formattedDate] = {
+<<<<<<< HEAD
                 marked: true,
                 dotColor: isDarkMode ? '#4A90E2' : '#50cebb', // Adjust dot color based on mode
                 selected: true,
                 selectedColor: '#50cebb',
                 selectedTextColor: 'white',
+=======
+                selected: true,
+                selectedColor: '#50cebb',
+                selectedTextColor: 'white',
+                marked: true,
+                dotColor: isDarkMode ? '#4A90E2' : '#50cebb', // Adjust dot color based on mode
+>>>>>>> fbc9b60309694597f9914e1f5bae8ae31377260b
               };
               console.log('Match found:', course.title);
             } else {
@@ -143,23 +157,24 @@ const Schedule = ({isDarkMode}) => {
 
   return (
     <SafeAreaView edges={['top']} style={styles.safeArea}>
+      <Navbar isDarkMode={isDarkMode} navigation={navigation} />
       <View style={styles.container}>
         <Text style={styles.header}>Schedule</Text>
         <Calendar
           onDayPress={onDayPress}
           markedDates={markedDates}
           theme={{
-            backgroundColor: isDarkMode ? '#121212' : '#ffffff', 
-            calendarBackground: isDarkMode ? '#121212' : '#ffffff', 
-            textSectionTitleColor: isDarkMode ? '#b6c1cd' : '#2d4150', 
-            dayTextColor: isDarkMode ? 'white' : '#2d4150', 
-            todayTextColor: isDarkMode ? '#4A90E2' : '#00adf5', 
-            selectedDayBackgroundColor: isDarkMode ? '#4A90E2' : '#00adf5', 
-            selectedDayTextColor: 'white', 
-            dotColor: isDarkMode ? '#4A90E2' : '#50cebb', 
-            arrowColor: isDarkMode ? '#4A90E2' : '#00adf5', 
-            monthTextColor: isDarkMode ? 'white' : 'black', 
-            indicatorColor: isDarkMode ? 'white' : '#00adf5', 
+            backgroundColor: isDarkMode ? '#121212' : '#ffffff',
+            calendarBackground: isDarkMode ? '#121212' : '#ffffff',
+            textSectionTitleColor: isDarkMode ? '#b6c1cd' : '#2d4150',
+            dayTextColor: isDarkMode ? 'white' : '#2d4150',
+            todayTextColor: isDarkMode ? '#4A90E2' : '#00adf5',
+            selectedDayBackgroundColor: isDarkMode ? '#4A90E2' : '#00adf5',
+            selectedDayTextColor: 'white',
+            dotColor: isDarkMode ? '#4A90E2' : '#50cebb',
+            arrowColor: isDarkMode ? '#4A90E2' : '#00adf5',
+            monthTextColor: isDarkMode ? 'white' : 'black',
+            indicatorColor: isDarkMode ? 'white' : '#00adf5',
           }}
         />
         <Modal
@@ -256,4 +271,8 @@ const getStyles = (isDarkMode) => {
   });
 };
 
+<<<<<<< HEAD
 export default Schedule;
+=======
+export default CalendarComponent;
+>>>>>>> fbc9b60309694597f9914e1f5bae8ae31377260b

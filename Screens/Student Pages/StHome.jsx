@@ -1,21 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { ScrollView, Text, Image, View, Alert } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Calendar } from 'react-native-calendars';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import StTable from './StTable.jsx';
 import StCourses from './StCourses.jsx';
 import StCalendar from './StCalendar.jsx';
-import Navbar from '../../Navigations/navbar';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useRoute } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
 const StHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
     return (
         <>
-            <Navbar 
-                isDarkMode={isDarkMode} 
-                toggleDarkMode={toggleDarkMode} 
-                navigation={navigation} 
-            />
             <Tab.Navigator
                 initialRouteName="Calendar"
                 screenOptions={{
@@ -23,9 +21,10 @@ const StHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
                 }}
             >
                 <Tab.Screen
-                    name="Calendar"
+                    name="Schedule"
                     options={{
-                        tabBarLabel: 'Calendar',
+                        tabBarLabel: 'Schedule',
+                        headerShown: false,
                         tabBarIcon: ({ color, size }) => (
                             <MaterialCommunityIcons name="calendar-blank" color={color} size={size} />
                         ),
@@ -34,9 +33,10 @@ const StHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
                     {(props) => <StCalendar {...props} isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />}
                 </Tab.Screen>
                 <Tab.Screen
-                    name="Table"
+                    name="Grades"
                     options={{
-                        tabBarLabel: 'Table',
+                        tabBarLabel: 'Grades',
+                        headerShown: false,
                         tabBarIcon: ({ color, size }) => (
                             <MaterialCommunityIcons name="table" color={color} size={size} />
                         ),
@@ -48,6 +48,7 @@ const StHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
                     name="Courses"
                     options={{
                         tabBarLabel: 'Courses',
+                        headerShown: false,
                         tabBarIcon: ({ color, size }) => (
                             <MaterialCommunityIcons name="content-paste" color={color} size={size} />
                         ),
@@ -57,7 +58,11 @@ const StHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
                 </Tab.Screen>
             </Tab.Navigator>
         </>
+
     );
 }
 
+
 export default StHome;
+
+

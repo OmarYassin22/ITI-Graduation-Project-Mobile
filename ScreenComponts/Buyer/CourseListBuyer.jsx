@@ -4,17 +4,18 @@ import { Card, Title, Paragraph, Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { GetData } from '../../Contexts/GetDataContext';
 
-const CourseListBuyer = ({ filteredCourses }) => {
+const CourseListBuyer = ({ filteredCourses,isDarkMode }) => {
   const navigation = useNavigation();
   const {  removeFromCart } = useContext(GetData);
   
   const renderCourseItem = ({ item: course }) => (
-    <Card style={styles.card}>
+    <Card style={[styles.card, isDarkMode && styles.darkContainer]}>
       <Card.Cover source={{ uri: course.image }} />
       <Card.Content>
-        <Title>{course.data.title}</Title>
-        <Paragraph>{`by: ${course.data.instructor.split(" ").slice(0, 3).join(" ")}`}</Paragraph>
-        <Paragraph style={styles.price}>{`Price: ${course.data.price} $`}</Paragraph>
+        <Title style={isDarkMode && styles.darkText}>{course.data.title}</Title>
+        <Paragraph style={isDarkMode && styles.darkText}>{`by: ${course.data.instructor.split(" ").slice(0, 3).join(" ")}`}</Paragraph>
+        <Paragraph style={[styles.price, isDarkMode && styles.darkText]}>{`Price: ${course.data.price} $`}</Paragraph>
+        <Paragraph style={isDarkMode && styles.darkText}>{`Duration: ${course?.data?.duration} hrs`}</Paragraph>
       </Card.Content>
       <Card.Actions style={styles.cardActions}>
         <Button
@@ -55,6 +56,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 8,
   },
+  darkText: {
+    color: '#fff',
+  },
+  darkContainer: {
+    backgroundColor: '#7f7f7f',
+  }
 });
 
 export default CourseListBuyer;
