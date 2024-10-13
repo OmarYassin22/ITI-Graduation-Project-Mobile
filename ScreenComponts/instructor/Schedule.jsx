@@ -5,11 +5,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-<<<<<<< HEAD:ScreenComponts/instructor/calendar.jsx
-const CalendarComponent = ({ isDarkMode }) => {
-=======
-const Schedule = () => {
->>>>>>> origin/master:ScreenComponts/instructor/Schedule.jsx
+const Schedule = ({isDarkMode}) => {
   const [events, setEvents] = useState({});
   const [markedDates, setMarkedDates] = useState({});
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -65,14 +61,11 @@ const Schedule = () => {
                 }),
               };
               newMarkedDates[formattedDate] = {
-<<<<<<< HEAD:ScreenComponts/instructor/calendar.jsx
                 marked: true,
                 dotColor: isDarkMode ? '#4A90E2' : '#50cebb', // Adjust dot color based on mode
-=======
                 selected: true,
                 selectedColor: '#50cebb',
                 selectedTextColor: 'white',
->>>>>>> origin/master:ScreenComponts/instructor/Schedule.jsx
               };
               console.log('Match found:', course.title);
             } else {
@@ -263,8 +256,4 @@ const getStyles = (isDarkMode) => {
   });
 };
 
-<<<<<<< HEAD:ScreenComponts/instructor/calendar.jsx
-export default CalendarComponent;
-=======
 export default Schedule;
->>>>>>> origin/master:ScreenComponts/instructor/Schedule.jsx

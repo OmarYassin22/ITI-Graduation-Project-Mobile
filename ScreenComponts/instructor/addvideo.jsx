@@ -8,11 +8,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
-<<<<<<< HEAD
 const AddVideo = ({ isDarkMode }) => {
-=======
-const AddVideo = () => {
->>>>>>> origin/master
   const [courseData, setCourseData] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState('');
   const [file, setFile] = useState(null);
@@ -189,10 +185,7 @@ const AddVideo = () => {
           </Text>
         </TouchableOpacity>
       </View>
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/master
       {isUploading && (
         <View style={styles.progressContainer}>
           <AnimatedCircularProgress
@@ -281,8 +274,4 @@ const styles = StyleSheet.create({
   },
 });
 
-<<<<<<< HEAD
 export default AddVideo;
-=======
-export default AddVideo;
->>>>>>> origin/master

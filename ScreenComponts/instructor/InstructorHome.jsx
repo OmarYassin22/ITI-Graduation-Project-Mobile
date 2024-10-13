@@ -3,12 +3,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Schedule from "./Schedule";
 import AddVideo from "./addvideo";
-<<<<<<< HEAD
-import Table from "./table";
+// import Table from "./table";
 import Navbar from '../../Navigations/navbar'; 
-=======
 import Students from "./Students";
->>>>>>> origin/master
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Tab = createBottomTabNavigator();
