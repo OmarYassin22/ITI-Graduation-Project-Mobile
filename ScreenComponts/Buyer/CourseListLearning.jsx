@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import { Card, Title, Paragraph, Button } from 'react-native-paper';
 
-const CourseListLearning = ({ filteredCourses }) => {
+const CourseListLearning = ({ filteredCourses,isDarkMode }) => {
   useEffect(() => {
     console.log("FilteredCourses in CourseListLearning:", JSON.stringify(filteredCourses, null, 2));
   }, [filteredCourses]);
@@ -10,12 +10,14 @@ const CourseListLearning = ({ filteredCourses }) => {
   const renderCourseItem = ({ item: course }) => {
     console.log("Rendering course item:", JSON.stringify(course, null, 2));
     return (
-      <Card style={styles.card}>
+      <Card style={[styles.card,isDarkMode&&styles.darkContainer]}>
         <Card.Cover source={{ uri: course.image }} />
         <Card.Content>
-          <Title>{course?.title}</Title>
-          <Paragraph>{`by: ${course.instructor?.split(" ").slice(0, 3).join(" ")}`}</Paragraph>
-          <Paragraph style={styles.price}>{`Price: ${course.price} $`}</Paragraph>
+          <Title style={[styles.price,isDarkMode&&styles.darkText]}>{course?.title}</Title>
+          <Paragraph style={[isDarkMode&&styles.darkText]}>{`by: ${course.instructor?.split(" ").slice(0, 3).join(" ")}`}</Paragraph>
+          <Paragraph style={[isDarkMode&&styles.darkText]}>{`Price: ${course.price} $`}</Paragraph>
+          <Paragraph style={[isDarkMode&&styles.darkText]}>{`Duration: ${course.duration} hrs`}</Paragraph>
+
         </Card.Content>
         <Card.Actions style={styles.cardActions}>
           <Button
@@ -56,6 +58,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 8,
   },
+  darkText: {
+    color: '#fff',
+  },
+  darkContainer: {
+    backgroundColor: '#7f7f7f',
+  }
 });
 
 export default CourseListLearning;

@@ -6,7 +6,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const CourseDetailes = ({ route }) => {
+const CourseDetailes = ({ route,isDarkMode }) => {
   const navigation = useNavigation();
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -87,47 +87,75 @@ const CourseDetailes = ({ route }) => {
 
   if (loading) {
     return (
-      <View style={styles.container}>
-        <Text>Loading course details...</Text>
+      <View style={[styles.container, isDarkMode && styles.darkContainer]}>
+        <Text style={isDarkMode && styles.darkText}>Loading course details...</Text>
       </View>
     );
   }
 
   if (error) {
     return (
-      <View style={styles.container}>
-        <Text>Error: {error}</Text>
+      <View style={[styles.container, isDarkMode && styles.darkContainer]}>
+        <Text style={isDarkMode && styles.darkText}>Error: {error}</Text>
       </View>
     );
   }
 
   if (!course) {
     return (
-      <View style={styles.container}>
-        <Text>No course data available.</Text>
+      <View style={[styles.container, isDarkMode && styles.darkContainer]}>
+        <Text style={isDarkMode && styles.darkText}>No course data available.</Text>
       </View>
     );
   }
 
   return (
-    <ScrollView>
-      <Card>
-        <Card.Cover source={{ uri: course.data.imgPath }} />
-        <Card.Content>
-          <Title>{course.data.title}</Title>
-          <Paragraph>{course.data.details}</Paragraph>
-          <Paragraph><Text style={{ fontWeight: 'bold' }}>Duration:</Text> {course.data.duration}</Paragraph>
-          <Paragraph><Text style={{ fontWeight: 'bold' }}>Instructor:</Text> {course.data.instructor}</Paragraph>
-          <Paragraph><Text style={{ fontWeight: 'bold' }}>Price:</Text> {course.data.price} $</Paragraph>
-          <Paragraph><Text style={{ fontWeight: 'bold' }}>Rating:</Text> {course.data.rating || 4.3} <MaterialCommunityIcons name="star" color="green" size={16} /> </Paragraph>
-          <Paragraph><Text style={{ fontWeight: 'bold' }}>Track:</Text> {course.data.track}</Paragraph>
-        </Card.Content>
-        <Card.Actions style={styles.btn}>
-          <Button icon="cart" onPress={addToCart} mode="contained">Add TO Cart</Button>
-          <Button icon="heart" onPress={addToWishlist} mode="contained">Add TO Wishlist</Button>
-        </Card.Actions>
-      </Card>
-    </ScrollView>
+    <ScrollView style={[styles.container, isDarkMode && styles.darkContainer]}>
+    <Card style={isDarkMode && styles.darkCard}>
+      <Card.Cover source={{ uri: course.data.imgPath }} />
+      <Card.Content>
+        <Title style={isDarkMode && styles.darkText}>{course.data.title}</Title>
+        <Paragraph style={isDarkMode && styles.darkText}>{course.data.details}</Paragraph>
+        <Paragraph style={isDarkMode && styles.darkText}>
+          <Text style={[styles.boldText, isDarkMode && styles.darkText]}>Duration:</Text> {course.data.duration}
+        </Paragraph>
+        <Paragraph style={isDarkMode && styles.darkText}>
+          <Text style={[styles.boldText, isDarkMode && styles.darkText]}>Instructor:</Text> {course.data.instructor}
+        </Paragraph>
+        <Paragraph style={isDarkMode && styles.darkText}>
+          <Text style={[styles.boldText, isDarkMode && styles.darkText]}>Price:</Text> {course.data.price} $
+        </Paragraph>
+        <Paragraph style={isDarkMode && styles.darkText}>
+          <Text style={[styles.boldText, isDarkMode && styles.darkText]}>Rating:</Text> {course.data.rating || 4.3} 
+          <MaterialCommunityIcons name="star" color={isDarkMode ? "yellow" : "green"} size={16} />
+        </Paragraph>
+        <Paragraph style={isDarkMode && styles.darkText}>
+          <Text style={[styles.boldText, isDarkMode && styles.darkText]}>Track:</Text> {course.data.track}
+        </Paragraph>
+      </Card.Content>
+      <Card.Actions style={styles.buttonContainer}>
+        <Button 
+          icon="cart" 
+          onPress={addToCart} 
+          mode="contained" 
+          style={styles.button}
+        
+        >
+          Add TO Cart
+        </Button>
+        <Button 
+          icon="heart" 
+          onPress={addToWishlist} 
+          mode="contained"
+          style={styles.button}
+       
+        >
+          Add TO Wishlist
+        </Button>
+      </Card.Actions>
+   
+    </Card>
+  </ScrollView>
   );
 };
 
@@ -135,14 +163,24 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   btn: {
     flex: 1,
-    padding: 16,
+    padding: 3,
     justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    alignItems: 'start',
+    marginBottom: 16,
+  },
+  buttonContainer: {
+    flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
+    padding: 16,
+  },
+  button: {
+    width: '80%',
+    marginVertical: 8,
   },
   title: {
     fontSize: 24,
@@ -157,6 +195,24 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+  boldText: {
+    fontWeight: 'bold',
+  },
+  darkText: {
+    color: '#fff',
+  },
+  darkContainer: {
+    backgroundColor: '#333',
+  },
+  darkCard: {
+    backgroundColor: '#1E1E1E',
+  },
+  darkButton: {
+    backgroundColor: '#333',
+  },
+  darkButtonText: {
+    color: '#fff',
+  }
 });
 
 export default CourseDetailes;

@@ -15,18 +15,19 @@ import {
   ActivityIndicator,
 } from "react-native-paper";
 import { View, ScrollView, SafeAreaView, StyleSheet } from "react-native";
-
+import { useNavigation } from '@react-navigation/native';
 import { db } from "../../firebase";
 import CourseListLearning from "./CourseListLearning";
+import Navbar from "../../Navigations/navbar";
 
-const Mylearning = () => {
+const Mylearning = ({ isDarkMode, toggleDarkMode } ) => {
   const [buyedCourses, setBuyedCourses] = useState([]);
   const [courseData, setCourseData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [buyerEmail, setBuyerEmail] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-
+  const navigation = useNavigation();
   const fetchEmail = useCallback(async () => {
     try {
       const email = await AsyncStorage.getItem("email");
@@ -159,34 +160,54 @@ const Mylearning = () => {
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <View        style={[{ flex: 1, justifyContent: "center", alignItems: "center" },isDarkMode&&styles.darkContainer]}
+>
+<Navbar
+          isDarkMode={isDarkMode}
+          toggleDarkMode={toggleDarkMode}
+          navigation={navigation}
+        />
         <ActivityIndicator size="large" />
-        <Text>Loading your courses...</Text>
+        <Text style={styles.darkText}>Loading your courses...</Text>
       </View>
     );
   }
 
   if (error) {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Error: {error}</Text>
+      <View
+       style={[{ flex: 1, justifyContent: "center", alignItems: "center" },isDarkMode&&styles.darkContainer]}
+       >
+         <Navbar
+          isDarkMode={isDarkMode}
+          toggleDarkMode={toggleDarkMode}
+          navigation={navigation}
+        />
+        <Text style={styles.darkText}>Error: {error}</Text>
       </View>
     );
   }
 
   if (courseData.length === 0) {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>No courses in your learning list yet.</Text>
+      <View
+       style={[{ flex: 1, justifyContent: "center", alignItems: "center" },isDarkMode&&styles.darkContainer]}>
+        <Text style={styles.darkText}>No courses in your learning list yet.</Text>
       </View>
     );
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container,isDarkMode&&styles.darkContainer]}>
+       <Navbar
+          isDarkMode={isDarkMode}
+          toggleDarkMode={toggleDarkMode}
+          navigation={navigation}
+        />
+    
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.header}>
-          <Headline style={styles.head}>All Courses in My Learning</Headline>
+          <Headline style={[styles.head,isDarkMode&&styles.darkText]}>All Courses in My Learning</Headline>
           <Searchbar
             placeholder="Search courses"
             onChangeText={setSearchTerm}
@@ -194,7 +215,7 @@ const Mylearning = () => {
             style={styles.searchBar}
           />
         </View>
-        <CourseListLearning filteredCourses={filteredCourses} />
+        <CourseListLearning filteredCourses={filteredCourses} isDarkMode={isDarkMode} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -222,6 +243,12 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 20,
   },
+  darkText: {
+    color: '#fff',
+  },
+  darkContainer: {
+    backgroundColor: '#333',
+  }
 });
 
 export default Mylearning;

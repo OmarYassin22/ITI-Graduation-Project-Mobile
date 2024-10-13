@@ -37,7 +37,7 @@ const Courses = ({ isDarkMode, toggleDarkMode, navigation }) => {
 
   return (
     <SafeAreaView
-      style={[styles.container, { backgroundColor: theme.colors.background }]}
+      style={[styles.container, { backgroundColor: theme.colors.background },isDarkMode && styles.darkContainer]}
     >
       <Navbar
         isDarkMode={isDarkMode}
@@ -46,7 +46,7 @@ const Courses = ({ isDarkMode, toggleDarkMode, navigation }) => {
       />
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.header}>
-          <Headline style={styles.title}>All Courses in our App</Headline>
+          <Headline style={[styles.title,isDarkMode&&styles.darkText]}>All Courses in our App</Headline>
           <Searchbar
             placeholder="Search courses"
             onChangeText={setSearchTerm}
@@ -54,7 +54,7 @@ const Courses = ({ isDarkMode, toggleDarkMode, navigation }) => {
             style={styles.searchBar}
           />
         </View>
-        <CourseList filteredCourses={filteredCourses} />
+        <CourseList filteredCourses={filteredCourses} isDarkMode={isDarkMode} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -79,6 +79,12 @@ const styles = StyleSheet.create({
   searchBar: {
     marginBottom: 16,
   },
+  darkText: {
+    color: '#fff',
+  },
+  darkContainer: {
+    backgroundColor: '#333',
+  }
 });
 
 export default Courses;

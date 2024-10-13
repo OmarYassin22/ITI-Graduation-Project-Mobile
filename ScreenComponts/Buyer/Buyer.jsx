@@ -12,14 +12,18 @@ import Scholarship from './Scholarship/Scholarship';
 
 const Tab = createBottomTabNavigator();
 
-// eslint-disable-next-line react/prop-types
+
 function Buyer({ isDarkMode, toggleDarkMode }) {
   const {courseBuyerCart,courseBuyerWish} = useContext(GetData);
   return (
     <Tab.Navigator
       initialRouteName="Courses"
       screenOptions={{
-        tabBarActiveTintColor: '#e91e63',
+        tabBarActiveTintColor:isDarkMode?'#fff': '#e91e63',
+        tabBarStyle: {
+          backgroundColor: isDarkMode ? '#555' : '#fff',
+          paddingVertical:10,
+        },
       }}
     >
       <Tab.Screen
@@ -86,6 +90,7 @@ function Buyer({ isDarkMode, toggleDarkMode }) {
 <Tab.Screen
         name="Scholarship"
         options={{
+          headerShown:false,
           tabBarLabel: 'Scholarship',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="school" color={color} size={size} />
@@ -97,5 +102,6 @@ function Buyer({ isDarkMode, toggleDarkMode }) {
     </Tab.Navigator>
   );
 }
+
 
 export default Buyer;

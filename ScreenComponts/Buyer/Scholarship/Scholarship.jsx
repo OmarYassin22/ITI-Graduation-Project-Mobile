@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Button, Alert, FlatList } from "react-native";
+import { View, Text, Button, Alert, FlatList, StyleSheet} from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { RadioButton } from "react-native-paper";
+
 import { db } from "../../../firebase";
 import {
   collection,
@@ -13,9 +14,10 @@ import {
 } from "firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import styles from './styleScholarship';
+import Navbar from "../../../Navigations/navbar";
 
-const Scholarship = () => {
+
+const Scholarship = ({isDarkMode, toggleDarkMode}) => {
   const [field, setField] = useState(null);
   const [answers, setAnswers] = useState([]);
   const [docData, setDocData] = useState();
@@ -386,12 +388,76 @@ useEffect(() => {
 
   if (docData?.type === "applicant") {
     return (
-      <View style={styles.container}>
-        <Text style={styles.header}>You are already an applicant</Text>
-        <Text style={styles.text}>You cannot apply again</Text>
+      <View style={[styles.questionContainer, isDarkMode && styles.darkQuestionContainer]}>
+        <Navbar
+          isDarkMode={isDarkMode}
+          toggleDarkMode={toggleDarkMode}
+          navigation={navigation}
+        />
+        <Text style={[styles.header,isDarkMode && styles.darkText]}>You are already an applicant</Text>
+        <Text style={[styles.text,isDarkMode && styles.darkText]}>You cannot apply again</Text>
       </View>
     );
   }
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: isDarkMode ? '#222' : '#fff',
+    },
+    label: {
+      fontSize: 16,
+      marginBottom: 8,
+      paddingVertical: 10,
+      paddingHorizontal: 10,
+      color: isDarkMode ? '#fff' : '#000',
+    },
+    pickerContainer: {
+      backgroundColor: isDarkMode ? '#444' : '#f0f0f0',
+      borderRadius: 8,
+      marginHorizontal: 10,
+      marginBottom: 16,
+    },
+    picker: {
+      color: isDarkMode ? '#fff' : '#000',
+    },
+    questionContainer: {
+      marginBottom: 16,
+      padding: 16,
+      marginHorizontal: 10,
+      backgroundColor: isDarkMode ? '#333' : '#f9f9f9',
+      borderRadius: 8,
+    },
+    question: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      marginBottom: 8,
+      color: isDarkMode ? '#fff' : '#000',
+    },
+    answer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 4,
+    },
+    answerText: {
+      marginLeft: 8,
+      fontSize: 14,
+      color: isDarkMode ? '#fff' : '#000',
+    },
+    header: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      marginBottom: 16,
+      color: isDarkMode ? '#fff' : '#000',
+    },
+    text: {
+      fontSize: 16,
+      color: isDarkMode ? '#fff' : '#000',
+    },
+    subBtn:{
+      marginVertical: 10,
+    }
+  });
 
   const renderQuestion = ({ item, index }) => (
     <View style={styles.questionContainer}>
@@ -406,6 +472,7 @@ useEffect(() => {
               newAnswers[index] = answerIndex;
               setAnswers(newAnswers);
             }}
+            color={isDarkMode ? "#fff" : "#000"}
           />
           <Text style={styles.answerText}>{answer}</Text>
         </View>
@@ -413,27 +480,49 @@ useEffect(() => {
     </View>
   );
 
+  if (docData?.type === "applicant") {
+    return (
+      <View style={styles.container}>
+        <Navbar
+          isDarkMode={isDarkMode}
+          toggleDarkMode={toggleDarkMode}
+          navigation={navigation}
+        />
+        <Text style={styles.header}>You are already an applicant</Text>
+        <Text style={styles.text}>You cannot apply again</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
+      <Navbar
+        isDarkMode={isDarkMode}
+        toggleDarkMode={toggleDarkMode}
+        navigation={navigation}
+      />
       <Text style={styles.label}>Select Field you want</Text>
-      <Picker
-        selectedValue={field}
-        style={styles.picker}
-        onValueChange={(itemValue) => {
-          console.log("Selected field:", itemValue);
-          setField(itemValue);
-          if (itemValue && questions[itemValue]) {
-            setAnswers(new Array(questions[itemValue].length).fill(null));
-          } else {
-            setAnswers([]);
-          }
-        }}
-      >
-        <Picker.Item label="-- select field --" value="" />
-        <Picker.Item label="Front-end" value="Front-end" />
-        <Picker.Item label="Back-end" value="Back-end" />
-        <Picker.Item label="Mobile App" value="Mobile-app" />
-      </Picker>
+      <View style={styles.pickerContainer}>
+        <Picker
+          selectedValue={field}
+          style={styles.picker}
+          onValueChange={(itemValue) => {
+            console.log("Selected field:", itemValue);
+            setField(itemValue);
+            if (itemValue && questions[itemValue]) {
+              setAnswers(new Array(questions[itemValue].length).fill(null));
+            } else {
+              setAnswers([]);
+            }
+          }}
+          dropdownIconColor={isDarkMode ? "#fff" : "#000"}
+        >
+          <Picker.Item label="-- select field --" value="" />
+          <Picker.Item label="Front-end" value="Front-end" />
+          <Picker.Item label="Back-end" value="Back-end" />
+          <Picker.Item label="Mobile App" value="Mobile-app" />
+        </Picker>
+      </View>
 
       {field && (
         <FlatList
@@ -441,7 +530,12 @@ useEffect(() => {
           renderItem={renderQuestion}
           keyExtractor={(item, index) => index.toString()}
           ListFooterComponent={
-            <Button title="Submit" onPress={submitHandle} />
+            <Button 
+              title="Submit" 
+              onPress={submitHandle}
+              color={isDarkMode ? "#4a90e2" : "#007AFF"}
+              style={styles.subBtn}
+            />
           }
         />
       )}
