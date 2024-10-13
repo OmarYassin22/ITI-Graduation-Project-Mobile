@@ -4,11 +4,23 @@ import { DataTable } from 'react-native-paper';
 import styles from "../../styles.js";
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import SecondNavbar from '../../Navigations/secondNav/secondNavbar.jsx';
 
-const StTable = ({ isDarkMode, toggleDarkMode, navigation, email2 }) => {
+const StTable = ({ isDarkMode, toggleDarkMode, navigation }) => {
     const [data, setData] = useState([]);
+    const getEmail = async () => {
+        const email = await AsyncStorage.getItem("email");
+        console.error(email);
+        return email;
+    };
+
     useEffect(() => {
-        fetchData(email2);
+        const fetchDataWithEmail = async () => {
+            const email = await getEmail();
+            fetchData(email.replace(/"/g, ''));
+        };
+        fetchDataWithEmail();
     }, []);
     const fetchData = async (email) => {
         console.warn(`Email is${email}`);
@@ -45,12 +57,16 @@ const StTable = ({ isDarkMode, toggleDarkMode, navigation, email2 }) => {
     return (
         <SafeAreaView style={[styles.mainContainer, isDarkMode && styles.mainContainerDark]}>
             <ScrollView showsVerticalScrollIndicator={false}>
+                <SecondNavbar
+                    isDarkMode={isDarkMode}
+                    navigation={navigation}
+                />
                 <DataTable style={styles.tableContainer}>
                     <DataTable.Header style={styles.tableHeader}>
-                        <DataTable.Title><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>Name</Text></DataTable.Title>
-                        <DataTable.Title><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>Percentage</Text></DataTable.Title>
-                        <DataTable.Title><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>Status</Text></DataTable.Title>
-                        <DataTable.Title><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>instructor</Text></DataTable.Title>
+                        <DataTable.Title>Name</DataTable.Title>
+                        <DataTable.Title>Percentage</DataTable.Title>
+                        <DataTable.Title>Status</DataTable.Title>
+                        <DataTable.Title>instructor</DataTable.Title>
                     </DataTable.Header>
                     {data.map(function (course, key) {
                         return <DataTable.Row>

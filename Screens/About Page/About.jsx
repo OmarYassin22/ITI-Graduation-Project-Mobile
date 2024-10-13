@@ -4,7 +4,6 @@ import RNPickerSelect from 'react-native-picker-select';
 import styles from "../../styles.js";
 import MapView from 'react-native-maps';
 import { Marker } from 'react-native-maps';
-import Navbar from '../../Navigations/navbar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 const About = ({ isDarkMode}) => {

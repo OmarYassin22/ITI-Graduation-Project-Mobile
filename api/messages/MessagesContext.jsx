@@ -4,19 +4,15 @@ import {
   collection,
   getDocs,
   addDoc,
-  deleteDoc,
-  doc,
-  updateDoc,
 } from 'firebase/firestore';
 import { ref, getDownloadURL, listAll } from 'firebase/storage';
 
 const MessagesContext = createContext();
 
- const MessagesProvider = ({ children }) => {
+const MessagesProvider = ({ children }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // image Firebase
   const fetchMessages = async () => {
     try {
       let imagesRef = ref(storage, 'images/messages/');
@@ -28,7 +24,6 @@ const MessagesContext = createContext();
         )
       );
 
-      //fetch Firestore
       const querySnapshot = await getDocs(collection(db, 'messages'));
       let docs = [];
       querySnapshot.forEach((doc) => {
@@ -38,7 +33,6 @@ const MessagesContext = createContext();
           image: imageUrls.find((url) => url.includes(doc.data().imgPath)),
         });
       });
-
       setMessages(docs);
       setLoading(false);
     } catch (error) {
@@ -47,7 +41,6 @@ const MessagesContext = createContext();
     }
   };
 
-  //add message
   const addMessage = async ({ name, email, subject, message }) => {
     try {
       const docRef = await addDoc(collection(db, 'messages'), {
@@ -63,28 +56,6 @@ const MessagesContext = createContext();
     }
   };
 
-  // upadata message
-  const updateMessage = async (id, { name, email, subject, message }) => {
-    try {
-      const oldDoc = doc(db, 'messages', id);
-      await updateDoc(oldDoc, { name, email, subject, message });
-      fetchMessages(); 
-    } catch (error) {
-      console.error('Error updating message: ', error);
-    }
-  };
-
-  // Delete message
-  const deleteMessage = async (id) => {
-    try {
-      await deleteDoc(doc(db, 'messages', id));
-      fetchMessages(); 
-    } catch (error) {
-      console.error('Error deleting message: ', error);
-    }
-  };
-
- 
   useEffect(() => {
     fetchMessages();
   }, []);
@@ -94,9 +65,7 @@ const MessagesContext = createContext();
       value={{
         messages,
         loading,
-        addMessage,
-        updateMessage,
-        deleteMessage,
+        addMessage, 
       }}
     >
       {children}
@@ -105,6 +74,4 @@ const MessagesContext = createContext();
 };
 
 export const useMessages = () => useContext(MessagesContext);
-
-
-export default MessagesProvider
+export default MessagesProvider;

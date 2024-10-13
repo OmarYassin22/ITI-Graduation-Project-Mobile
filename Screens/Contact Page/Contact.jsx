@@ -1,26 +1,49 @@
 import React, { useState } from 'react';
-import { ScrollView, Text, View, TouchableOpacity } from 'react-native';
-import styles from "../About Page/styles";
+import { ScrollView, Text, Image, View, TouchableOpacity } from 'react-native';
+import RNPickerSelect from 'react-native-picker-select';
+import styles from "../../styles.js";
+import MapView from 'react-native-maps';
+import { Marker } from 'react-native-maps';
+import Navbar from '../../Navigations/navbar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { TextInput } from 'react-native-gesture-handler';
 import { useTranslation } from 'react-i18next';
-
+import { useMessages } from '../../api/messages/MessagesContext';
+import MessagesProvider from '../../api/messages/MessagesContext';
 const Contact = ({ isDarkMode }) => {
     const { t } = useTranslation();
+    const { addMessage } = useMessages();
     const [inputs, setInputs] = useState({
         name: "",
         email: "",
         subject: "",
         message: "",
     });
+    const [loading, setLoading] = useState(false);
+    
     const handleChange = (txt, inputName) => {
         setInputs({ ...inputs, [inputName]: txt });
-    }
+    };
+
+    const handleSubmit = async () => {
+        setLoading(true);
+        try {
+            await addMessage(inputs);
+            alert(t('Message added successfully')); 
+            setInputs({ name: "", email: "", subject: "", message: "" });
+        } catch (error) {
+            alert(t('There was an error'));
+        } finally {
+            setLoading(false); 
+        }
+    };
+
     return (
+        <MessagesProvider>
         <SafeAreaView style={[styles.mainContainer, isDarkMode && styles.mainContainerDark]}>
             <ScrollView showsVerticalScrollIndicator={false}>
-            <Text style={styles.txtAbout}>{t('contact.contactUs')}</Text>
+                <Text style={styles.txtAbout}>{t('contact.contactUs')}</Text>
                 <Text style={styles.txtAbout}>{t('contact.howCanIHelp')}</Text>
                 <Text style={[styles.txtAboutContent, isDarkMode && styles.txtAboutContentDark]}>
                     {t('contact.fillFormOrEmail')}
@@ -50,10 +73,11 @@ const Contact = ({ isDarkMode }) => {
                         value={inputs.message}
                         onChangeText={(txt) => { handleChange(txt, "message") }}
                     />
-                    <TouchableOpacity style={styles.button} onPress={() => { }}>
-                        <Text style={styles.btnTxt}>{t('contact.submit')}</Text>
+                    <TouchableOpacity style={styles.button} onPress={handleSubmit} disabled={loading}>
+                        <Text style={styles.btnTxt}>{loading ? t('contact.sending') : t('contact.submit')}</Text>
                     </TouchableOpacity>
                 </View>
+
                 <View style={styles.shadowBox}>
                     <Icon name="phone-portrait-sharp" size={20} style={styles.Icons} />
                     <Text style={[styles.txtAboutContent, isDarkMode && styles.txtAboutContentDark]}>+1282185755</Text>
@@ -66,8 +90,7 @@ const Contact = ({ isDarkMode }) => {
                 </View>
             </ScrollView>
         </SafeAreaView>
+        </MessagesProvider>
     );
-}
-
-
+};
 export default Contact;

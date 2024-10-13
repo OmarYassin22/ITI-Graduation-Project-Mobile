@@ -6,16 +6,27 @@ import StTable from './StTable.jsx';
 import StCourses from './StCourses.jsx';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
+import SecondNavbar from '../../Navigations/secondNav/secondNavbar.jsx';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
-
-const StCalendar = ({ isDarkMode, toggleDarkMode, navigation, email2 }) => {
+const StCalendar = ({ isDarkMode, toggleDarkMode, navigation }) => {
     const [events, setEvents] = useState({});
     const [markedDates, setMarkedDates] = useState({});
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
+    const getEmail = async () => {
+        const email = await AsyncStorage.getItem("email");
+        console.error(email);
+        return email;
+    };
+
     useEffect(() => {
-        fetchData(email2);
+        const fetchDataWithEmail = async () => {
+            const email = await getEmail();
+            fetchData(email.replace(/"/g, ''));
+        };
+        fetchDataWithEmail();
     }, []);
     const fetchData = async (email) => {
         console.warn(`email is ${email}`);
@@ -100,6 +111,27 @@ const StCalendar = ({ isDarkMode, toggleDarkMode, navigation, email2 }) => {
         textMonthFontSize: 16,
         textDayHeaderFontSize: 16
     });
+    const [calendarThemeDark, setCalendarThemeDark] = useState({
+        backgroundColor: 'black',
+        calendarBackground: 'black',
+        textSectionTitleColor: '#b6c1cd',
+        selectedDayBackgroundColor: '#00adf5',
+        selectedDayTextColor: '#ffffff',
+        todayTextColor: '#00adf5',
+        dayTextColor: '#2d4150',
+        textDisabledColor: '#d9e1e8',
+        dotColor: '#00adf5',
+        selectedDotColor: '#ffffff',
+        arrowColor: '#00adf5',
+        monthTextColor: '#00adf5',
+        indicatorColor: 'blue',
+        textDayFontFamily: 'monospace',
+        textMonthFontFamily: 'monospace',
+        textDayHeaderFontFamily: 'monospace',
+        textDayFontSize: 16,
+        textMonthFontSize: 16,
+        textDayHeaderFontSize: 16
+    });
     const onDayPress = (day) => {
         const selectedDate = day.dateString;
         if (events[selectedDate]) {
@@ -113,6 +145,10 @@ const StCalendar = ({ isDarkMode, toggleDarkMode, navigation, email2 }) => {
     return (
         <>
             <SafeAreaView edges={['top']} style={styles.safeArea}>
+                <SecondNavbar
+                    isDarkMode={isDarkMode}
+                    navigation={navigation}
+                />
                 <View style={styles.container}>
                     <Text style={styles.header}>Schedule</Text>
                     <Calendar
@@ -124,6 +160,7 @@ const StCalendar = ({ isDarkMode, toggleDarkMode, navigation, email2 }) => {
                             dotColor: '#50cebb',
                             arrowColor: '#00adf5',
                         }}
+                        style={isDarkMode ? calendarThemeDark : calendarTheme}
                     />
                     <Modal
                         animationType="slide"

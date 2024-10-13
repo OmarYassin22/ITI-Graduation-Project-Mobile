@@ -80,7 +80,7 @@ async function getCourses() {
 }
 
 async function addCourse(courseData) {
-  const { title, price, details, duration, instructor, imgPath, buyers, track } = courseData;
+  const { title, price, details, duration, instructor, cImage, buyers, track } = courseData;
   try {
     const docRef = await addDoc(collection(db, "courses"), {
       title,
@@ -88,7 +88,7 @@ async function addCourse(courseData) {
       details,
       duration,
       instructor,
-      imgPath: imgPath != null ? imgPath : null,
+      cImage,
       buyers,
       track,
     });

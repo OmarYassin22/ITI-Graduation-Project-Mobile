@@ -12,6 +12,7 @@ import CourseList from "./CourseList";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Navbar from "../../Navigations/navbar";
+import SecondNavbar from "../../Navigations/secondNav/secondNavbar";
 const Courses = ({ isDarkMode, toggleDarkMode, navigation }) => {
   const { getAllCourses } = useContext(GetData);
   const [courses, setCourses] = useState([]);
@@ -39,10 +40,14 @@ const Courses = ({ isDarkMode, toggleDarkMode, navigation }) => {
     <SafeAreaView
       style={[styles.container, { backgroundColor: theme.colors.background }]}
     >
-      <Navbar
+      {/* <Navbar
         isDarkMode={isDarkMode}
         toggleDarkMode={toggleDarkMode}
         navigation={navigation}
+      /> */}
+      <SecondNavbar
+      isDarkMode={isDarkMode}
+      navigation={navigation}
       />
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.header}>
