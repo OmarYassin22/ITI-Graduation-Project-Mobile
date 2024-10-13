@@ -31,14 +31,14 @@ const Wishlist = ({ isDarkMode, toggleDarkMode, navigation }) => {
 
   if(courseBuyerWish.length==0){
     return (
-      <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background },isDarkMode&&styles.darkContainer]}>
       <Navbar
         isDarkMode={isDarkMode}
         toggleDarkMode={toggleDarkMode}
         navigation={navigation}
       />
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>No courses in your wishlist yet.</Text>
+        <Text style={[isDarkMode&&styles.darkText]}>No courses in your wishlist yet.</Text>
       </View>
       </SafeAreaView>
     );  
