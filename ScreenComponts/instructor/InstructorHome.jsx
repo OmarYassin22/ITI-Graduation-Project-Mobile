@@ -6,7 +6,7 @@ import AddVideo from "./addvideo";
 import Students from "./Students";
 // import Table from "./table";
 import Navbar from '../../Navigations/navbar'; 
-import AsyncStorage from "@react-native-async-storage/async-storage";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Tab = createBottomTabNavigator();
 
@@ -14,9 +14,9 @@ const InsHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
 
   useEffect(() => {
     async function getEmail() {
-      var email = await AsyncStorage.getItem("email");
-      var email = await AsyncStorage.getItem("fname");
-      var email = await AsyncStorage.getItem("lname");
+      // var email = await AsyncStorage.getItem("email");
+      // var email = await AsyncStorage.getItem("fname");
+      // var email = await AsyncStorage.getItem("lname");
       // console.warn(email);
       // console.warn(fname);
       // console.warn(lname);

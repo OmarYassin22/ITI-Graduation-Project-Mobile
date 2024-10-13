@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, Text, ScrollView, ImageBackground, FlatList, Image, TouchableOpacity } from 'react-native';
 import { useCourses } from '../../api/courses/CourseContext'; 
-import Navbar from '../../Navigations/navbar';
+// import Navbar from '../../Navigations/navbar';
 import { List } from 'react-native-paper';
 import { FontAwesome } from '@expo/vector-icons';
-import styles from './StyleHome';
+import styles from '../homeScreen/StyleHome';
 import { useTranslation } from 'react-i18next';
+import SecondNavbar from '../../Navigations/secondNav/secondNavbar';
 
-const HomeScreen = ({ isDarkMode, navigation }) => {
+const HomeScreen2 = ({ isDarkMode, navigation }) => {
   const { t } = useTranslation();
   const { courses, loading } = useCourses();
 // const {instructors}=useInstructo
@@ -26,7 +27,11 @@ const HomeScreen = ({ isDarkMode, navigation }) => {
   );
   return (
     <View style={[styles.screenContainer, isDarkMode && styles.darkContainer]}>
-      <Navbar isDarkMode={isDarkMode} navigation={navigation} />
+      {/* <Navbar isDarkMode={isDarkMode} navigation={navigation} /> */}
+      <SecondNavbar
+      isDarkMode={isDarkMode}
+      navigation={navigation}
+      />
       <ScrollView style={[styles.container, isDarkMode && styles.darkContainer]}>
         <View style={styles.introSection}>
           <View style={styles.introTextContainer}>
@@ -121,4 +126,4 @@ const CustomListItem = ({ title, isDarkMode }) => (
   </View>
 );
 
-export default HomeScreen;
+export default HomeScreen2;

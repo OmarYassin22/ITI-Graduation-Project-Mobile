@@ -72,6 +72,8 @@ const Login = ({ isDarkMode, toggleDarkMode, navigation }) => {
       setErrors({ general: t("login.errors.general") });
       console.error(error);
     }
+    setEmail("");
+    setPassword("");
   };
   //======================= end authontication ================================
   const [email, setEmail] = useState("");

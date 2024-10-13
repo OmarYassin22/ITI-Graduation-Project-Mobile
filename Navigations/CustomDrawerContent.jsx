@@ -38,6 +38,7 @@ function CustomDrawerContent({ navigation }) {
         onPress={() => navigation.navigate("Home")}
         style={styles.selectedItem}
       />
+      
       <DrawerItem
         label={t("drawer.profile")}
         icon={({ color, size }) => (
@@ -47,15 +48,6 @@ function CustomDrawerContent({ navigation }) {
         onPress={() => navigation.navigate("Profile")}
         style={styles.selectedItem}
       />
-      <DrawerItem
-          label="Courses"
-          icon={({ color, size }) => (
-            <Icon name="book-outline" size={size} color={color} />
-          )}
-          focused={currentRoute === "Courses"}
-          onPress={() => navigation.navigate("Courses")}
-          style={styles.selectedItem}
-        />
       <DrawerItem
         label={t("drawer.settings")}
         icon={({ color, size }) => (
@@ -73,13 +65,6 @@ function CustomDrawerContent({ navigation }) {
         )}
         focused={currentRoute === "Login"}
         onPress={() => navigation.navigate("Login")}
-        style={styles.selectedItem}
-      />
-         <DrawerItem
-        label="Scholarship"
-        icon={({ color, size }) => <Icon name="cart-outline" size={size} color={color} />}
-        focused={currentRoute === 'Scholarship'}
-        onPress={() => navigation.navigate('Scholarship')}
         style={styles.selectedItem}
       />
     </DrawerContentScrollView>

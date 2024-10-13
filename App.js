@@ -1,10 +1,10 @@
 import Login from "./Screens/login";
-import Signup from "./Screens/Signup.jsx";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import CustomDrawerContent from "./Navigations/CustomDrawerContent";
 import About from "./Screens/About Page/About";
+import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./Screens/homeScreen/homeScreen";
 import StHome from "./Screens/Student Pages/StHome.jsx";
 import Buyer from "./ScreenComponts/Buyer/Buyer.jsx";
@@ -18,6 +18,9 @@ import Scholarship from "./ScreenComponts/Buyer/Scholarship/Scholarship.jsx";
 import InsHome from "./ScreenComponts/instructor/InstructorHome.jsx";
 import Signup from "./Screens/Signup.jsx";
 import MessagesProvider from "./api/messages/MessagesContext.jsx"
+import SettingsScreen2 from "./Screens/screensPersonas/settings2.jsx";
+import HomeScreen2 from "./Screens/screensPersonas/homeScreen2.jsx";
+import ProfilePage2 from "./Screens/screensPersonas/profile2.jsx";
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 export function SettingsStack({ isDarkMode, toggleDarkMode }) {
@@ -63,12 +66,237 @@ export function SettingsStack({ isDarkMode, toggleDarkMode }) {
     </Stack.Navigator>
   );
 }
+export function SettingsStack2({ isDarkMode, toggleDarkMode }) {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen 
+        name="Settings2" 
+        options={{ headerShown: false }}
+      >
+        {(props) => (
+          <SettingsScreen2
+            {...props}
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+          />
+        )}
+      </Stack.Screen>
+      <Stack.Screen 
+        name="About" 
+        options={{ headerShown: false }}
+      >
+        {(props) => (
+          <About
+            {...props}
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+          />
+        )}
+      </Stack.Screen>
+      
+      <Stack.Screen 
+        name="Contact" 
+        options={{ headerShown: false }}
+      >
+        {(props) => (
+          <Contact
+            {...props}
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+          />
+        )}
+      </Stack.Screen>
+    </Stack.Navigator>
+  );
+}
+
+export function BuyerStack({ isDarkMode, toggleDarkMode }) {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen 
+        name="Buyer" 
+        options={{ headerShown: false }}
+      >
+        {(props) => (
+          <Buyer
+            {...props}
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+          />
+        )}
+      </Stack.Screen>
+      <Stack.Screen 
+        name="HomeScreen2" 
+        options={{ headerShown: false }}
+      >
+        {(props) => (
+          <HomeScreen2
+            {...props}
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+          />
+        )}
+      </Stack.Screen>
+      
+      <Stack.Screen 
+        name="ProfilePage2" 
+        options={{ headerShown: false }}
+      >
+        {(props) => (
+          <ProfilePage2
+            {...props}
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+          />
+        )}
+      </Stack.Screen>
+
+      <Stack.Screen 
+        name="Settings2" 
+        options={{ headerShown: false }}
+      >
+        {(props) => (
+          <SettingsStack2
+            {...props}
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+          />
+        )}
+      </Stack.Screen>
+    </Stack.Navigator>
+  );
+}
+export function StudentStack({ isDarkMode, toggleDarkMode }) {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen 
+        name="Student" 
+        options={{ headerShown: false }}
+      >
+        {(props) => (
+          <StHome
+            {...props}
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+          />
+        )}
+      </Stack.Screen>
+      <Stack.Screen 
+        name="HomeScreen2" 
+        options={{ headerShown: false }}
+      >
+        {(props) => (
+          <HomeScreen2
+            {...props}
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+          />
+        )}
+      </Stack.Screen>
+      
+      <Stack.Screen 
+        name="ProfilePage2" 
+        options={{ headerShown: false }}
+      >
+        {(props) => (
+          <ProfilePage2
+            {...props}
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+          />
+        )}
+      </Stack.Screen>
+
+      <Stack.Screen 
+        name="Settings2" 
+        options={{ headerShown: false }}
+      >
+        {(props) => (
+          <SettingsStack2
+            {...props}
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+          />
+        )}
+      </Stack.Screen>
+    </Stack.Navigator>
+  );
+}
+
+export function InstructorStack({ isDarkMode, toggleDarkMode }) {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen 
+        name="Instructor" 
+        options={{ headerShown: false }}
+      >
+        {(props) => (
+          <InsHome
+            {...props}
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+          />
+        )}
+      </Stack.Screen>
+      <Stack.Screen 
+        name="HomeScreen2" 
+        options={{ headerShown: false }}
+      >
+        {(props) => (
+          <HomeScreen2
+            {...props}
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+          />
+        )}
+      </Stack.Screen>
+      
+      <Stack.Screen 
+        name="ProfilePage2" 
+        options={{ headerShown: false }}
+      >
+        {(props) => (
+          <ProfilePage2
+            {...props}
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+          />
+        )}
+      </Stack.Screen>
+
+      <Stack.Screen 
+        name="Settings2" 
+        options={{ headerShown: false }}
+      >
+        {(props) => (
+          <SettingsStack2
+            {...props}
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+          />
+        )}
+      </Stack.Screen>
+    </Stack.Navigator>
+  );
+}
+
 export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
   };
-  
+  const [type, setType] = useState(null);
+  async function fetchUserData() {
+    try {
+      const storedType = await AsyncStorage.getItem("type");
+      setType(storedType);
+    } catch (error) {
+      console.error("Error retrieving user data:", error);
+    }
+  }
+  useEffect(() => {
+    fetchUserData();
+  }, []); 
   return (
     <MessagesProvider>
     <GetDataProvider>
@@ -83,6 +311,34 @@ export default function App() {
               <Drawer.Screen name="Home" options={{ headerShown: false }}>
                 {(props) => (
                   <Home
+                    {...props}
+                    isDarkMode={isDarkMode}
+                    toggleDarkMode={toggleDarkMode}
+                  />
+                )}
+              </Drawer.Screen>
+              <Drawer.Screen name="Student" options={{ headerShown: false }}>
+                {(props) => (
+                  <StudentStack
+                    {...props}
+                    isDarkMode={isDarkMode}
+                    toggleDarkMode={toggleDarkMode}
+                  />
+                )}
+              </Drawer.Screen>
+              <Drawer.Screen name="Buyer" options={{ headerShown: false }}>
+                {(props) => (
+                  <BuyerStack
+                    {...props}
+                    isDarkMode={isDarkMode}
+                    toggleDarkMode={toggleDarkMode}
+                  />
+                )}
+              </Drawer.Screen>
+              
+              <Drawer.Screen name="Instructor" options={{ headerShown: false }}>
+                {(props) => (
+                  <InstructorStack
                     {...props}
                     isDarkMode={isDarkMode}
                     toggleDarkMode={toggleDarkMode}
@@ -107,24 +363,7 @@ export default function App() {
                   />
                 )}
               </Drawer.Screen>
-              <Drawer.Screen name="Buyer" options={{ headerShown: false }}>
-                {(props) => (
-                  <Buyer
-                    {...props}
-                    isDarkMode={isDarkMode}
-                    toggleDarkMode={toggleDarkMode}
-                  />
-                )}
-              </Drawer.Screen>
-              <Drawer.Screen name="Student" options={{ headerShown: false }}>
-                {(props) => (
-                  <StHome
-                    {...props}
-                    isDarkMode={isDarkMode}
-                    toggleDarkMode={toggleDarkMode}
-                  />
-                )}
-              </Drawer.Screen>
+              
               <Drawer.Screen name="Settings" options={{ headerShown: false }}>
               {(props) => (
               <SettingsStack
@@ -134,7 +373,10 @@ export default function App() {
             />
           )}
               </Drawer.Screen>
-              <Drawer.Screen name="Scholarship" options={{ headerShown: false }}>
+              <Drawer.Screen
+                name="Scholarship"
+                options={{ headerShown: false }}
+              >
                 {(props) => (
                   <Scholarship
                     {...props}
@@ -149,16 +391,6 @@ export default function App() {
               >
                 {(props) => (
                   <Login
-                    {...props}
-                    isDarkMode={isDarkMode}
-                    toggleDarkMode={toggleDarkMode}
-                  />
-                )}
-              </Drawer.Screen>
-              
-              <Drawer.Screen name="Courses" options={{ headerShown: false }}>
-                {(props) => (
-                  <Courses
                     {...props}
                     isDarkMode={isDarkMode}
                     toggleDarkMode={toggleDarkMode}

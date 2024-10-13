@@ -6,6 +6,7 @@ import StTable from './StTable.jsx';
 import StCourses from './StCourses.jsx';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
+import SecondNavbar from '../../Navigations/secondNav/secondNavbar.jsx';
 
 
 
@@ -134,6 +135,10 @@ const StCalendar = ({ isDarkMode, toggleDarkMode, navigation, email2 }) => {
     return (
         <>
             <SafeAreaView edges={['top']} style={styles.safeArea}>
+                <SecondNavbar
+                isDarkMode={isDarkMode}
+                navigation={navigation}
+                />
                 <View style={styles.container}>
                     <Text style={styles.header}>Schedule</Text>
                     <Calendar
