@@ -16,6 +16,9 @@ import SettingsScreen from "./Screens/settings";
 import Contact from "./Screens/Contact Page/Contact.jsx";
 import Scholarship from "./ScreenComponts/Buyer/Scholarship/Scholarship.jsx";
 import InsHome from "./ScreenComponts/instructor/InstructorHome.jsx";
+import CourseDetails from "./Screens/homeScreen/courseDetails.jsx"; 
+import Courses from "./ScreenComponts/Buyer/Courses.jsx"; 
+
 import Signup from "./Screens/Signup.jsx";
 import MessagesProvider from "./api/messages/MessagesContext.jsx"
 import SettingsScreen2 from "./Screens/screensPersonas/settings2.jsx";
@@ -383,8 +386,7 @@ export default function App() {
                     />
                   )}
                 </Drawer.Screen>
-                <Drawer.Screen
-                  name="Scholarship"
+                <Drawer.Screen name="Scholarship"
                   options={{ headerShown: false }}
                 >
                   {(props) => (
@@ -395,8 +397,7 @@ export default function App() {
                     />
                   )}
                 </Drawer.Screen>
-                <Drawer.Screen
-                  name="Login"
+                <Drawer.Screen name="Login"
                   options={{ headerShown: false }}
                 >
                   {(props) => (
@@ -407,6 +408,43 @@ export default function App() {
                     />
                   )}
                 </Drawer.Screen>
+                <Drawer.Screen
+                  name="Scholarship"
+                  options={{ headerShown: false }}
+                >
+                {(props) => (
+                  <Scholarship
+                    {...props}
+                    isDarkMode={isDarkMode}
+                    toggleDarkMode={toggleDarkMode}
+                  />
+                )}
+              </Drawer.Screen>
+             
+              <Drawer.Screen name="CourseDetails" options={{ headerShown: false }}>
+                {(props) => (
+                  <CourseDetails
+                    {...props}
+                    isDarkMode={isDarkMode}
+                    toggleDarkMode={toggleDarkMode}
+                  />
+                )}
+              </Drawer.Screen>
+         
+              <Drawer.Screen name="Courses" options={{ headerShown: false }}>
+                {(props) => (
+                  <Courses
+                    {...props}
+                    isDarkMode={isDarkMode}
+                    toggleDarkMode={toggleDarkMode}
+                  />
+                )}
+              </Drawer.Screen>
+
+
+
+
+
               </Drawer.Navigator>
             </InstructorsProvider>
           </CourseProvider>

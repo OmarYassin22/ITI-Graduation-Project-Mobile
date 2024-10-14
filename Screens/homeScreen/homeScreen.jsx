@@ -11,19 +11,26 @@ const HomeScreen = ({ isDarkMode, navigation }) => {
   const { t } = useTranslation();
   const { courses, loading } = useCourses();
 // const {instructors}=useInstructo
+  const handleCoursePress = (course) => {
+    navigation.navigate('CourseDetails', { course, isDarkMode });
+  };
+
   const renderCourse = ({ item }) => (
-    <View style={styles.courseCard}>
-      <Image source={{ uri: item.cImage }} style={styles.courseImage} resizeMode="cover" />
-      <View style={styles.overlay}></View>
-      <View style={styles.cardContent}>
-        <Text style={styles.courseTitle}>{item.title}</Text>
-        <View style={styles.ratingContainer}>
-          <FontAwesome name="star" size={16} color="#FFD700" />
-          <Text style={styles.ratingText}>{parseFloat(item.rating).toFixed(2)}</Text>
+    <TouchableOpacity onPress={() => handleCoursePress(item)}>
+      <View style={styles.courseCard}>
+        <Image source={{ uri: item.cImage }} style={styles.courseImage} resizeMode="cover" />
+        <View style={styles.overlay}></View>
+        <View style={styles.cardContent}>
+          <Text style={styles.courseTitle}>{item.title}</Text>
+          <View style={styles.ratingContainer}>
+            <FontAwesome name="star" size={16} color="#FFD700" />
+            <Text style={styles.ratingText}>{parseFloat(item.rating).toFixed(2)}</Text>
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
+
   return (
     <View style={[styles.screenContainer, isDarkMode && styles.darkContainer]}>
       <Navbar isDarkMode={isDarkMode} navigation={navigation} />

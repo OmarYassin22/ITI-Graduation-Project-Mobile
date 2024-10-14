@@ -7,7 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Navbar from '../../Navigations/navbar';
 
 
-const CalendarComponent = ({ isDarkMode }) => {
+const Schedule = ({isDarkMode}) => {
   const [events, setEvents] = useState({});
   const [markedDates, setMarkedDates] = useState({});
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -63,6 +63,11 @@ const CalendarComponent = ({ isDarkMode }) => {
                 }),
               };
               newMarkedDates[formattedDate] = {
+                marked: true,
+                dotColor: isDarkMode ? '#4A90E2' : '#50cebb', // Adjust dot color based on mode
+                selected: true,
+                selectedColor: '#50cebb',
+                selectedTextColor: 'white',
                 selected: true,
                 selectedColor: '#50cebb',
                 selectedTextColor: 'white',
@@ -259,4 +264,4 @@ const getStyles = (isDarkMode) => {
   });
 };
 
-export default CalendarComponent;
+export default Schedule;
