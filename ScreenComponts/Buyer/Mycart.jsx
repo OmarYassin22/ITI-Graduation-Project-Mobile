@@ -34,6 +34,7 @@ import {
 import { db } from "../../firebase";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import SecondNavbar from "../../Navigations/secondNav/secondNavbar";
 
 
 // Use Stripe's test publishable key
@@ -192,11 +193,11 @@ const Mycart = ({  isDarkMode, toggleDarkMode }) => {
       <SafeAreaView
       style={[styles.container, { backgroundColor: theme.colors.background },isDarkMode && styles.darkContainer]}
       >
-        <Navbar
-          isDarkMode={isDarkMode}
-          toggleDarkMode={toggleDarkMode}
-          navigation={navigation}
-        />
+       <SecondNavbar
+        isDarkMode={isDarkMode}
+        toggleDarkMode={toggleDarkMode}
+        navigation={navigation}
+      />
 
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
