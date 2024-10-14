@@ -185,10 +185,6 @@ const AddVideo = ({ isDarkMode }) => {
           </Text>
         </TouchableOpacity>
       </View>
-<<<<<<< HEAD
-
-=======
->>>>>>> fbc9b60309694597f9914e1f5bae8ae31377260b
       {isUploading && (
         <View style={styles.progressContainer}>
           <AnimatedCircularProgress

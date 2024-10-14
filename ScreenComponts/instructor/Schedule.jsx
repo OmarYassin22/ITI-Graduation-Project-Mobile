@@ -7,11 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Navbar from '../../Navigations/navbar';
 
 
-<<<<<<< HEAD
 const Schedule = ({isDarkMode}) => {
-=======
-const CalendarComponent = ({ isDarkMode }) => {
->>>>>>> fbc9b60309694597f9914e1f5bae8ae31377260b
   const [events, setEvents] = useState({});
   const [markedDates, setMarkedDates] = useState({});
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -67,19 +63,16 @@ const CalendarComponent = ({ isDarkMode }) => {
                 }),
               };
               newMarkedDates[formattedDate] = {
-<<<<<<< HEAD
                 marked: true,
                 dotColor: isDarkMode ? '#4A90E2' : '#50cebb', // Adjust dot color based on mode
                 selected: true,
                 selectedColor: '#50cebb',
                 selectedTextColor: 'white',
-=======
                 selected: true,
                 selectedColor: '#50cebb',
                 selectedTextColor: 'white',
                 marked: true,
                 dotColor: isDarkMode ? '#4A90E2' : '#50cebb', // Adjust dot color based on mode
->>>>>>> fbc9b60309694597f9914e1f5bae8ae31377260b
               };
               console.log('Match found:', course.title);
             } else {
@@ -271,8 +264,4 @@ const getStyles = (isDarkMode) => {
   });
 };
 
-<<<<<<< HEAD
 export default Schedule;
-=======
-export default CalendarComponent;
->>>>>>> fbc9b60309694597f9914e1f5bae8ae31377260b

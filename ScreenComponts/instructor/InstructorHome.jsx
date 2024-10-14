@@ -3,17 +3,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Schedule from "./Schedule";
 import AddVideo from "./addvideo";
-<<<<<<< HEAD
-// import Table from "./table";
-import Navbar from '../../Navigations/navbar'; 
-import Students from "./Students";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-=======
 import Students from "./Students";
 // import Table from "./table";
 import Navbar from '../../Navigations/navbar'; 
 // import AsyncStorage from "@react-native-async-storage/async-storage";
->>>>>>> fbc9b60309694597f9914e1f5bae8ae31377260b
 
 const Tab = createBottomTabNavigator();
 
