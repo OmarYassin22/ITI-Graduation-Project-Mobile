@@ -5,7 +5,8 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const CalendarComponent = ({ isDarkMode, navigation }) => {
+
+const Schedule = ({isDarkMode , navigation}) => {
   const [events, setEvents] = useState({});
   const [markedDates, setMarkedDates] = useState({});
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -35,7 +36,7 @@ const CalendarComponent = ({ isDarkMode, navigation }) => {
 
   const fetchData = async (fullName) => {
     try {
-      console.log('Fetching data for instructor:', fullName);
+      
       const querySnapshot = await getDocs(collection(db, 'course_instructor'));
       const newEvents = {};
       const newMarkedDates = {};
@@ -49,7 +50,7 @@ const CalendarComponent = ({ isDarkMode, navigation }) => {
             course.instructor &&
             course.title
           ) {
-            console.log(`Comparing: "${course.instructor}" with "${fullName}"`);
+            
             if (course.instructor.trim() === fullName.trim()) {
               const dateObj = new Date(course.date);
               const formattedDate = dateObj.toISOString().split('T')[0]; // YYYY-MM-DD format
@@ -61,13 +62,18 @@ const CalendarComponent = ({ isDarkMode, navigation }) => {
                 }),
               };
               newMarkedDates[formattedDate] = {
+                marked: true,
+                dotColor: isDarkMode ? '#4A90E2' : '#50cebb', // Adjust dot color based on mode
+                selected: true,
+                selectedColor: '#50cebb',
+                selectedTextColor: 'white',
                 selected: true,
                 selectedColor: '#50cebb',
                 selectedTextColor: 'white',
                 marked: true,
                 dotColor: isDarkMode ? '#4A90E2' : '#50cebb', // Adjust dot color based on mode
               };
-              console.log('Match found:', course.title);
+              
             } else {
               console.log('No match for:', course.title);
             }
@@ -75,13 +81,15 @@ const CalendarComponent = ({ isDarkMode, navigation }) => {
         });
       });
 
-      console.log('Total events found:', Object.keys(newEvents).length);
+  
       setEvents(newEvents);
       setMarkedDates(newMarkedDates);
     } catch (error) {
       console.error('Error fetching data: ', error);
     }
   };
+
+
 
   const onDayPress = (day) => {
     const selectedDate = day.dateString;
@@ -211,4 +219,4 @@ const getStyles = (isDarkMode) => {
   });
 };
 
-export default CalendarComponent;
+export default Schedule;

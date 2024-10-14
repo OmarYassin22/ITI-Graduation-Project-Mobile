@@ -55,7 +55,6 @@ const Login = ({ isDarkMode, toggleDarkMode, navigation }) => {
               JSON.stringify(doc.data().lname)
             );
           await AsyncStorage.setItem("type", JSON.stringify(userType));
-          console.error(`user type id ==> ${userType}`);
 
           if (userType === "buyer" || userType === "applicant") {
             navigation.navigate("Buyer");
@@ -65,7 +64,7 @@ const Login = ({ isDarkMode, toggleDarkMode, navigation }) => {
             navigation.navigate("Student", { email2: email });
           }
         } else {
-          console.warn("No such document!");
+          alert("No such document!");
         }
       });
     } catch (error) {
@@ -105,7 +104,6 @@ const Login = ({ isDarkMode, toggleDarkMode, navigation }) => {
   const storeEmail = async (email) => {
     try {
       await AsyncStorage.setItem("email", email);
-      console.log("Email stored successfully");
     } catch (error) {
       console.error("Error storing email:", error);
     }

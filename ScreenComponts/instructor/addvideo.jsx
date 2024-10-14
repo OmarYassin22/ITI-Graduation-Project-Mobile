@@ -136,7 +136,6 @@ const AddVideo = ({ isDarkMode }) => {
       },
       () => {
         getDownloadURL(task.snapshot.ref).then((downloadURL) => {
-          console.log('File available at', downloadURL);
           setIsUploading(false);
           setUploadProgress(0);
           Alert.alert(

@@ -49,7 +49,6 @@ const MessagesProvider = ({ children }) => {
         subject,
         message,
       });
-      console.log('Document written with ID: ', docRef.id);
       fetchMessages(); 
     } catch (error) {
       console.error('Error adding message: ', error);

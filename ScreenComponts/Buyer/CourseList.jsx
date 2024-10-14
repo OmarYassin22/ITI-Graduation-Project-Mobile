@@ -8,12 +8,11 @@ const CourseList = ({ filteredCourses, isDarkMode }) => {
 
   const openCourseDetails = (courseId) => {
     navigation.navigate('CourseDetailes', { id: courseId });
-    console.log('Opening course with ID:', courseId);
   };
 
   const renderCourseItem = ({ item: course }) => (
     <Card style={[styles.card, isDarkMode && styles.darkContainer]}>
-      <Card.Cover source={{ uri: course.image }} />
+      <Card.Cover source={{ uri: course.data.cImage }} />
       <Card.Content>
         <Title style={isDarkMode && styles.darkText}>{course.data.title}</Title>
         <Paragraph style={isDarkMode && styles.darkText}>{`by: ${course.data.instructor.split(" ").slice(0, 3).join(" ")}`}</Paragraph>

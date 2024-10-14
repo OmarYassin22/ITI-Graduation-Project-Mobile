@@ -19,7 +19,7 @@ const CourseDetails = ({ route, navigation }) => {
           <Text style={[styles.description, isDarkMode && styles.darkText]}>{course.details}</Text>
           <Text style={[styles.rating, isDarkMode && styles.darkRating]}>Rating: {parseFloat(course.rating).toFixed(2)}</Text>
 
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Account')}>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
             <Text style={styles.buttonText}>Buy Now</Text>
           </TouchableOpacity>
         </View>

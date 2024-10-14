@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Button, Alert, FlatList, StyleSheet} from "react-native";
+import { View, Text, Button, Alert, FlatList, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { RadioButton } from "react-native-paper";
 
@@ -13,17 +13,21 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Navbar from "../../../Navigations/navbar";
+import createStyles from './styleScholarship';
+import SecondNavbar from "../../../Navigations/secondNav/secondNavbar";
 
+const Scholarship = ({ isDarkMode }) => {
+  const styles = createStyles(isDarkMode);
 
-const Scholarship = ({isDarkMode, toggleDarkMode}) => {
-  const [field, setField] = useState(null);
+  const [field, setField] = useState("Front-end");
   const [answers, setAnswers] = useState([]);
   const [docData, setDocData] = useState(null);
   const [docId, setDocId] = useState(null);
-  const [submitted, setSubmitted] = useState(false); 
+  const [submitted, setSubmitted] = useState(false);
+  const [currentEmail, setCurrentEmail] = useState(null);
   const navigation = useNavigation();
 
  const questions = {
@@ -289,71 +293,99 @@ const Scholarship = ({isDarkMode, toggleDarkMode}) => {
     ],
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const email = await AsyncStorage.getItem('email');
-        const cleanedEmail = email?.replace(/^"|"$|'/g, '').trim(); 
-        console.log("Fetched email:", cleanedEmail);
 
-        if (!cleanedEmail) {
-          Alert.alert("Error", "Email is missing. Please try again.");
-          return;
-        }
-
-        const usersCollection = collection(db, "UserData");
-        const q = query(usersCollection, where("email", "==", cleanedEmail));
-        const querySnapshot = await getDocs(q);
-
-        querySnapshot.forEach((doc) => {
-          console.log("Document ID found:", doc.id); 
-          setDocId(doc.id);
-          setDocData(doc.data());
-          if (doc.data().type === "applicant") {
-            setSubmitted(true); 
-          }
-        });
-
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        Alert.alert("Error", "Failed to fetch user data. Please try again.");
+  const showAlert = (title, message) => {
+    Alert.alert(
+      title,
+      message,
+      [
+        {
+          text: "OK",
+          style: isDarkMode ? "default" : "cancel",
+        },
+      ],
+      {
+        cancelable: true,
+        onDismiss: () => console.log("Alert dismissed"),
       }
-    };
+    );
+  };
 
-    fetchData();
-  }, []);
+  const resetState = () => {
+    setField("Front-end");
+    setAnswers([]);
+    setDocData(null);
+    setDocId(null);
+    setSubmitted(false);
+    setCurrentEmail(null);
+  };
+
+  const fetchData = async () => {
+    try {
+      resetState();
+
+      const email = await AsyncStorage.getItem('email');
+      const cleanedEmail = email?.replace(/^"|"$|'/g, '').trim();
+      if (!cleanedEmail) {
+        showAlert("Error", "Email is missing. Please try again.");
+        return;
+      }
+
+      setCurrentEmail(cleanedEmail);
+
+      const usersCollection = collection(db, "UserData");
+      const q = query(usersCollection, where("email", "==", cleanedEmail));
+      const querySnapshot = await getDocs(q);
+
+      querySnapshot.forEach((doc) => {
+        setDocId(doc.id);
+        setDocData(doc.data());
+        if (doc.data().type === "applicant") {
+          setSubmitted(true);
+          setField(doc.data().field);
+          setAnswers(JSON.parse(doc.data().answers || '[]'));
+        }
+      });
+
+    } catch (error) {
+      showAlert("Error", "Failed to fetch user data. Please try again.");
+    }
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchData();
+    }, [])
+  );
+
 
   const submitHandle = () => {
     if (submitted) {
-      Alert.alert("Already an Applicant", "You are already an applicant.");
+      showAlert("Already an Applicant", "You are already an applicant.");
       return;
     }
 
     if (field) {
+      if (answers.length !== questions[field].length || answers.some(answer => answer === null)) {
+        showAlert("Error", "Please answer all questions before submitting.");
+        return;
+      }
+
       Alert.alert(
         "Scholarship Application",
         "Are you sure you want to submit the application?",
         [
           {
             text: "Cancel",
-            onPress: () => Alert.alert("Cancelled", "Your application has been canceled."),
+            onPress: () => showAlert("Cancelled", "Your application has been canceled."),
             style: "cancel",
           },
           {
             text: "Submit",
             onPress: async () => {
               try {
-                console.log("Submitting application...");
-                console.log("Field:", field);
-                console.log("Answers:", answers);
-
-                if (answers.some((answer) => answer === null)) {
-                  Alert.alert("Error", "Please answer all questions before submitting.");
-                  return;
-                }
-
                 if (!docId) {
-                  Alert.alert("Error", "Document ID is missing. Please try again.");
+                  showAlert("Error", "Document ID is missing. Please try again.");
                   return;
                 }
 
@@ -361,109 +393,34 @@ const Scholarship = ({isDarkMode, toggleDarkMode}) => {
                   return acc + (answer === questions[field][index].rightAnswer ? 1 : 0);
                 }, 0);
 
-                console.log("Calculated grade:", grade);
-
                 const docRef = doc(db, "UserData", docId);
-                const updateData = { 
-                  type: "applicant", 
-                  grade: grade, 
+                const updateData = {
+                  type: "applicant",
+                  grade: grade,
                   field: field,
-                  answers: JSON.stringify(answers) 
+                  answers: JSON.stringify(answers)
                 };
-
-                console.log("Updating document with data:", updateData);
 
                 await updateDoc(docRef, updateData);
 
+                const updatedDoc = await getDoc(docRef);
+                if (updatedDoc.exists() && updatedDoc.data().type === "applicant") {
+                  showAlert("Success", "You have become an applicant.");
+                }
                 setSubmitted(true);
-                Alert.alert("Success", "Submitted successfully!");
 
                 navigation.navigate("Courses");
               } catch (error) {
-                console.error("Error updating document: ", error);
-                Alert.alert("Error", "There was an issue submitting your application.");
+                showAlert("Error", "There was an issue submitting your application.");
               }
             },
           },
         ]
       );
     } else {
-      Alert.alert("Error", "Please select a field");
+      showAlert("Error", "Please select a field");
     }
   };
-
-  if (docData?.type === "applicant") {
-    return (
-      <View style={[styles.questionContainer, isDarkMode && styles.darkQuestionContainer]}>
-        <Navbar
-          isDarkMode={isDarkMode}
-          toggleDarkMode={toggleDarkMode}
-          navigation={navigation}
-        />
-        <Text style={[styles.header,isDarkMode && styles.darkText]}>You are already an applicant</Text>
-        <Text style={[styles.text,isDarkMode && styles.darkText]}>You cannot apply again</Text>
-      </View>
-    );
-  }
-
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: isDarkMode ? '#222' : '#fff',
-    },
-    label: {
-      fontSize: 16,
-      marginBottom: 8,
-      paddingVertical: 10,
-      paddingHorizontal: 10,
-      color: isDarkMode ? '#fff' : '#000',
-    },
-    pickerContainer: {
-      backgroundColor: isDarkMode ? '#444' : '#f0f0f0',
-      borderRadius: 8,
-      marginHorizontal: 10,
-      marginBottom: 16,
-    },
-    picker: {
-      color: isDarkMode ? '#fff' : '#000',
-    },
-    questionContainer: {
-      marginBottom: 16,
-      padding: 16,
-      marginHorizontal: 10,
-      backgroundColor: isDarkMode ? '#333' : '#f9f9f9',
-      borderRadius: 8,
-    },
-    question: {
-      fontSize: 16,
-      fontWeight: 'bold',
-      marginBottom: 8,
-      color: isDarkMode ? '#fff' : '#000',
-    },
-    answer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginBottom: 4,
-    },
-    answerText: {
-      marginLeft: 8,
-      fontSize: 14,
-      color: isDarkMode ? '#fff' : '#000',
-    },
-    header: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      marginBottom: 16,
-      color: isDarkMode ? '#fff' : '#000',
-    },
-    text: {
-      fontSize: 16,
-      color: isDarkMode ? '#fff' : '#000',
-    },
-    subBtn:{
-      marginVertical: 10,
-    }
-  });
 
   const renderQuestion = ({ item, index }) => (
     <View style={styles.questionContainer}>
@@ -489,9 +446,8 @@ const Scholarship = ({isDarkMode, toggleDarkMode}) => {
   if (docData?.type === "applicant") {
     return (
       <View style={styles.container}>
-        <Navbar
+        <SecondNavbar
           isDarkMode={isDarkMode}
-          toggleDarkMode={toggleDarkMode}
           navigation={navigation}
         />
         <Text style={styles.header}>You are already an applicant</Text>
@@ -502,9 +458,8 @@ const Scholarship = ({isDarkMode, toggleDarkMode}) => {
 
   return (
     <View style={styles.container}>
-      <Navbar
+      <SecondNavbar
         isDarkMode={isDarkMode}
-        toggleDarkMode={toggleDarkMode}
         navigation={navigation}
       />
       <Text style={styles.label}>Select Field you want</Text>
@@ -513,7 +468,6 @@ const Scholarship = ({isDarkMode, toggleDarkMode}) => {
           selectedValue={field}
           style={styles.picker}
           onValueChange={(itemValue) => {
-            console.log("Selected field:", itemValue);
             setField(itemValue);
             if (itemValue && questions[itemValue]) {
               setAnswers(new Array(questions[itemValue].length).fill(null));
@@ -522,11 +476,11 @@ const Scholarship = ({isDarkMode, toggleDarkMode}) => {
             }
           }}
           dropdownIconColor={isDarkMode ? "#fff" : "#000"}
+          enabled={!submitted}
         >
-          <Picker.Item label="-- select field --" value="" />
-          <Picker.Item label="Front-end" value="Front-end" />
-          <Picker.Item label="Back-end" value="Back-end" />
-          <Picker.Item label="Mobile App" value="Mobile-app" />
+          <Picker.Item label="Front-end" value="Front-end" style={styles.pickerItem} />
+          <Picker.Item label="Back-end" value="Back-end" style={styles.pickerItem} />
+          <Picker.Item label="Mobile App" value="Mobile-app" style={styles.pickerItem} />
         </Picker>
       </View>
 
@@ -536,14 +490,22 @@ const Scholarship = ({isDarkMode, toggleDarkMode}) => {
           renderItem={renderQuestion}
           keyExtractor={(item, index) => index.toString()}
           ListFooterComponent={
-            <Button 
-              title="Submit" 
-              onPress={submitHandle}
-              color={isDarkMode ? "#4a90e2" : "#007AFF"}
-              style={styles.subBtn}
-            />
+            !submitted && (
+              <Button
+                title="Submit"
+                onPress={submitHandle}
+                color={isDarkMode ? "#3a70b2" : "#4a90e2"}
+                style={styles.subBtn}
+              />
+            )
           }
         />
+      )}
+
+      {submitted && (
+        <Text style={styles.submittedText}>
+          You have already submitted your application for the {field} field.
+        </Text>
       )}
     </View>
   );

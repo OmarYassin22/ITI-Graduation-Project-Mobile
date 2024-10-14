@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { collection, getDocs, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 
-const Table = ({ isDarkMode }) => {
+const Students = ({ isDarkMode }) => {
   const [courseData, setCourseData] = useState([]);
   const [gradeInputs, setGradeInputs] = useState({});
   const [uniqueFieldsArray, setUniqueFieldsArray] = useState([]);
@@ -285,4 +285,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Table;
+export default Students;

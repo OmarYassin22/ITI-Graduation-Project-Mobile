@@ -17,7 +17,6 @@ const StCalendar = ({ isDarkMode, toggleDarkMode, navigation }) => {
     const [modalVisible, setModalVisible] = useState(false);
     const getEmail = async () => {
         const email = await AsyncStorage.getItem("email");
-        console.error(email);
         return email;
     };
 
@@ -29,7 +28,6 @@ const StCalendar = ({ isDarkMode, toggleDarkMode, navigation }) => {
         fetchDataWithEmail();
     }, []);
     const fetchData = async (email) => {
-        console.warn(`email is ${email}`);
         var field;
         var cdata = [];
         const newEvents = {};
@@ -112,8 +110,8 @@ const StCalendar = ({ isDarkMode, toggleDarkMode, navigation }) => {
         textDayHeaderFontSize: 16
     });
     const [calendarThemeDark, setCalendarThemeDark] = useState({
-        backgroundColor: 'black',
-        calendarBackground: 'black',
+        backgroundColor: '#333',
+        calendarBackground: '#333',
         textSectionTitleColor: '#b6c1cd',
         selectedDayBackgroundColor: '#00adf5',
         selectedDayTextColor: '#ffffff',
@@ -144,13 +142,13 @@ const StCalendar = ({ isDarkMode, toggleDarkMode, navigation }) => {
     };
     return (
         <>
-            <SafeAreaView edges={['top']} style={styles.safeArea}>
+            {/* <SafeAreaView edges={['top']} style={styles.safeArea}> */}
                 <SecondNavbar
                     isDarkMode={isDarkMode}
                     navigation={navigation}
                 />
-                <View style={styles.container}>
-                    <Text style={styles.header}>Schedule</Text>
+                <View style={[styles.container, isDarkMode && styles.darkContainer]}>
+                    <Text style={[styles.header, isDarkMode && styles.darkHeader]}>Schedule</Text>
                     <Calendar
                         onDayPress={onDayPress}
                         markedDates={markedDates}
@@ -187,27 +185,34 @@ const StCalendar = ({ isDarkMode, toggleDarkMode, navigation }) => {
                         </View>
                     </Modal>
                 </View>
-            </SafeAreaView>
+            {/* </SafeAreaView> */}
         </>
 
     );
 }
 
 const styles = StyleSheet.create({
-    safeArea: {
-        flex: 1,
-        backgroundColor: '#fff',
-        paddingTop: Platform.OS === 'android' ? 30 : 0,
-    },
+    // safeArea: {
+    //     flex: 1,
+    //     backgroundColor: '#fff',
+    //     // paddingTop: Platform.OS === 'android' ? 30 : 0,
+    // },
     container: {
         flex: 1,
         paddingHorizontal: 16,
+        height:"100%"
+    },
+    darkContainer:{
+        backgroundColor: "#333"
     },
     header: {
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 16,
         marginTop: 16,
+    },
+    darkHeader:{
+        color: "#fff"
     },
     centeredView: {
         flex: 1,
