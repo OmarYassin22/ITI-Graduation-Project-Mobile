@@ -4,31 +4,16 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import Schedule from "./Schedule";
 import AddVideo from "./addvideo";
 import Students from "./Students";
-// import Table from "./table";
-import Navbar from '../../Navigations/navbar'; 
-// import AsyncStorage from "@react-native-async-storage/async-storage";
+import SecondNavbar from "../../Navigations/secondNav/secondNavbar";
 
 const Tab = createBottomTabNavigator();
 
 const InsHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
 
-  useEffect(() => {
-    async function getEmail() {
-      // var email = await AsyncStorage.getItem("email");
-      // var email = await AsyncStorage.getItem("fname");
-      // var email = await AsyncStorage.getItem("lname");
-      // console.warn(email);
-      // console.warn(fname);
-      // console.warn(lname);
-    }
-    getEmail();
-  }, []);
-
   return (
     <>
-      <Navbar 
+      <SecondNavbar 
         isDarkMode={isDarkMode} 
-        toggleDarkMode={toggleDarkMode} 
         navigation={navigation}
       />
       <Tab.Navigator
@@ -78,7 +63,7 @@ const InsHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
           )}
         </Tab.Screen>
         <Tab.Screen
-          name="AddVideo"
+          name="Add Video"
           options={{
             tabBarLabel: "Add Video",
             tabBarIcon: ({ color, size }) => (

@@ -4,10 +4,8 @@ import { Calendar } from 'react-native-calendars';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Navbar from '../../Navigations/navbar';
 
-
-const CalendarComponent = ({ isDarkMode }) => {
+const CalendarComponent = ({ isDarkMode, navigation }) => {
   const [events, setEvents] = useState({});
   const [markedDates, setMarkedDates] = useState({});
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -85,51 +83,6 @@ const CalendarComponent = ({ isDarkMode }) => {
     }
   };
 
-  // const fetchData = async (fullName) => {
-  //   try {
-  //     const querySnapshot = await getDocs(collection(db, 'course_instructor'));
-  //     const newEvents = {};
-  //     const newMarkedDates = {};
-
-  //     querySnapshot.forEach((doc) => {
-  //       const courses = doc.data();
-  //       Object.entries(courses).forEach(([key, course]) => {
-  //         console.warn(course.instructor);
-  //         if (
-  //           typeof course === 'object' &&
-  //           course.date &&
-  //           course.instructor &&
-  //           course.title
-  //         ) {
-  //           if (course.instructor.trim() === fullName.trim()) {
-  //             const dateObj = new Date(course.date);
-  //             const formattedDate = dateObj.toISOString().split('T')[0]; // YYYY-MM-DD format
-  //             newEvents[formattedDate] = {
-  //               title: course.title,
-  //               date: dateObj.toLocaleDateString('en-GB', {
-  //                 day: 'numeric',
-  //                 month: 'short',
-  //               }),
-  //             };
-  //             newMarkedDates[formattedDate] = {
-  //               marked: true,
-  //               dotColor: '#50cebb',
-  //             };
-  //           }
-  //           else {
-  //             console.warn('not equall');
-  //           }
-  //         }
-  //       });
-  //     });
-
-  //     setEvents(newEvents);
-  //     setMarkedDates(newMarkedDates);
-  //   } catch (error) {
-  //     console.error('Error fetching data: ', error);
-  //   }
-  // };
-
   const onDayPress = (day) => {
     const selectedDate = day.dateString;
     if (events[selectedDate]) {
@@ -145,7 +98,6 @@ const CalendarComponent = ({ isDarkMode }) => {
 
   return (
     <SafeAreaView edges={['top']} style={styles.safeArea}>
-      <Navbar isDarkMode={isDarkMode} navigation={navigation} />
       <View style={styles.container}>
         <Text style={styles.header}>Schedule</Text>
         <Calendar

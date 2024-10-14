@@ -20,6 +20,7 @@ const AddVideo = ({ isDarkMode }) => {
     const fetchDataWithName = async () => {
       const fullName = await getFullName();
       fetchData(fullName.replace(/"/g, ''));
+      handleUpload(fullName.replace(/"/g, ''));
     };
     fetchDataWithName();
   }, []);
@@ -81,7 +82,7 @@ const AddVideo = ({ isDarkMode }) => {
     }
   };
 
-  const handleUpload = async () => {
+  const handleUpload = async (fullName) => {
     if (!file || !selectedCourse) {
       Alert.alert(
         'Fill inputs',
