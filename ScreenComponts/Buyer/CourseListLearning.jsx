@@ -3,15 +3,12 @@ import { View, FlatList, StyleSheet } from 'react-native';
 import { Card, Title, Paragraph, Button } from 'react-native-paper';
 
 const CourseListLearning = ({ filteredCourses,isDarkMode }) => {
-  useEffect(() => {
-    console.log("FilteredCourses in CourseListLearning:", JSON.stringify(filteredCourses, null, 2));
-  }, [filteredCourses]);
+
 
   const renderCourseItem = ({ item: course }) => {
-    console.log("Rendering course item:", JSON.stringify(course, null, 2));
     return (
       <Card style={[styles.card,isDarkMode&&styles.darkContainer]}>
-        <Card.Cover source={{ uri: course.image }} />
+        <Card.Cover source={{ uri: course.cImage }} />
         <Card.Content>
           <Title style={[styles.price,isDarkMode&&styles.darkText]}>{course?.title}</Title>
           <Paragraph style={[isDarkMode&&styles.darkText]}>{`by: ${course.instructor?.split(" ").slice(0, 3).join(" ")}`}</Paragraph>

@@ -16,7 +16,6 @@ function CustomDrawerContent({ navigation }) {
   async function fetchUserData() {
     try {
       const storedType = await AsyncStorage.getItem("type");
-      console.log("Stored type:", storedType);
       setType(storedType);
     } catch (error) {
       console.error("Error retrieving user data:", error);
@@ -39,15 +38,6 @@ function CustomDrawerContent({ navigation }) {
         style={styles.selectedItem}
       />
       
-      <DrawerItem
-        label={t("drawer.profile")}
-        icon={({ color, size }) => (
-          <Icon name="person-outline" size={size} color={color} />
-        )}
-        focused={currentRoute === "Profile"}
-        onPress={() => navigation.navigate("Profile")}
-        style={styles.selectedItem}
-      />
       <DrawerItem
         label={t("drawer.settings")}
         icon={({ color, size }) => (
