@@ -28,7 +28,6 @@ const CourseDetailes = ({ route,isDarkMode }) => {
           const data = await getCourseById(route.params.id);
           if (data) {
             setCourse(data);
-            console.log('Fetched course data:', data);
           } else {
             setError('Course not found');
           }
@@ -112,7 +111,7 @@ const CourseDetailes = ({ route,isDarkMode }) => {
   return (
     <ScrollView style={[styles.container, isDarkMode && styles.darkContainer]}>
     <Card style={isDarkMode && styles.darkCard}>
-      <Card.Cover source={{ uri: course.data.imgPath }} />
+      <Card.Cover source={{ uri: course.data.cImage }} />
       <Card.Content>
         <Title style={isDarkMode && styles.darkText}>{course.data.title}</Title>
         <Paragraph style={isDarkMode && styles.darkText}>{course.data.details}</Paragraph>

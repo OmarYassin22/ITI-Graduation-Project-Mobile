@@ -7,7 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Navbar from '../../Navigations/navbar';
 
 
-const Schedule = ({isDarkMode}) => {
+const Schedule = ({isDarkMode , navigation}) => {
   const [events, setEvents] = useState({});
   const [markedDates, setMarkedDates] = useState({});
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -37,7 +37,7 @@ const Schedule = ({isDarkMode}) => {
 
   const fetchData = async (fullName) => {
     try {
-      console.log('Fetching data for instructor:', fullName);
+      
       const querySnapshot = await getDocs(collection(db, 'course_instructor'));
       const newEvents = {};
       const newMarkedDates = {};
@@ -51,7 +51,7 @@ const Schedule = ({isDarkMode}) => {
             course.instructor &&
             course.title
           ) {
-            console.log(`Comparing: "${course.instructor}" with "${fullName}"`);
+            
             if (course.instructor.trim() === fullName.trim()) {
               const dateObj = new Date(course.date);
               const formattedDate = dateObj.toISOString().split('T')[0]; // YYYY-MM-DD format
@@ -74,7 +74,7 @@ const Schedule = ({isDarkMode}) => {
                 marked: true,
                 dotColor: isDarkMode ? '#4A90E2' : '#50cebb', // Adjust dot color based on mode
               };
-              console.log('Match found:', course.title);
+              
             } else {
               console.log('No match for:', course.title);
             }
@@ -82,7 +82,7 @@ const Schedule = ({isDarkMode}) => {
         });
       });
 
-      console.log('Total events found:', Object.keys(newEvents).length);
+  
       setEvents(newEvents);
       setMarkedDates(newMarkedDates);
     } catch (error) {
@@ -90,50 +90,7 @@ const Schedule = ({isDarkMode}) => {
     }
   };
 
-  // const fetchData = async (fullName) => {
-  //   try {
-  //     const querySnapshot = await getDocs(collection(db, 'course_instructor'));
-  //     const newEvents = {};
-  //     const newMarkedDates = {};
 
-  //     querySnapshot.forEach((doc) => {
-  //       const courses = doc.data();
-  //       Object.entries(courses).forEach(([key, course]) => {
-  //         console.warn(course.instructor);
-  //         if (
-  //           typeof course === 'object' &&
-  //           course.date &&
-  //           course.instructor &&
-  //           course.title
-  //         ) {
-  //           if (course.instructor.trim() === fullName.trim()) {
-  //             const dateObj = new Date(course.date);
-  //             const formattedDate = dateObj.toISOString().split('T')[0]; // YYYY-MM-DD format
-  //             newEvents[formattedDate] = {
-  //               title: course.title,
-  //               date: dateObj.toLocaleDateString('en-GB', {
-  //                 day: 'numeric',
-  //                 month: 'short',
-  //               }),
-  //             };
-  //             newMarkedDates[formattedDate] = {
-  //               marked: true,
-  //               dotColor: '#50cebb',
-  //             };
-  //           }
-  //           else {
-  //             console.warn('not equall');
-  //           }
-  //         }
-  //       });
-  //     });
-
-  //     setEvents(newEvents);
-  //     setMarkedDates(newMarkedDates);
-  //   } catch (error) {
-  //     console.error('Error fetching data: ', error);
-  //   }
-  // };
 
   const onDayPress = (day) => {
     const selectedDate = day.dateString;

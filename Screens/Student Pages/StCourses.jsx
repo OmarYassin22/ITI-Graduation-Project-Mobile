@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, Text, Image, View, Alert, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Calendar } from 'react-native-calendars';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Avatar, Card, IconButton } from 'react-native-paper';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
@@ -10,10 +7,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import SecondNavbar from '../../Navigations/secondNav/secondNavbar.jsx';
 
 
-const StCourses = ({ isDarkMode, toggleDarkMode, navigation }) => {
+const StCourses = ({ isDarkMode, navigation }) => {
     const [data, setData] = useState([]);
     const fetchData = async (email) => {
-        console.warn(`Email is ${email}`);
         var newData = [];
         try {
             const querySnapshot = await getDocs(collection(db, "students"));
@@ -57,7 +53,6 @@ const StCourses = ({ isDarkMode, toggleDarkMode, navigation }) => {
 
     const getEmail = async () => {
         const email = await AsyncStorage.getItem("email");
-        console.error(email);
         return email;
     };
 
@@ -69,7 +64,7 @@ const StCourses = ({ isDarkMode, toggleDarkMode, navigation }) => {
         fetchDataWithEmail();
     }, []);
     return (
-        <SafeAreaView style={[styles.mainContainer, isDarkMode && styles.mainContainerDark]}>
+        <View style={[styles.mainContainer, isDarkMode && styles.mainContainerDark]}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <SecondNavbar
                     isDarkMode={isDarkMode}
@@ -94,7 +89,7 @@ const StCourses = ({ isDarkMode, toggleDarkMode, navigation }) => {
                     />
                 })}
             </ScrollView>
-        </SafeAreaView>
+        </View>
     );
 }
 
@@ -103,10 +98,9 @@ const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
         backgroundColor: '#ffffff', // لون الخلفية في الوضع العادي
-        paddingVertical: 16,
     },
     mainContainerDark: {
-        backgroundColor: '#121212', // لون الخلفية في الوضع الداكن
+        backgroundColor: '#333', // لون الخلفية في الوضع الداكن
     },
     coursesCard: {
         marginBottom: 16,
@@ -135,23 +129,3 @@ const styles = StyleSheet.create({
 });
 
 export default StCourses;
-{/* <SafeAreaView style={[styles.mainContainer, isDarkMode ? styles.mainContainerDark : styles.mainContainer]}>
-    <ScrollView showsVerticalScrollIndicator={false}>
-        <Card style={[styles.coursesCard, isDarkMode ? styles.coursesCardDark : styles.coursesCard]}>
-            <Card.Title
-                titleStyle={isDarkMode ? styles.titleTextDark : styles.titleText}
-                subtitleStyle={isDarkMode ? styles.subtitleTextDark : styles.subtitleText}
-                title="Java Script"
-                subtitle="With Amr Gado"
-                left={(props) => (
-                    <Image source={require("../../assets/coureses images/JavaScript.png")} style={styles.coursesImages} />
-                )}
-                right={(props) => (
-                    <IconButton
-                        {...props}
-                        icon="eye"
-                        color={isDarkMode ? '#ffffff' : '#000000'}
-                        onPress={() => { }}
-                    />
-                )}
-            /> */}

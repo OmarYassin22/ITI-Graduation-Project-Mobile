@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, SafeAreaView, ScrollView, Alert, Image } from "react-native";
-import { DataTable } from 'react-native-paper';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../../../firebase';
-import AsyncStorage from "@react-native-async-storage/async-storage";
+// import { DataTable } from 'react-native-paper';
+// import { collection, getDocs } from 'firebase/firestore';
+// import { db } from '../../../firebase';
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 import SecondNavbar from '../../../Navigations/secondNav/secondNavbar.jsx';
 import styles from "../../../styles.js";
 
@@ -11,7 +11,6 @@ const CoursesDetails = ({ isDarkMode, toggleDarkMode, navigation, route }) => {
     const { id } = route.params;
     const { course } = route.params;
     const { instructor } = route.params;
-    console.warn(id);
 
     return (
         <SafeAreaView style={[styles.mainContainer, isDarkMode && styles.mainContainerDark]}>

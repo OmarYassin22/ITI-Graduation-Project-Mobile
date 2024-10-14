@@ -38,7 +38,6 @@ export const GetDataProvider = ({ children }) => {
           data: docSnap.data(),
         };
       } else {
-        console.log("No such document!");
         return null;
       }
     } catch (e) {

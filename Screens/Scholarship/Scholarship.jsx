@@ -39,7 +39,6 @@ const Scholarship = () => {
       try {
         const email = await AsyncStorage.getItem('email');
         const cleanedEmail = email?.replace(/^"|"$|'/g, '').trim().toLowerCase(); 
-        console.log("Fetched email:", cleanedEmail);
 
         if (!cleanedEmail) {
           Alert.alert("Error", "Email is missing. Please try again.");
@@ -51,7 +50,6 @@ const Scholarship = () => {
         const querySnapshot = await getDocs(q);
 
         querySnapshot.forEach((doc) => {
-          console.log("Document ID found:", doc.id); 
           setDocId(doc.id);
           setDocData(doc.data());
         });
@@ -80,10 +78,6 @@ const Scholarship = () => {
             text: "Submit",
             onPress: async () => {
               try {
-                console.log("Submitting application...");
-                console.log("Field:", field);
-                console.log("Answers:", answers);
-
                 if (answers.some((answer) => answer === null)) {
                   Alert.alert("Error", "Please answer all questions before submitting.");
                   return;
@@ -98,7 +92,6 @@ const Scholarship = () => {
                   return acc + (answer === questions[field][index].rightAnswer ? 1 : 0);
                 }, 0);
 
-                console.log("Calculated grade:", grade);
 
                 const docRef = doc(db, "UserData", docId);
                 const updateData = { 
@@ -108,7 +101,6 @@ const Scholarship = () => {
                   answers: JSON.stringify(answers) 
                 };
 
-                console.log("Updating document with data:", updateData);
 
                 await updateDoc(docRef, updateData);
 
@@ -164,7 +156,6 @@ const Scholarship = () => {
         selectedValue={field}
         style={styles.picker}
         onValueChange={(itemValue) => {
-          console.log("Selected field:", itemValue);
           setField(itemValue);
           if (itemValue && questions[itemValue]) {
             setAnswers(new Array(questions[itemValue].length).fill(null));

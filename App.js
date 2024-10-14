@@ -24,7 +24,7 @@ import MessagesProvider from "./api/messages/MessagesContext.jsx"
 import SettingsScreen2 from "./Screens/screensPersonas/settings2.jsx";
 import HomeScreen2 from "./Screens/screensPersonas/homeScreen2.jsx";
 import ProfilePage2 from "./Screens/screensPersonas/profile2.jsx";
-import CoursesDetails from './Screens/Student Pages/CoursesDetails/Courses Details';
+// import CoursesDetails from './Screens/Student Pages/CoursesDetails/Courses Details';
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 export function SettingsStack({ isDarkMode, toggleDarkMode }) {
@@ -330,7 +330,7 @@ export default function App() {
                     />
                   )}
                 </Drawer.Screen>
-                <Drawer.Screen name="CoursesDetails" options={{ headerShown: false }}>
+                {/* <Drawer.Screen name="CoursesDetails" options={{ headerShown: false }}>
                   {(props) => (
                     <CoursesDetails
                       {...props}
@@ -338,7 +338,7 @@ export default function App() {
                       toggleDarkMode={toggleDarkMode}
                     />
                   )}
-                </Drawer.Screen>
+                </Drawer.Screen> */}
                 <Drawer.Screen name="Buyer" options={{ headerShown: false }}>
                   {(props) => (
                     <BuyerStack
@@ -408,19 +408,6 @@ export default function App() {
                     />
                   )}
                 </Drawer.Screen>
-                <Drawer.Screen
-                  name="Scholarship"
-                  options={{ headerShown: false }}
-                >
-                {(props) => (
-                  <Scholarship
-                    {...props}
-                    isDarkMode={isDarkMode}
-                    toggleDarkMode={toggleDarkMode}
-                  />
-                )}
-              </Drawer.Screen>
-             
               <Drawer.Screen name="CourseDetails" options={{ headerShown: false }}>
                 {(props) => (
                   <CourseDetails
@@ -440,11 +427,6 @@ export default function App() {
                   />
                 )}
               </Drawer.Screen>
-
-
-
-
-
               </Drawer.Navigator>
             </InstructorsProvider>
           </CourseProvider>

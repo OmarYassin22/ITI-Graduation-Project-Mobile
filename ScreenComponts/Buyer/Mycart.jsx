@@ -53,7 +53,6 @@ const Mycart = ({  isDarkMode, toggleDarkMode }) => {
   async function fetchEmail() {
     try {
       const email = await AsyncStorage.getItem("email");
-      console.log("Fetched buyer email:", email);
       setBuyerEmail(email);
     } catch (error) {
       console.error("Error fetching email:", error);
@@ -75,7 +74,6 @@ const Mycart = ({  isDarkMode, toggleDarkMode }) => {
   const purchasedCourseIds = courses
     .filter((course) => course != null && course.id != null)
     .map((course) => course.id);
-  console.log("Purchased Course IDs:", purchasedCourseIds);
 
   const totalAmount = courseBuyerCart
     .reduce((acc, curr) => acc + parseInt(curr.data.price), 0)
@@ -96,14 +94,12 @@ const Mycart = ({  isDarkMode, toggleDarkMode }) => {
       }
 
       if (token) {
-        console.log("Payment token:", token);
 
         Alert.alert(
           "Processing",
           "Payment successful! Updating your courses..."
         );
 
-        console.log("Buyer email used for query:", buyerEmail);
         // 3. increment courses buyed in Firebase
         for (const courseId of purchasedCourseIds) {
           const courseRef = doc(db, "courses", courseId);
@@ -118,16 +114,13 @@ const Mycart = ({  isDarkMode, toggleDarkMode }) => {
           // Update the 'buyers' field in the course document
           await updateDoc(courseRef, { buyers: updatedBuyersCount });
 
-          console.log(
-            `Buyers count updated successfully for course ${courseId}`
-          );
+          
         }
 
         // 3. Update Firebase
         const UserDataCollection = collection(db, "UserData");
 
         const querySnapshot = await getDocs(UserDataCollection);
-        console.log("All UserData documents:");
 
         let buyerUser = null;
         querySnapshot.docs.forEach((doc) => {
@@ -140,7 +133,6 @@ const Mycart = ({  isDarkMode, toggleDarkMode }) => {
           }
         });
 
-        console.log("Buyer User:", buyerUser);
 
         if (buyerUser) {
           const userRef = doc(db, "UserData", buyerUser.id);
@@ -150,9 +142,7 @@ const Mycart = ({  isDarkMode, toggleDarkMode }) => {
             buyedCourses: arrayUnion(...purchasedCourseIds),
           });
 
-          console.log("Firebase update successful");
 
-          console.log("Database updated successfully");
 
           // Clear the cart in AsyncStorage and state
           await AsyncStorage.setItem("courseBuyerCart", JSON.stringify([]));
@@ -165,7 +155,6 @@ const Mycart = ({  isDarkMode, toggleDarkMode }) => {
             [{ text: "OK", onPress: () => navigation.navigate("Mylearning") }]
           );
         } else {
-          console.error("No user document found for email:", buyerEmail);
           throw new Error(
             `User document not found for email: ${buyerEmail}. Please check your account details.`
           );

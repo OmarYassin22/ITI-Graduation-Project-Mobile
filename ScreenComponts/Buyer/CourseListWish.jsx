@@ -9,7 +9,7 @@ const CourseListWish = ({ filteredCourses,isDarkMode }) => {
   const {   addToCart,  removeFromWishlist } = useContext(GetData);
   const renderCourseItem = ({ item: course }) => (
     <Card style={[styles.card, isDarkMode && styles.darkContainer]}>
-      <Card.Cover source={{ uri: course.image }} />
+      <Card.Cover source={{ uri: course.data.cImage }} />
       <Card.Content>
         <Title style={isDarkMode && styles.darkText}>{course.data.title}</Title>
         <Paragraph style={isDarkMode && styles.darkText}>{`by: ${course.data.instructor.split(" ").slice(0, 3).join(" ")}`}</Paragraph>

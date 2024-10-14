@@ -2,27 +2,19 @@ import React, { useContext, useEffect, useState } from "react";
 import { View, ScrollView, SafeAreaView, StyleSheet } from "react-native";
 import { GetData } from "../../Contexts/GetDataContext";
 import {
-  TextInput,
-  Text,
   Headline,
   Searchbar,
   useTheme,
 } from "react-native-paper";
 import CourseList from "./CourseList";
-import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import Navbar from "../../Navigations/navbar";
 import SecondNavbar from "../../Navigations/secondNav/secondNavbar";
-const Courses = ({ isDarkMode, toggleDarkMode, navigation }) => {
+const Courses = ({ isDarkMode, navigation }) => {
   const { getAllCourses } = useContext(GetData);
   const [courses, setCourses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const theme = useTheme();
 
   async function fetchCourses() {
-    console.warn("buyer email is " + (await AsyncStorage.getItem("email")));
-    const email = await AsyncStorage.getItem("email");
-    console.error(email);
 
     const data = await getAllCourses();
     setCourses(data);

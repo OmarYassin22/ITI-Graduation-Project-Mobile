@@ -31,10 +31,8 @@ const Mylearning = ({ isDarkMode, toggleDarkMode } ) => {
   const fetchEmail = useCallback(async () => {
     try {
       const email = await AsyncStorage.getItem("email");
-      console.log("Raw email from AsyncStorage:", email);
       if (email) {
         const trimmedEmail = email.replace(/^"|"$/g, "");
-        console.log("Trimmed buyer email:", trimmedEmail);
         setBuyerEmail(trimmedEmail);
       } else {
         throw new Error("Email not found in AsyncStorage");
@@ -59,25 +57,15 @@ const Mylearning = ({ isDarkMode, toggleDarkMode } ) => {
       if (!querySnapshot.empty) {
         const userDoc = querySnapshot.docs[0];
         let userDocument = userDoc.data();
-        console.log(
-          "User document data:",
-          JSON.stringify(userDocument, null, 2)
-        );
+        
         if (Array.isArray(userDocument.buyedCourses)) {
           setBuyedCourses(userDocument.buyedCourses);
-          console.log(
-            "Buyed courses:",
-            JSON.stringify(userDocument.buyedCourses, null, 2)
-          );
+          
         } else {
-          console.warn(
-            "buyedCourses is not an array:",
-            userDocument.buyedCourses
-          );
+          
           setBuyedCourses([]);
         }
       } else {
-        console.warn("No user document found for email:", buyerEmail);
         setBuyedCourses([]);
       }
     } catch (error) {
@@ -96,15 +84,9 @@ const Mylearning = ({ isDarkMode, toggleDarkMode } ) => {
             const courseSnap = await getDoc(courseRef);
             if (courseSnap.exists()) {
               const data = courseSnap.data();
-              console.log(
-                "Fetched course data for ID",
-                courseId,
-                ":",
-                JSON.stringify(data, null, 2)
-              );
+              
               return { id: courseId, ...data };
             } else {
-              console.warn("No such course:", courseId);
               return null;
             }
           } catch (error) {
@@ -114,10 +96,7 @@ const Mylearning = ({ isDarkMode, toggleDarkMode } ) => {
         })
       );
       const validCoursesData = coursesData.filter((course) => course !== null);
-      console.log(
-        "Valid courses data:",
-        JSON.stringify(validCoursesData, null, 2)
-      );
+  
       setCourseData(validCoursesData);
     } catch (error) {
       console.error("Error fetching course data:", error);
@@ -147,16 +126,14 @@ const Mylearning = ({ isDarkMode, toggleDarkMode } ) => {
 
   const filteredCourses = courseData.filter((course) => {
     if (!course) {
-      console.warn("Undefined course in courseData");
       return false;
     }
-    console.log("Filtering course:", JSON.stringify(course, null, 2));
+
     return (
       course?.title?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false
     );
   });
 
-  console.log("Filtered courses:", JSON.stringify(filteredCourses, null, 2));
 
   if (isLoading) {
     return (

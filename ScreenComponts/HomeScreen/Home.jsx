@@ -79,11 +79,7 @@ const Home = () => {
           getDownloadURL(item).then((url) => imageUrls.push(url))
         )
       );
-      console.log("================================================");
-      console.log(res);
-      console.log("================================================");
       const querySnapshot = await getDocs(collection(db, "courses"));
-      if (querySnapshot) console.log("get done");
       data = [];
       querySnapshot.forEach((doc) => {
         data.push({
@@ -92,7 +88,6 @@ const Home = () => {
           image: imageUrls.filter((url, i) => url.includes(doc.data().imgPath)),
         });
       });
-      console.warn(data);
     }
 
 

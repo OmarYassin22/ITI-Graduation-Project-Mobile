@@ -10,7 +10,6 @@ export default function LoginScreen() {
   const handleLogin = async () => {
     try {
       await signInWithEmail({ email, password });
-      console.log('User signed in successfully');
       // Redirect to the next screen or perform any action on success
     } catch (err) {
       setError(err.message);
