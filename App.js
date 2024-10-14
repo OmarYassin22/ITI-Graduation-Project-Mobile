@@ -408,28 +408,8 @@ export default function App() {
                     />
                   )}
                 </Drawer.Screen>
-                <Drawer.Screen
-                  name="Scholarship"
-                  options={{ headerShown: false }}
-                >
-                {(props) => (
-                  <Scholarship
-                    {...props}
-                    isDarkMode={isDarkMode}
-                    toggleDarkMode={toggleDarkMode}
-                  />
-                )}
-              </Drawer.Screen>
+                  
              
-              <Drawer.Screen name="CourseDetails" options={{ headerShown: false }}>
-                {(props) => (
-                  <CourseDetails
-                    {...props}
-                    isDarkMode={isDarkMode}
-                    toggleDarkMode={toggleDarkMode}
-                  />
-                )}
-              </Drawer.Screen>
          
               <Drawer.Screen name="Courses" options={{ headerShown: false }}>
                 {(props) => (
