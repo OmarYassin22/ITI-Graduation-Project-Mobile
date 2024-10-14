@@ -195,5 +195,17 @@ const styles = StyleSheet.create({
   coursesCard: { marginbot: 10, color: "red" },
   TableHeader: { color: "black" },
   TableHeaderDark: { color: "white" },
+  courseDetails: { width: 80, height: 80, },
+  courseDetailsContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  courseDetailsText: { fontSize: 20, color: "black" },
+  courseDetailsTextDark: { fontSize: 20, color: "white" },
+  courseDetailsContainerDark: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: "black"
+  }
 });
 export default styles;

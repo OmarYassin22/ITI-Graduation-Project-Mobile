@@ -88,7 +88,7 @@ const StCourses = ({ isDarkMode, toggleDarkMode, navigation }) => {
                                 {...props}
                                 icon="eye"
                                 color={isDarkMode ? '#ffffff' : '#000000'}
-                                onPress={() => { }}
+                                onPress={() => { navigation.navigate("CoursesDetails", { id: courses.id, course: courses.course, instructor: courses.instructor }) }}
                             />
                         )}
                     />
