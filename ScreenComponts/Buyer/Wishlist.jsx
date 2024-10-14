@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import CourseListBuyer from './CourseListBuyer';
 import CourseListWish from './CourseListWish';
 import Navbar from "../../Navigations/navbar";
+import SecondNavbar from '../../Navigations/secondNav/secondNavbar';
 
 
 
@@ -32,7 +33,7 @@ const Wishlist = ({ isDarkMode, toggleDarkMode, navigation }) => {
   if(courseBuyerWish.length==0){
     return (
       <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background },isDarkMode&&styles.darkContainer]}>
-      <Navbar
+      <SecondNavbar
         isDarkMode={isDarkMode}
         toggleDarkMode={toggleDarkMode}
         navigation={navigation}

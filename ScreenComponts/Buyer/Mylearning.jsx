@@ -19,6 +19,7 @@ import { useNavigation } from '@react-navigation/native';
 import { db } from "../../firebase";
 import CourseListLearning from "./CourseListLearning";
 import Navbar from "../../Navigations/navbar";
+import SecondNavbar from "../../Navigations/secondNav/secondNavbar";
 
 const Mylearning = ({ isDarkMode, toggleDarkMode } ) => {
   const [buyedCourses, setBuyedCourses] = useState([]);
@@ -155,11 +156,11 @@ const Mylearning = ({ isDarkMode, toggleDarkMode } ) => {
       <View
        style={[{ flex: 1, justifyContent: "center", alignItems: "center" },isDarkMode&&styles.darkContainer]}
        >
-         <Navbar
-          isDarkMode={isDarkMode}
-          toggleDarkMode={toggleDarkMode}
-          navigation={navigation}
-        />
+        <SecondNavbar
+        isDarkMode={isDarkMode}
+        toggleDarkMode={toggleDarkMode}
+        navigation={navigation}
+      />
         <Text style={styles.darkText}>Error: {error}</Text>
       </View>
     );
