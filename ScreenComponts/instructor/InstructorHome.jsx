@@ -5,6 +5,8 @@ import Schedule from "./Schedule";
 import AddVideo from "./addvideo";
 import Students from "./Students";
 import SecondNavbar from "../../Navigations/secondNav/secondNavbar";
+import { Text } from 'react-native';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -64,7 +66,7 @@ const InsHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
         </Tab.Screen>
         <Tab.Screen
           name="Add Video"
-          options={{
+          options={({ navigation, route }) => ({
             tabBarLabel: "Add Video",
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons
@@ -73,7 +75,19 @@ const InsHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
                 size={size}
               />
             ),
-          }}
+            headerStyle: {
+              backgroundColor: isDarkMode ? '#333' : 'white',
+            },
+            headerTintColor: isDarkMode ? 'white' : 'black',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+            headerTitle: () => (
+              <Text style={{ color: isDarkMode ? 'white' : 'black', fontSize: 20, fontWeight: 'bold' }}>
+                Add Video
+              </Text>
+            ),
+          })}
         >
           {(props) => (
             <AddVideo

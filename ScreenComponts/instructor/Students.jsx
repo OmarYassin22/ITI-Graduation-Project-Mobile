@@ -181,6 +181,7 @@ const Students = ({ isDarkMode }) => {
 
   return (
     <SafeAreaView style={[styles.safeArea, { backgroundColor: isDarkMode ? '#121212' : '#fff' }]}>
+      <Text style={[styles.header, { color: isDarkMode ? '#fff' : '#000' }]}>Students</Text>
       <View style={styles.container}>
         <View style={styles.pickerContainer}>
           <Text style={[styles.pickerLabel, { color: isDarkMode ? '#fff' : '#000' }]}>Select The Field</Text>
@@ -222,6 +223,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+    marginTop: 10,
+    marginLeft: 12,
   },
   pickerContainer: {
     marginBottom: 20,

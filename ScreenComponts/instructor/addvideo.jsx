@@ -16,11 +16,12 @@ const AddVideo = ({ isDarkMode }) => {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadTask, setUploadTask] = useState(null);
 
+  let fullName;
+
   useEffect(() => {
     const fetchDataWithName = async () => {
-      const fullName = await getFullName();
+      fullName = await getFullName();
       fetchData(fullName.replace(/"/g, ''));
-      handleUpload(fullName.replace(/"/g, ''));
     };
     fetchDataWithName();
   }, []);
@@ -71,7 +72,6 @@ const AddVideo = ({ isDarkMode }) => {
       const result = await DocumentPicker.getDocumentAsync({
         type: 'video/*',
       });
-  
       if (result.assets && result.assets.length > 0) {
         setFile(result.assets[0]);
       } else if (result.type === 'success') {
@@ -95,9 +95,9 @@ const AddVideo = ({ isDarkMode }) => {
           },
         ],
         {
-          titleStyle: { color: 'white' },
-          messageStyle: { color: 'white' },
-          containerStyle: { backgroundColor: 'black' },
+          titleStyle: { color: isDarkMode ? 'white' : "black" },
+          messageStyle: { color: isDarkMode ? 'white' : "black" },
+          containerStyle: { backgroundColor: isDarkMode ? 'black' : "white" },
         }
       );
       return;
@@ -128,7 +128,7 @@ const AddVideo = ({ isDarkMode }) => {
             'Upload Error',
             'An error occurred while uploading the file.',
             [{ text: 'OK', style: 'cancel' }],
-            { titleStyle: { color: 'white' }, containerStyle: { backgroundColor: 'black' } }
+            { titleStyle: { color: isDarkMode ? 'white' : "black" }, containerStyle: { backgroundColor: isDarkMode ? 'black' : "white" } }
           );
         }
         setIsUploading(false);
@@ -142,7 +142,7 @@ const AddVideo = ({ isDarkMode }) => {
             'Upload Complete',
             'Your file has been successfully uploaded.',
             [{ text: 'OK', style: 'cancel' }],
-            { titleStyle: { color: 'white' }, containerStyle: { backgroundColor: 'black' } }
+            { titleStyle: { color: isDarkMode ? 'white' : "black" }, containerStyle: { backgroundColor: isDarkMode ? 'black' : "white" } }
           );
         });
       }
@@ -156,7 +156,7 @@ const AddVideo = ({ isDarkMode }) => {
         'Upload cancelled',
         'The upload has been cancelled.',
         [{ text: 'OK', style: 'cancel' }],
-        { titleStyle: { color: 'white' }, containerStyle: { backgroundColor: 'black' } }
+        { titleStyle: { color: isDarkMode ? 'white' : "black" }, containerStyle: { backgroundColor: isDarkMode ? 'black' : "white" } }
       );
     }
   };
