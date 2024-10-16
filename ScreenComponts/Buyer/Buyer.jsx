@@ -9,11 +9,14 @@ import Wishlist from './Wishlist';
 import CourseDetailes from './CourseDetailes';
 import { GetData } from '../../Contexts/GetDataContext';
 import Scholarship from './Scholarship/Scholarship';
+import { useTranslation } from 'react-i18next';
+
 
 const Tab = createBottomTabNavigator();
 
 
 function Buyer({ isDarkMode, toggleDarkMode }) {
+  const { t } = useTranslation();
   const {courseBuyerCart,courseBuyerWish} = useContext(GetData);
   return (
     <Tab.Navigator
@@ -30,7 +33,7 @@ function Buyer({ isDarkMode, toggleDarkMode }) {
         name="Courses"
         options={{
           headerShown:false,
-          tabBarLabel: 'Courses',
+          tabBarLabel: t('buyer.home.courses'),
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="book-open-page-variant" color={color} size={size} />
           ),
@@ -42,7 +45,7 @@ function Buyer({ isDarkMode, toggleDarkMode }) {
         name="Mycart"
         options={{
           headerShown:false,
-          tabBarLabel: 'Mycart',
+          tabBarLabel: t('buyer.home.mycart'),
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="cart" color={color} size={size} />
           ),
@@ -55,7 +58,7 @@ function Buyer({ isDarkMode, toggleDarkMode }) {
         name="Wishlist"
         options={{
           headerShown:false,
-          tabBarLabel: 'Wishlist',
+          tabBarLabel: t('buyer.home.wishlist'),
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="heart" color={color} size={size} />
           ),
@@ -68,7 +71,7 @@ function Buyer({ isDarkMode, toggleDarkMode }) {
         name="Mylearning"
         options={{
           headerShown:false,
-          tabBarLabel: 'My learning',
+          tabBarLabel: t('buyer.home.mylearning'),
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="play-circle" color={color} size={size} />
           ),
@@ -91,7 +94,7 @@ function Buyer({ isDarkMode, toggleDarkMode }) {
         name="Scholarship"
         options={{
           headerShown:false,
-          tabBarLabel: 'Scholarship',
+          tabBarLabel: t('buyer.home.scholarship'),
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="school" color={color} size={size} />
           ),

@@ -3,8 +3,10 @@ import { View, FlatList, StyleSheet } from 'react-native';
 import { Card, Title, Paragraph, Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { GetData } from '../../Contexts/GetDataContext';
+import { useTranslation } from 'react-i18next';
 
 const CourseListBuyer = ({ filteredCourses,isDarkMode }) => {
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const {  removeFromCart } = useContext(GetData);
   
@@ -13,9 +15,9 @@ const CourseListBuyer = ({ filteredCourses,isDarkMode }) => {
       <Card.Cover source={{ uri: course.data.cImage }} />
       <Card.Content>
         <Title style={isDarkMode && styles.darkText}>{course.data.title}</Title>
-        <Paragraph style={isDarkMode && styles.darkText}>{`by: ${course.data.instructor.split(" ").slice(0, 3).join(" ")}`}</Paragraph>
-        <Paragraph style={[styles.price, isDarkMode && styles.darkText]}>{`Price: ${course.data.price} $`}</Paragraph>
-        <Paragraph style={isDarkMode && styles.darkText}>{`Duration: ${course?.data?.duration} hrs`}</Paragraph>
+        <Paragraph style={isDarkMode && styles.darkText}>{`${t('buyer.courseListWish.by')}: ${course.data.instructor.split(" ").slice(0, 3).join(" ")}`}</Paragraph>
+        <Paragraph style={[styles.price, isDarkMode && styles.darkText]}>{`${t('buyer.courseListWish.price')}: ${course.data.price} $`}</Paragraph>
+        <Paragraph style={isDarkMode && styles.darkText}>{`${t('buyer.courseListWish.duration')}: ${course?.data?.duration} hrs`}</Paragraph>
       </Card.Content>
       <Card.Actions style={styles.cardActions}>
         <Button

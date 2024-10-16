@@ -7,10 +7,13 @@ import { useNavigation } from '@react-navigation/native';
 import CourseListBuyer from './CourseListBuyer';
 import CourseListWish from './CourseListWish';
 import Navbar from "../../Navigations/navbar";
+import SecondNavbar from '../../Navigations/secondNav/secondNavbar';
+import { useTranslation } from 'react-i18next';
 
 
 
 const Wishlist = ({ isDarkMode, toggleDarkMode, navigation }) => {
+  const { t } = useTranslation(); 
   const {courseBuyerWish} = useContext(GetData);
   const [courses, setCourses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -32,13 +35,13 @@ const Wishlist = ({ isDarkMode, toggleDarkMode, navigation }) => {
   if(courseBuyerWish.length==0){
     return (
       <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background },isDarkMode&&styles.darkContainer]}>
-      <Navbar
+      <SecondNavbar
         isDarkMode={isDarkMode}
         toggleDarkMode={toggleDarkMode}
         navigation={navigation}
       />
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={[isDarkMode&&styles.darkText]}>No courses in your wishlist yet.</Text>
+        <Text style={[styles.textBold,isDarkMode&&styles.darkText]}>{t('buyer.wishlist.noCourses')}</Text>
       </View>
       </SafeAreaView>
     );  
@@ -46,16 +49,16 @@ const Wishlist = ({ isDarkMode, toggleDarkMode, navigation }) => {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background },isDarkMode && styles.darkContainer]}>
-      <Navbar
+      <SecondNavbar
         isDarkMode={isDarkMode}
         toggleDarkMode={toggleDarkMode}
         navigation={navigation}
       />
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={[styles.header,isDarkMode&&styles.darkContainer]}>
-          <Headline style={[styles.title,isDarkMode&&styles.darkText]}>All Courses in Wishlist</Headline>
+          <Headline style={[styles.title,isDarkMode&&styles.darkText]}>{t('buyer.wishlist.allCourses')}</Headline>
           <Searchbar
-            placeholder="Search courses"
+            placeholder={t('buyer.wishlist.searchPlaceholder')}
             onChangeText={setSearchTerm}
             value={searchTerm}
             style={styles.searchBar}
@@ -71,6 +74,11 @@ const Wishlist = ({ isDarkMode, toggleDarkMode, navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  textBold: {
+    marginBottom: 20,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
   container: {
     flex: 1,
   },

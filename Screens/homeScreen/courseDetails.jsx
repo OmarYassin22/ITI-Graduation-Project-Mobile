@@ -1,14 +1,16 @@
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 const CourseDetails = ({ route, navigation }) => {
+  const { t } = useTranslation(); 
   const { course, isDarkMode } = route.params; 
 
   return (
     <>
       <ScrollView style={[styles.container, isDarkMode && styles.darkContainer]}>
         <ImageBackground
-          source={course.imgPath ? { uri: course.imgPath } : null}
+          source={course.cImage ? { uri: course.cImage } : null}
           style={styles.courseImage}
           resizeMode="cover"
         >
@@ -17,10 +19,10 @@ const CourseDetails = ({ route, navigation }) => {
         <View style={[styles.contentContainer, isDarkMode && styles.darkContentContainer]}>
           <Text style={[styles.title, isDarkMode && styles.darkText]}>{course.title}</Text>
           <Text style={[styles.description, isDarkMode && styles.darkText]}>{course.details}</Text>
-          <Text style={[styles.rating, isDarkMode && styles.darkRating]}>Rating: {parseFloat(course.rating).toFixed(2)}</Text>
+          <Text style={[styles.rating, isDarkMode && styles.darkRating]}>{t('home.courseDetails.Rating')}: {parseFloat(course.rating).toFixed(2)}</Text>
 
           <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.buttonText}>Buy Now</Text>
+            <Text style={styles.buttonText}>{t('home.courseDetails.BuyNow')}</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

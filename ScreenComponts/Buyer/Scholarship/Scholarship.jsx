@@ -17,8 +17,10 @@ import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import createStyles from './styleScholarship';
 import SecondNavbar from "../../../Navigations/secondNav/secondNavbar";
+import { useTranslation } from 'react-i18next';
 
 const Scholarship = ({ isDarkMode }) => {
+  const { t } = useTranslation();
   const styles = createStyles(isDarkMode);
 
   const [field, setField] = useState("Front-end");
@@ -360,31 +362,30 @@ const Scholarship = ({ isDarkMode }) => {
 
   const submitHandle = () => {
     if (submitted) {
-      showAlert("Already an Applicant", "You are already an applicant.");
+      showAlert(t("buyer.solarship.alreadyApplicant"), t("buyer.solarship.alreadyApplicantMessage"));
       return;
     }
 
     if (field) {
       if (answers.length !== questions[field].length || answers.some(answer => answer === null)) {
-        showAlert("Error", "Please answer all questions before submitting.");
+        showAlert(t("buyer.solarship.error"), t("buyer.solarship.answerAllQuestions"));
         return;
       }
 
       Alert.alert(
-        "Scholarship Application",
-        "Are you sure you want to submit the application?",
+        t("buyer.solarship.scholarshipApplication"), t("buyer.solarship.confirmSubmit"),
         [
           {
-            text: "Cancel",
-            onPress: () => showAlert("Cancelled", "Your application has been canceled."),
+            text: t("buyer.solarship.cancel"),
+            onPress: () => showAlert(t("buyer.solarship.canceled"), t("buyer.solarship.applicationCanceledMessage")),
             style: "cancel",
           },
           {
-            text: "Submit",
+            text: t("buyer.solarship.submit"),
             onPress: async () => {
               try {
                 if (!docId) {
-                  showAlert("Error", "Document ID is missing. Please try again.");
+                  showAlert(t("buyer.solarship.error"), t("buyer.solarship.documentIdMissing"));
                   return;
                 }
 
@@ -404,20 +405,20 @@ const Scholarship = ({ isDarkMode }) => {
 
                 const updatedDoc = await getDoc(docRef);
                 if (updatedDoc.exists() && updatedDoc.data().type === "applicant") {
-                  showAlert("Success", "You have become an applicant.");
+                  showAlert(t("buyer.solarship.success"), t("buyer.solarship.applicationSuccess"));
                 }
                 setSubmitted(true);
 
                 navigation.navigate("Courses");
               } catch (error) {
-                showAlert("Error", "There was an issue submitting your application.");
+                showAlert(t("buyer.solarship.error"), t("buyer.solarship.applicationError"));
               }
             },
           },
         ]
       );
     } else {
-      showAlert("Error", "Please select a field");
+      showAlert(t("buyer.solarship.error"), t("buyer.solarship.selectField"));
     }
   };
 
@@ -449,8 +450,8 @@ const Scholarship = ({ isDarkMode }) => {
           isDarkMode={isDarkMode}
           navigation={navigation}
         />
-        <Text style={styles.header}>You are already an applicant</Text>
-        <Text style={styles.text}>You cannot apply again</Text>
+        <Text style={styles.header}>{t("buyer.solarship.alreadyApplicant")}</Text>
+        <Text style={styles.text}>{t("buyer.solarship.cannotApply")}</Text>
       </View>
     );
   }
@@ -461,7 +462,7 @@ const Scholarship = ({ isDarkMode }) => {
         isDarkMode={isDarkMode}
         navigation={navigation}
       />
-      <Text style={styles.label}>Select Field you want</Text>
+      <Text style={styles.label}>{t("buyer.solarship.fieldSelection")}</Text>
       <View style={styles.pickerContainer}>
         <Picker
           selectedValue={field}
@@ -477,9 +478,9 @@ const Scholarship = ({ isDarkMode }) => {
           dropdownIconColor={isDarkMode ? "#fff" : "#000"}
           enabled={!submitted}
         >
-          <Picker.Item label="Front-end" value="Front-end" style={styles.pickerItem} />
-          <Picker.Item label="Back-end" value="Back-end" style={styles.pickerItem} />
-          <Picker.Item label="Mobile App" value="Mobile-app" style={styles.pickerItem} />
+          <Picker.Item label={t("buyer.solarship.frontEnd")} value="Front-end" style={styles.pickerItem} />
+          <Picker.Item label={t("buyer.solarship.backEnd")} value="Back-end" style={styles.pickerItem} />
+          <Picker.Item label={t("buyer.solarship.mobileApp")} value="Mobile-app" style={styles.pickerItem} />
         </Picker>
       </View>
 
@@ -491,7 +492,7 @@ const Scholarship = ({ isDarkMode }) => {
           ListFooterComponent={
             !submitted && (
               <Button
-                title="Submit"
+                title={t("buyer.solarship.submit")}
                 onPress={submitHandle}
                 color={isDarkMode ? "#3a70b2" : "#4a90e2"}
                 style={styles.subBtn}
@@ -503,7 +504,7 @@ const Scholarship = ({ isDarkMode }) => {
 
       {submitted && (
         <Text style={styles.submittedText}>
-          You have already submitted your application for the {field} field.
+          {t("buyer.solarship.submittedText")} {field}.
         </Text>
       )}
     </View>

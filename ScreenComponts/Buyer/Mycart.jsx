@@ -34,6 +34,8 @@ import {
 import { db } from "../../firebase";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import SecondNavbar from "../../Navigations/secondNav/secondNavbar";
+import { useTranslation } from 'react-i18next';
 
 
 // Use Stripe's test publishable key
@@ -41,6 +43,7 @@ const STRIPE_PUBLISHABLE_KEY =
   "pk_test_51PrP4TBp38FM06vYjqUSTOWFAdyY60sB8ibBsgfWBIbVReUBAauq8qRPyJR4TRdBgzyBY1SnxeRN23cmyQg4wu2Y00iBHn5Kvm";
 
 const Mycart = ({  isDarkMode, toggleDarkMode }) => {
+  const { t } = useTranslation(); 
   const { courseBuyerCart, setCourseBuyerCart } = useContext(GetData);
   const [courses, setCourses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -181,16 +184,16 @@ const Mycart = ({  isDarkMode, toggleDarkMode }) => {
       <SafeAreaView
       style={[styles.container, { backgroundColor: theme.colors.background },isDarkMode && styles.darkContainer]}
       >
-        <Navbar
-          isDarkMode={isDarkMode}
-          toggleDarkMode={toggleDarkMode}
-          navigation={navigation}
-        />
+       <SecondNavbar
+        isDarkMode={isDarkMode}
+        toggleDarkMode={toggleDarkMode}
+        navigation={navigation}
+      />
 
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
-          <Text style={ [styles.totalAmount,isDarkMode&&styles.darkText]}>No courses in your cart yet.</Text>
+          <Text style={ [styles.totalAmount,isDarkMode&&styles.darkText]}>{t('buyer.myCart.noCourses')}</Text>
         </View>
       </SafeAreaView>
       </SafeAreaView>
@@ -216,9 +219,9 @@ const Mycart = ({  isDarkMode, toggleDarkMode }) => {
         >
           <ScrollView contentContainerStyle={styles.scrollView}>
             <View style={styles.header}>
-              <Headline style={[styles.title,isDarkMode&&styles.darkText]}>All Courses in My Cart</Headline>
+              <Headline style={[styles.title,isDarkMode&&styles.darkText]}>{t('buyer.myCart.allCoursesInCart')}</Headline>
               <Searchbar
-                placeholder="Search courses"
+                placeholder={t('buyer.myCart.searchPlaceholder')}
                 onChangeText={setSearchTerm}
                 value={searchTerm}
                 style={styles.searchBar}
@@ -226,7 +229,7 @@ const Mycart = ({  isDarkMode, toggleDarkMode }) => {
             </View>
             <CourseListBuyer filteredCourses={filteredCourses} isDarkMode={isDarkMode} />
             <View style={styles.paymentSection}>
-              <Text style={[styles.totalAmount,isDarkMode&&styles.darkText]}>Total: ${totalAmount}</Text>
+              <Text style={[styles.totalAmount,isDarkMode&&styles.darkText]}>{t('buyer.myCart.totalLabel')}: ${totalAmount}</Text>
               <CardField
                 postalCodeEnabled={true}
                 placeholder={{
@@ -249,7 +252,7 @@ const Mycart = ({  isDarkMode, toggleDarkMode }) => {
                 disabled={loading}
                 loading={loading}
               >
-                {loading ? "Processing..." : "Buy now "}
+                {loading ? `${t('buyer.myCart.processingPayment')}` : `${t('buyer.myCart.buyNow')}`}
               </Button>
             </View>
           </ScrollView>

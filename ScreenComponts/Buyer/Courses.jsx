@@ -8,7 +8,11 @@ import {
 } from "react-native-paper";
 import CourseList from "./CourseList";
 import SecondNavbar from "../../Navigations/secondNav/secondNavbar";
+import { useTranslation } from 'react-i18next';
+
 const Courses = ({ isDarkMode, navigation }) => {
+  const { t } = useTranslation(); 
+
   const { getAllCourses } = useContext(GetData);
   const [courses, setCourses] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -32,20 +36,15 @@ const Courses = ({ isDarkMode, navigation }) => {
     <SafeAreaView
       style={[styles.container, { backgroundColor: theme.colors.background },isDarkMode && styles.darkContainer]}
     >
-      {/* <Navbar
-        isDarkMode={isDarkMode}
-        toggleDarkMode={toggleDarkMode}
-        navigation={navigation}
-      /> */}
       <SecondNavbar
       isDarkMode={isDarkMode}
       navigation={navigation}
       />
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.header}>
-          <Headline style={[styles.title,isDarkMode&&styles.darkText]}>All Courses in our App</Headline>
+          <Headline style={[styles.title,isDarkMode&&styles.darkText]}>{t('buyer.courses.allCourses')}</Headline>
           <Searchbar
-            placeholder="Search courses"
+            placeholder={t('buyer.courses.searchPlaceholder')}
             onChangeText={setSearchTerm}
             value={searchTerm}
             style={styles.searchBar}

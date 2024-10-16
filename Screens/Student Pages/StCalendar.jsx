@@ -8,9 +8,11 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
 import SecondNavbar from '../../Navigations/secondNav/secondNavbar.jsx';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useTranslation } from 'react-i18next';
 
 
 const StCalendar = ({ isDarkMode, toggleDarkMode, navigation }) => {
+    const { t } = useTranslation();
     const [events, setEvents] = useState({});
     const [markedDates, setMarkedDates] = useState({});
     const [selectedEvent, setSelectedEvent] = useState(null);
@@ -148,7 +150,7 @@ const StCalendar = ({ isDarkMode, toggleDarkMode, navigation }) => {
                     navigation={navigation}
                 />
                 <View style={[styles.container, isDarkMode && styles.darkContainer]}>
-                    <Text style={[styles.header, isDarkMode && styles.darkHeader]}>Schedule</Text>
+                    <Text style={[styles.header, isDarkMode && styles.darkHeader]}>{t('student.Schedule')}</Text>
                     <Calendar
                         onDayPress={onDayPress}
                         markedDates={markedDates}

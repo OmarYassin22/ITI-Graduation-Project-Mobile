@@ -5,8 +5,10 @@ import { Card, Title, Paragraph, Button } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useTranslation } from 'react-i18next';
 
 const CourseDetailes = ({ route,isDarkMode }) => {
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -47,47 +49,47 @@ const CourseDetailes = ({ route,isDarkMode }) => {
   const addToCart = async () => {
     try {
       if (!course) {
-        throw new Error('No course data available');
+        throw new Error(t('buyer.courseDetails.noData'));
       }
       if (courseBuyerCart.some((item) => item.id === course.id)) {
-        Alert.alert('Course already in cart:', course.data.title);
+        Alert.alert(t('buyer.courseDetails.courseAlreadyInCart'), course.data.title);
       } else {
         const updatedCart = [...courseBuyerCart, course];
         setCourseBuyerCart(updatedCart);
         await AsyncStorage.setItem('courseBuyerCart', JSON.stringify(updatedCart));
         navigation.navigate('Mycart');
-        Alert.alert('Course added to cart:', course.data.title);
+        Alert.alert(t('buyer.courseDetails.courseAddedToCart'), course.data.title);
       }
     } catch (e) {
       console.error('Error adding to cart:', e);
-      Alert.alert('Error', 'Failed to add course to cart. Please try again.');
+      Alert.alert(t('buyer.courseDetails.error'), t('buyer.courseDetails.errorMsg'));
     }
   };
   
   const addToWishlist = async () => {
     try {
       if (!course) {
-        throw new Error('No course data available');
+        throw new Error(t('buyer.courseDetails.noData'));
       }
       if (courseBuyerWish.some((item) => item.id === course.id)) {
-        Alert.alert('Course already in wishlist:', course.data.title);
+        Alert.alert(t('buyer.courseDetails.courseAlreadyInWishlist'), course.data.title);
       } else {
         const updatedWishlist = [...courseBuyerWish, course];
         setCourseBuyerWish(updatedWishlist);
         await AsyncStorage.setItem('courseBuyerWish', JSON.stringify(updatedWishlist));
         navigation.navigate('Wishlist');
-        Alert.alert('Course added to wishlist:', course.data.title);
+        Alert.alert(t('buyer.courseDetails.courseAddedToWishlist'), course.data.title);
       }
     } catch (e) {
       console.error('Error adding to wishlist:', e);
-      Alert.alert('Error', 'Failed to add course to wishlist. Please try again.');
+      Alert.alert(t('buyer.courseDetails.error'), t('buyer.courseDetails.errorMsg'));
     }
   };
 
   if (loading) {
     return (
       <View style={[styles.container, isDarkMode && styles.darkContainer]}>
-        <Text style={isDarkMode && styles.darkText}>Loading course details...</Text>
+        <Text style={isDarkMode && styles.darkText}>{t('buyer.courseDetails.loading')}</Text>
       </View>
     );
   }
@@ -95,7 +97,7 @@ const CourseDetailes = ({ route,isDarkMode }) => {
   if (error) {
     return (
       <View style={[styles.container, isDarkMode && styles.darkContainer]}>
-        <Text style={isDarkMode && styles.darkText}>Error: {error}</Text>
+        <Text style={isDarkMode && styles.darkText}>{`${t('buyer.courseDetails.error')} : ${error}`}</Text>
       </View>
     );
   }
@@ -103,7 +105,7 @@ const CourseDetailes = ({ route,isDarkMode }) => {
   if (!course) {
     return (
       <View style={[styles.container, isDarkMode && styles.darkContainer]}>
-        <Text style={isDarkMode && styles.darkText}>No course data available.</Text>
+        <Text style={isDarkMode && styles.darkText}>{t('buyer.courseDetails.noData')}</Text>
       </View>
     );
   }
@@ -116,20 +118,20 @@ const CourseDetailes = ({ route,isDarkMode }) => {
         <Title style={isDarkMode && styles.darkText}>{course.data.title}</Title>
         <Paragraph style={isDarkMode && styles.darkText}>{course.data.details}</Paragraph>
         <Paragraph style={isDarkMode && styles.darkText}>
-          <Text style={[styles.boldText, isDarkMode && styles.darkText]}>Duration:</Text> {course.data.duration}
+          <Text style={[styles.boldText, isDarkMode && styles.darkText]}>{t('buyer.courseDetails.duration')}:</Text> {course.data.duration}
         </Paragraph>
         <Paragraph style={isDarkMode && styles.darkText}>
-          <Text style={[styles.boldText, isDarkMode && styles.darkText]}>Instructor:</Text> {course.data.instructor}
+          <Text style={[styles.boldText, isDarkMode && styles.darkText]}>{t('buyer.courseDetails.instructor')}:</Text> {course.data.instructor}
         </Paragraph>
         <Paragraph style={isDarkMode && styles.darkText}>
-          <Text style={[styles.boldText, isDarkMode && styles.darkText]}>Price:</Text> {course.data.price} $
+          <Text style={[styles.boldText, isDarkMode && styles.darkText]}>{t('buyer.courseDetails.price')}:</Text> {course.data.price} $
         </Paragraph>
         <Paragraph style={isDarkMode && styles.darkText}>
-          <Text style={[styles.boldText, isDarkMode && styles.darkText]}>Rating:</Text> {course.data.rating || 4.3} 
+          <Text style={[styles.boldText, isDarkMode && styles.darkText]}>{t('buyer.courseDetails.rating')}:</Text> {course.data.rating || 4.3} 
           <MaterialCommunityIcons name="star" color={isDarkMode ? "yellow" : "green"} size={16} />
         </Paragraph>
         <Paragraph style={isDarkMode && styles.darkText}>
-          <Text style={[styles.boldText, isDarkMode && styles.darkText]}>Track:</Text> {course.data.track}
+          <Text style={[styles.boldText, isDarkMode && styles.darkText]}>{t('buyer.courseDetails.track')}:</Text> {course.data.track}
         </Paragraph>
       </Card.Content>
       <Card.Actions style={styles.buttonContainer}>
@@ -140,7 +142,7 @@ const CourseDetailes = ({ route,isDarkMode }) => {
           style={styles.button}
         
         >
-          Add TO Cart
+          {t('buyer.courseDetails.addToCart')}
         </Button>
         <Button 
           icon="heart" 
@@ -149,7 +151,7 @@ const CourseDetailes = ({ route,isDarkMode }) => {
           style={styles.button}
        
         >
-          Add TO Wishlist
+          {t('buyer.courseDetails.addToWishlist')}
         </Button>
       </Card.Actions>
    

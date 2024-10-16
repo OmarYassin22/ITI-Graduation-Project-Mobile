@@ -6,8 +6,10 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SecondNavbar from '../../Navigations/secondNav/secondNavbar.jsx';
+import { useTranslation } from 'react-i18next';
 
 const StTable = ({ isDarkMode, navigation }) => {
+    const { t } = useTranslation();
     const [data, setData] = useState([]);
     const getEmail = async () => {
         const email = await AsyncStorage.getItem("email");
@@ -61,10 +63,10 @@ const StTable = ({ isDarkMode, navigation }) => {
                 />
                 <DataTable style={styles.tableContainer}>
                     <DataTable.Header style={styles.tableHeader}>
-                        <DataTable.Title><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>Name</Text></DataTable.Title>
-                        <DataTable.Title><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>Percentage</Text></DataTable.Title>
-                        <DataTable.Title><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>Status</Text></DataTable.Title>
-                        <DataTable.Title><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>instructor</Text></DataTable.Title>
+                        <DataTable.Title><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>{t('student.table.name')}</Text></DataTable.Title>
+                        <DataTable.Title><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>{t('student.table.percentage')}</Text></DataTable.Title>
+                        <DataTable.Title><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>{t('student.table.status')}</Text></DataTable.Title>
+                        <DataTable.Title><Text style={[styles.TableHeader, isDarkMode && styles.TableHeaderDark]}>{t('student.table.instructor')}</Text></DataTable.Title>
                     </DataTable.Header>
                     {data.map(function (course, key) {
                         return <DataTable.Row>

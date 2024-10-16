@@ -6,11 +6,13 @@ import StCalendar from './StCalendar.jsx';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createStackNavigator } from "@react-navigation/stack";
 import CoursesDetails from '../../Screens/Student Pages/CoursesDetails/Courses Details.jsx';
+import { useTranslation } from 'react-i18next';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export function CourseStack({ isDarkMode, toggleDarkMode }) {
+  
     return (
       <Stack.Navigator>
         <Stack.Screen
@@ -46,6 +48,7 @@ export function CourseStack({ isDarkMode, toggleDarkMode }) {
   }
   
 const StHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
+  const { t } = useTranslation();
     return (
         <>
             <Tab.Navigator
@@ -57,7 +60,7 @@ const StHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
                 <Tab.Screen
                     name="Schedule"
                     options={{
-                        tabBarLabel: 'Schedule',
+                        tabBarLabel: t("student.home.schedule"),
                         headerShown: false,
                         tabBarIcon: ({ color, size }) => (
                             <MaterialCommunityIcons name="calendar-blank" color={color} size={size} />
@@ -69,7 +72,7 @@ const StHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
                 <Tab.Screen
                     name="Grades"
                     options={{
-                        tabBarLabel: 'Grades',
+                        tabBarLabel: t("student.home.grades"),
                         headerShown: false,
                         tabBarIcon: ({ color, size }) => (
                             <MaterialCommunityIcons name="table" color={color} size={size} />
@@ -81,7 +84,7 @@ const StHome = ({ isDarkMode, toggleDarkMode, navigation }) => {
                 <Tab.Screen
                     name="Courses"
                     options={{
-                        tabBarLabel: 'Courses',
+                        tabBarLabel: t("student.home.courses"),
                         headerShown: false,
                         tabBarIcon: ({ color, size }) => (
                             <MaterialCommunityIcons name="content-paste" color={color} size={size} />

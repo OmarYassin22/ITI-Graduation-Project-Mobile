@@ -19,8 +19,11 @@ import { useNavigation } from '@react-navigation/native';
 import { db } from "../../firebase";
 import CourseListLearning from "./CourseListLearning";
 import Navbar from "../../Navigations/navbar";
+import SecondNavbar from "../../Navigations/secondNav/secondNavbar";
+import { useTranslation } from 'react-i18next';
 
 const Mylearning = ({ isDarkMode, toggleDarkMode } ) => {
+  const { t } = useTranslation(); 
   const [buyedCourses, setBuyedCourses] = useState([]);
   const [courseData, setCourseData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -137,15 +140,15 @@ const Mylearning = ({ isDarkMode, toggleDarkMode } ) => {
 
   if (isLoading) {
     return (
-      <View        style={[{ flex: 1, justifyContent: "center", alignItems: "center" },isDarkMode&&styles.darkContainer]}
->
-<Navbar
-          isDarkMode={isDarkMode}
-          toggleDarkMode={toggleDarkMode}
-          navigation={navigation}
-        />
+      <View style={[{ flex: 1, justifyContent: "center", alignItems: "center" },isDarkMode&&styles.darkContainer]}
+      >
+      <SecondNavbar
+        isDarkMode={isDarkMode}
+        toggleDarkMode={toggleDarkMode}
+        navigation={navigation}
+      />
         <ActivityIndicator size="large" />
-        <Text style={styles.darkText}>Loading your courses...</Text>
+        <Text style={[styles.textBold,isDarkMode&&styles.darkText]}>{t('buyer.mylearning.loading')}</Text>
       </View>
     );
   }
@@ -155,12 +158,12 @@ const Mylearning = ({ isDarkMode, toggleDarkMode } ) => {
       <View
        style={[{ flex: 1, justifyContent: "center", alignItems: "center" },isDarkMode&&styles.darkContainer]}
        >
-         <Navbar
-          isDarkMode={isDarkMode}
-          toggleDarkMode={toggleDarkMode}
-          navigation={navigation}
-        />
-        <Text style={styles.darkText}>Error: {error}</Text>
+        <SecondNavbar
+        isDarkMode={isDarkMode}
+        toggleDarkMode={toggleDarkMode}
+        navigation={navigation}
+      />
+        <Text style={[styles.textBold,isDarkMode&&styles.darkText]}>{t('buyer.mylearning.error')}: {error}</Text>
       </View>
     );
   }
@@ -169,24 +172,24 @@ const Mylearning = ({ isDarkMode, toggleDarkMode } ) => {
     return (
       <View
        style={[{ flex: 1, justifyContent: "center", alignItems: "center" },isDarkMode&&styles.darkContainer]}>
-        <Text style={styles.darkText}>No courses in your learning list yet.</Text>
+        <Text style={[styles.textBold,isDarkMode&&styles.darkText]}>{t('buyer.mylearning.noCourses')}</Text>
       </View>
     );
   }
 
   return (
     <SafeAreaView style={[styles.container,isDarkMode&&styles.darkContainer]}>
-       <Navbar
-          isDarkMode={isDarkMode}
-          toggleDarkMode={toggleDarkMode}
-          navigation={navigation}
-        />
+       <SecondNavbar
+        isDarkMode={isDarkMode}
+        toggleDarkMode={toggleDarkMode}
+        navigation={navigation}
+      />
     
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.header}>
-          <Headline style={[styles.head,isDarkMode&&styles.darkText]}>All Courses in My Learning</Headline>
+          <Headline style={[styles.head,isDarkMode&&styles.darkText]}>{t('buyer.mylearning.allCourses')}</Headline>
           <Searchbar
-            placeholder="Search courses"
+            placeholder={t('buyer.mylearning.searchPlaceholder')}
             onChangeText={setSearchTerm}
             value={searchTerm}
             style={styles.searchBar}
@@ -199,6 +202,11 @@ const Mylearning = ({ isDarkMode, toggleDarkMode } ) => {
 };
 
 const styles = StyleSheet.create({
+  textBold: {
+    marginBottom: 20,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
   container: {
     flex: 1,
   },
