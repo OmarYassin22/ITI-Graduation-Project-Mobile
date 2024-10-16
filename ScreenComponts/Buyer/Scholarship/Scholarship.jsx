@@ -15,7 +15,6 @@ import {
 } from "firebase/firestore";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Navbar from "../../../Navigations/navbar";
 import createStyles from './styleScholarship';
 import SecondNavbar from "../../../Navigations/secondNav/secondNavbar";
 
