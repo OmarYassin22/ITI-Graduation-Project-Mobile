@@ -47,21 +47,25 @@ const AddVideo = ({ isDarkMode }) => {
         id: doc.id,
         ...doc.data(),
       }));
-
       const courseSet = new Set();
+      const fieldSet = new Set();
       students.forEach((student) => {
         if (student.courses && Array.isArray(student.courses)) {
           student.courses
-            .filter((course) => course.instructor === fullName)
-            .forEach((course) => courseSet.add(course.course));
+            .filter((course) =>
+              course.instructor.trim().toLowerCase() === fullName.trim().toLowerCase()
+            )
+            .forEach((course) => {
+              courseSet.add(course.course);
+              if (student.field) fieldSet.add(student.field);
+            });
         }
       });
-
       const uniqueCourses = Array.from(courseSet).map((courseName) => ({
         courseName,
       }));
-
       setCourseData(uniqueCourses);
+      // setUniqueFieldsArray(Array.from(fieldSet));
     } catch (error) {
       console.error('Error fetching data: ', error);
     }
@@ -95,9 +99,9 @@ const AddVideo = ({ isDarkMode }) => {
           },
         ],
         {
-          titleStyle: { color: isDarkMode ? 'white' : "black" },
-          messageStyle: { color: isDarkMode ? 'white' : "black" },
-          containerStyle: { backgroundColor: isDarkMode ? 'black' : "white" },
+          titleStyle: { color: isDarkMode ? 'white' : 'black' },
+          messageStyle: { color: isDarkMode ? 'white' : 'black' },
+          containerStyle: { backgroundColor: isDarkMode ? '#1c1c1e' : 'white' },
         }
       );
       return;

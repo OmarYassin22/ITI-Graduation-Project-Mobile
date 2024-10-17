@@ -46,8 +46,10 @@ const Students = ({ isDarkMode }) => {
         if (!student.courses || !Array.isArray(student.courses) || student.courses.length === 0) {
           return [];
         }
-
-        let filtered = student.courses.filter((course) => course.instructor === fullName);
+        
+        let filtered = student.courses.filter((course) => 
+          course.instructor.trim().toLowerCase() === fullName.trim().toLowerCase()
+        );
         return filtered.map((course) => ({
           studentId: student.id,
           courseStudent: student.fname + " " + student.lname,

@@ -89,8 +89,6 @@ const Schedule = ({isDarkMode , navigation}) => {
     }
   };
 
-
-
   const onDayPress = (day) => {
     const selectedDate = day.dateString;
     if (events[selectedDate]) {
