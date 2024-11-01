@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Switch, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Switch, StyleSheet, TouchableOpacity, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; 
 import { Picker } from '@react-native-picker/picker'; 
 // import Navbar from '../Navigations/navbar';
@@ -61,7 +61,7 @@ const SettingsScreen2 = ({ isDarkMode, toggleDarkMode, navigation }) => {
           <Ionicons name="mail" size={24} color="black" style={[styles.icon, isDarkMode && styles.iconDark]} />
           <Text style={[styles.settingText, isDarkMode && styles.darkText]}>{t('settings.contactUs')}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.settingRow} onPress={() => alert('Rate Us')}>
+        <TouchableOpacity style={styles.settingRow} onPress={() => Linking.openURL('https://iti.gov.eg/home')}>
           <Ionicons name="star" size={24} color="black" style={[styles.icon, isDarkMode && styles.iconDark]} />
           <Text style={[styles.settingText, isDarkMode && styles.darkText]}>{t('settings.rateUs')}</Text>
         </TouchableOpacity>

@@ -7,7 +7,7 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/Gemini_Generated_Image_y6l0riy6l0riy6l0.jpg",
+      "image": "./assets/Gemini_Generated.png",
       "resizeMode": "contain",
       "backgroundColor": "#485053"
     },

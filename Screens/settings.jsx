@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Switch, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Switch, StyleSheet, TouchableOpacity, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; 
 import { Picker } from '@react-native-picker/picker'; 
 import Navbar from '../Navigations/navbar';
@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import i18n from '../i18n';
 
 const SettingsScreen = ({ isDarkMode, toggleDarkMode, navigation }) => {
+  try{
   const { t } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
 
@@ -56,13 +57,20 @@ const SettingsScreen = ({ isDarkMode, toggleDarkMode, navigation }) => {
           <Ionicons name="mail" size={24} color="black" style={[styles.icon, isDarkMode && styles.iconDark]} />
           <Text style={[styles.settingText, isDarkMode && styles.darkText]}>{t('settings.contactUs')}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.settingRow} onPress={() => alert('Rate Us')}>
-          <Ionicons name="star" size={24} color="black" style={[styles.icon, isDarkMode && styles.iconDark]} />
-          <Text style={[styles.settingText, isDarkMode && styles.darkText]}>{t('settings.rateUs')}</Text>
-        </TouchableOpacity>
+        <TouchableOpacity style={styles.settingRow} onPress={() => Linking.openURL('https://iti.gov.eg/home')}>
+        <Ionicons name="star" size={24} color="black" style={[styles.icon, isDarkMode && styles.iconDark]} />
+        <Text style={[styles.settingText, isDarkMode && styles.darkText]}>{t('settings.rateUs')}</Text>
+      </TouchableOpacity>
       </View>
     </View>
-  );
+  );}catch (error) {
+    console.error("Error in SettingsScreen:", error);
+    return (
+      <View style={styles.marginHeader}>
+        <Text>An error occurred. Please try again later.</Text>
+      </View>
+    );
+  }
 };
 const styles = StyleSheet.create({
     darkText: {

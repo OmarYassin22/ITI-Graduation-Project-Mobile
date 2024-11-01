@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { View, Text, Button, Alert, FlatList, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { RadioButton } from "react-native-paper";
-
 import { db } from "../../../firebase";
 import {
   collection,
@@ -293,8 +292,6 @@ const Scholarship = ({ isDarkMode }) => {
       },
     ],
   };
-
-
   const showAlert = (title, message) => {
     Alert.alert(
       title,
@@ -361,6 +358,7 @@ const Scholarship = ({ isDarkMode }) => {
 
 
   const submitHandle = () => {
+    try{
     if (submitted) {
       showAlert(t("buyer.solarship.alreadyApplicant"), t("buyer.solarship.alreadyApplicantMessage"));
       return;
@@ -420,6 +418,10 @@ const Scholarship = ({ isDarkMode }) => {
     } else {
       showAlert(t("buyer.solarship.error"), t("buyer.solarship.selectField"));
     }
+  }catch (error) {
+    console.error("Error in handling:", error);
+    showAlert("Error", "Failed to handle data. Please try again.");
+  }
   };
 
   const renderQuestion = ({ item, index }) => (
@@ -442,7 +444,13 @@ const Scholarship = ({ isDarkMode }) => {
       ))}
     </View>
   );
-
+  if (!docData) {
+    return (
+      <View style={styles.container}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
   if (docData?.type === "applicant") {
     return (
       <View style={styles.container}>

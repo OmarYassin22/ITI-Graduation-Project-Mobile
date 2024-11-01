@@ -124,12 +124,21 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 16,
   },
+  title3: {
+    fontSize: 13, // حجم الخط حسب رغبتك
+    textAlign: 'center', // للتوسيط الأفقي داخل النص نفسه
+    margin: 10
+  },
+  title4:{
+    marginBottom:20
+  },
   itemText: {
     flexWrap: 'wrap',
     width: '100%',
     fontSize: 14,
     color: "#666",
   },
+
   accordionBackground: {
     backgroundColor: "#fff", // لون خلفية الوضع العادي
   },

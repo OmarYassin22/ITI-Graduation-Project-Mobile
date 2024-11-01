@@ -87,7 +87,8 @@ const HomeScreen = ({ isDarkMode, navigation }) => {
               title={t('home.accordion.eLearning')}
               id="1"
             >
-              <CustomListItem title={t('home.accordion.eLearningDescription')} isDarkMode={isDarkMode} />
+              <Text style={[styles.title3, isDarkMode && styles.darkTitle]}>{t('home.accordion.eLearningDescription')}</Text>
+              {/* <CustomListItem title={t('home.accordion.eLearningDescription')} isDarkMode={isDarkMode} /> */}
             </List.Accordion>
             <List.Accordion
               titleStyle={[styles.accordionTitle, isDarkMode && styles.darkText]}
@@ -95,7 +96,8 @@ const HomeScreen = ({ isDarkMode, navigation }) => {
               title={t('home.accordion.mission')}
               id="2"
             >
-              <CustomListItem title={t('home.accordion.missionDescription')} isDarkMode={isDarkMode} />
+              <Text style={[styles.title3, isDarkMode && styles.darkTitle]}>{t('home.accordion.missionDescription')}</Text>
+              {/* <CustomListItem title={t('home.accordion.missionDescription')} isDarkMode={isDarkMode} /> */}
             </List.Accordion>
             <List.Accordion
               titleStyle={[styles.accordionTitle, isDarkMode && styles.darkText]}
@@ -103,7 +105,8 @@ const HomeScreen = ({ isDarkMode, navigation }) => {
               title={t('home.accordion.instructors')}
               id="3"
             >
-              <CustomListItem title={t('home.accordion.instructorsDescription')} isDarkMode={isDarkMode} />
+              <Text style={[styles.title3, isDarkMode && styles.darkTitle]}>{t('home.accordion.instructorsDescription')}</Text>
+              {/* <CustomListItem title={t('home.accordion.instructorsDescription')} isDarkMode={isDarkMode} /> */}
             </List.Accordion>
             <List.Accordion
               titleStyle={[styles.accordionTitle, isDarkMode && styles.darkText]}
@@ -111,7 +114,8 @@ const HomeScreen = ({ isDarkMode, navigation }) => {
               title={t('home.accordion.uniqueness')}
               id="4"
             >
-              <CustomListItem title={t('home.accordion.uniquenessDescription')} isDarkMode={isDarkMode} />
+              <Text style={[styles.title4, isDarkMode && styles.darkTitle]}>{t('home.accordion.uniquenessDescription')}</Text>
+              {/* <CustomListItem title={t('home.accordion.uniquenessDescription')} isDarkMode={isDarkMode} /> */}
             </List.Accordion>
           </List.AccordionGroup>
         </View>
